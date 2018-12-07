@@ -6,9 +6,9 @@
     <artifactId>wavefront-fdb-tailer</artifactId>
     <version>0.9.0-SNAPSHOT</version>
     <packaging>jar</packaging>
-    <name>Wavefront by VMware Metrics Tailer for FoundationDB</name>
+    <name>Wavefront Metrics Adaptor for FoundationDB Logs</name>
     <description>Reads FoundationDB trace logs and converts them to time-series metrics in Wavefront and
-        also Open-Source formats
+        also Open Source formats
     </description>
     <url>https://github.com/wavefrontHQ/wavefront-fdb-tailer</url>
     <licenses>
