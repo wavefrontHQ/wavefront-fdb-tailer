@@ -1,0 +1,11 @@
+<Event Severity="10" Time="1402547147.206986" Type="MemSample" Machine="0.0.0.0:0" ID="0000000000000000" Count="248" TotalSize="4960" SampleCount="248" Hash="backTraces" Bt="na"/>
+<Event Severity="10" Time="1402547147.206986" Type="MemSample" Machine="0.0.0.0:0" ID="0000000000000000" Count="49" TotalSize="980" SampleCount="49" Hash="memSamples" Bt="na"/>
+<Event Severity="10" Time="1402547147.206986" Type="MemSample" Machine="0.0.0.0:0" ID="0000000000000000" Count="90112" TotalSize="1441792" SampleCount="1" Hash="FastAllocatedUnused16" Bt="na"/>
+<Event Severity="10" Time="1402547147.206986" Type="MemSample" Machine="0.0.0.0:0" ID="0000000000000000" Count="36864" TotalSize="1179648" SampleCount="1" Hash="FastAllocatedUnused32" Bt="na"/>
+<Event Severity="10" Time="1402547147.206986" Type="MemSample" Machine="0.0.0.0:0" ID="0000000000000000" Count="24576" TotalSize="1572864" SampleCount="1" Hash="FastAllocatedUnused64" Bt="na"/>
+<Event Severity="10" Time="1402547147.206986" Type="MemSample" Machine="0.0.0.0:0" ID="0000000000000000" Count="600064" TotalSize="76808192" SampleCount="1" Hash="FastAllocatedUnused128" Bt="na"/>
+<Event Severity="10" Time="1402547147.206986" Type="MemSample" Machine="0.0.0.0:0" ID="0000000000000000" Count="63488" TotalSize="16252928" SampleCount="1" Hash="FastAllocatedUnused256" Bt="na"/>
+<Event Severity="10" Time="1402547147.206986" Type="MemSample" Machine="0.0.0.0:0" ID="0000000000000000" Count="47616" TotalSize="24379392" SampleCount="1" Hash="FastAllocatedUnused512" Bt="na"/>
+<Event Severity="10" Time="1402547147.206986" Type="MemSample" Machine="0.0.0.0:0" ID="0000000000000000" Count="6144" TotalSize="6291456" SampleCount="1" Hash="FastAllocatedUnused1024" Bt="na"/>
+<Event Severity="10" Time="1402547147.206986" Type="MemSample" Machine="0.0.0.0:0" ID="0000000000000000" Count="9216" TotalSize="18874368" SampleCount="1" Hash="FastAllocatedUnused2048" Bt="na"/>
+<Event Severity="11" Time="1402547147.206986" Type="MemSample" Machine="0.0.0.0:0" ID="0000000000000000" Count="74144" TotalSize="303693824" SampleCount="1" Hash="FastAllocatedUnused4096" Bt="na"/>

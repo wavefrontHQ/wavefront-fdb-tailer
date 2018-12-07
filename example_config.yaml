@@ -1,0 +1,5 @@
+directory: "/usr/local/foundationdb/logs"
+matching: ".*\\.xml$"
+reporterType: PROXY
+proxyHost: 127.0.0.1
+proxyPort: 2878

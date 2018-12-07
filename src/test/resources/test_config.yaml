@@ -1,0 +1,9 @@
+directory: "/usr/local/foundationdb/logs"
+matching: ".*\\.xml$"
+reporterType: PROXY
+proxyHost: 1.0.0.0
+proxyPort: 2000
+server: wavefront.example.com
+token: abcde
+graphiteServer: graphite.example.com
+graphitePort: 3000
