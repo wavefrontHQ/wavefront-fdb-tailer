@@ -98,26 +98,4 @@ public class FDBMetricsReporterInitTest {
 
     }
 
-    @Test
-    public void backslashTest() {
-        String graphiteServer = "graphite.example.com";
-        String dir = "/test/dir";
-        String matching = ".*\\.xml$";
-        FDBMetricsReporterArguments.ReporterType type = FDBMetricsReporterArguments.ReporterType.GRAPHITE;
-        String[] args = {"--type", "GRAPHITE", "-f", "src/test/resources/test_config.yaml"};
-        try {
-            parseArguments(args, init);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            e.getMessage();
-            fail("Exception thrown");
-        }
-        assertEquals(init.arguments.getGraphiteServer(), graphiteServer);
-        assertEquals(init.arguments.getReporterType(), type);
-        assertEquals(init.arguments.getDirectory(), dir);
-        assertEquals(init.arguments.getMatching(), matching);
-
-    }
-
 }
