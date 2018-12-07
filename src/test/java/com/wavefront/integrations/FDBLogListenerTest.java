@@ -1,7 +1,12 @@
 package com.wavefront.integrations;
 
+import com.codahale.metrics.Gauge;
 import com.codahale.metrics.MetricRegistry;
 import com.codahale.metrics.SharedMetricRegistries;
+import com.google.common.cache.CacheBuilder;
+import com.google.common.cache.CacheLoader;
+import com.google.common.cache.LoadingCache;
+import com.google.common.util.concurrent.AtomicDouble;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -20,13 +25,45 @@ public class FDBLogListenerTest {
 
     private FDBLogListener listener;
 
+    private String prefix = "fdb.trace.";
+
+    private String metricName(String name) {
+        return prefix + name;
+    }
+
     static {
         SharedMetricRegistries.setDefault("defaultFDBMetrics", new MetricRegistry());
     }
 
     @Before
     public void setUp() {
-        listener = new FDBLogListener();
+
+        LoadingCache<String, AtomicDouble> values = CacheBuilder.newBuilder().build(
+                new CacheLoader<String, AtomicDouble>() {
+                    @Override
+                    public AtomicDouble load(String key) {
+                        return new AtomicDouble();
+                    }
+                });
+
+        LoadingCache<String, Gauge<Double>> gauges = CacheBuilder.newBuilder().build(
+                new CacheLoader<String, Gauge<Double>>() {
+                    @Override
+                    public Gauge load(final String key) {
+                        return SharedMetricRegistries.getDefault().gauge(metricName(key),
+                                () -> new Gauge() {
+                                    AtomicDouble value = values.getUnchecked(key);
+
+                                    @Override
+                                    public Double getValue() {
+                                        return value.get();
+                                    }
+                                });
+                    }
+                }
+        );
+
+        listener = new FDBLogListener(prefix, values, gauges);
     }
 
     @Test
