@@ -234,7 +234,6 @@ public class FDBLogListener extends TailerListenerAdapter {
                             break;
                         }
                         default: {
-                            SharedMetricRegistries.getDefault().counter(metricName(getPort(map) + "." + type.getNodeValue())).inc();
                             break;
                         }
                     }
