@@ -1,0 +1,3871 @@
+{
+    "description": "",
+    "hidden": false,
+    "parameters": {},
+    "tags": {
+      "customerTags": []
+    },
+    "systemOwned": false,
+    "customer": "collector",
+    "url": "samplefdbhealth",
+    "creatorId": "warshawd@vmware.com",
+    "updaterId": "warshawd@vmware.com",
+    "id": "samplefdbhealth",
+    "eventFilterType": "BYCHART",
+    "sections": [
+      {
+        "rows": [
+          {
+            "charts": [
+              {
+                "base": 0,
+                "sources": [
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderEnabled": false,
+                    "sourceDescription": "",
+                    "query": "count(count(ts(telegraf.exec.fdbcli-memory.cluster.processes.46*, tag=\"${mirror}\" and source=\"*-db1-*\" and excluded=False), address))",
+                    "name": "New Query"
+                  }
+                ],
+                "includeObsoleteMetrics": false,
+                "noDefaultEvents": false,
+                "chartAttributes": null,
+                "summarization": "MEAN",
+                "chartSettings": {
+                  "type": "sparkline",
+                  "windowing": "full",
+                  "autoColumnTags": false,
+                  "tagMode": "all",
+                  "numTags": 4,
+                  "customTags": [],
+                  "y1Units": "",
+                  "y0ScaleSIBy1024": false,
+                  "y1ScaleSIBy1024": false,
+                  "y0UnitAutoscaling": false,
+                  "y1UnitAutoscaling": false,
+                  "fixedLegendEnabled": false,
+                  "fixedLegendUseRawStats": false,
+                  "fixedLegendPosition": "RIGHT",
+                  "fixedLegendDisplayStats": [
+                    "CURRENT"
+                  ],
+                  "fixedLegendFilterSort": "TOP",
+                  "fixedLegendFilterLimit": 5,
+                  "fixedLegendFilterField": "CURRENT",
+                  "sparklineDisplayValueType": "VALUE",
+                  "sparklineDisplayColor": "rgba(255,255,255,1)",
+                  "sparklineDisplayHorizontalPosition": "MIDDLE",
+                  "sparklineDisplayFontSize": "200",
+                  "sparklineSize": "BACKGROUND",
+                  "sparklineLineColor": "rgba(255,255,255,0.5)",
+                  "sparklineFillColor": "rgba(255,255,255,0.1)",
+                  "sparklineValueColorMapColors": [
+                    "rgba(134,192,66,1)",
+                    "rgba(134,192,66,1)"
+                  ],
+                  "sparklineValueColorMapValuesV2": [
+                    10
+                  ],
+                  "sparklineValueColorMapApplyTo": "BACKGROUND",
+                  "sparklineDecimalPrecision": 0
+                },
+                "interpolatePoints": false,
+                "name": "Machines In Mem Cluster"
+              },
+              {
+                "base": 0,
+                "sources": [
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderEnabled": false,
+                    "sourceDescription": "",
+                    "query": "count(count(ts(telegraf.exec.fdbcli.cluster.processes.45*, tag=\"${mirror}\" and source=\"*-db1-*\" and excluded=False), address))",
+                    "name": "New Query"
+                  }
+                ],
+                "includeObsoleteMetrics": false,
+                "noDefaultEvents": false,
+                "chartAttributes": null,
+                "summarization": "MEAN",
+                "chartSettings": {
+                  "type": "sparkline",
+                  "lineType": "linear",
+                  "windowing": "full",
+                  "autoColumnTags": false,
+                  "tagMode": "all",
+                  "numTags": 4,
+                  "customTags": [],
+                  "y1Units": "",
+                  "y0ScaleSIBy1024": false,
+                  "y1ScaleSIBy1024": false,
+                  "y0UnitAutoscaling": false,
+                  "y1UnitAutoscaling": false,
+                  "fixedLegendEnabled": false,
+                  "fixedLegendUseRawStats": false,
+                  "fixedLegendPosition": "RIGHT",
+                  "fixedLegendDisplayStats": [
+                    "CURRENT"
+                  ],
+                  "fixedLegendFilterSort": "TOP",
+                  "fixedLegendFilterLimit": 5,
+                  "fixedLegendFilterField": "CURRENT",
+                  "sparklineDisplayValueType": "VALUE",
+                  "sparklineDisplayColor": "rgba(255,255,255,1)",
+                  "sparklineDisplayHorizontalPosition": "MIDDLE",
+                  "sparklineDisplayFontSize": "200",
+                  "sparklineSize": "BACKGROUND",
+                  "sparklineLineColor": "rgba(255,255,255,1)",
+                  "sparklineFillColor": "rgba(255,255,255,0.1)",
+                  "sparklineValueColorMapColors": [
+                    "rgba(134,192,66,1)",
+                    "rgba(134,192,66,1)"
+                  ],
+                  "sparklineValueColorMapValuesV2": [
+                    10
+                  ],
+                  "sparklineValueColorMapApplyTo": "BACKGROUND",
+                  "sparklineDecimalPrecision": 0
+                },
+                "interpolatePoints": false,
+                "name": "Machines In SSD Cluster"
+              },
+              {
+                "base": 0,
+                "units": "0 = good, 1 = bad",
+                "description": "This is critical and requires immediate action or we'll start queuing points. Failover immediately if this is the serving side. \n\nTo clear, issue the following fdbcli commands:\nclear \\x02__cluster_fingerprint__\\x00",
+                "sources": [
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderEnabled": false,
+                    "sourceDescription": "",
+                    "query": "ts(\"telegraf.exec.fingerprint.ssd\", tag=\"${mirror}\" and host=\"*db1*\")",
+                    "name": "ssd fingerprint"
+                  }
+                ],
+                "includeObsoleteMetrics": false,
+                "noDefaultEvents": false,
+                "chartAttributes": null,
+                "summarization": "MAX",
+                "chartSettings": {
+                  "type": "sparkline",
+                  "lineType": "linear",
+                  "windowing": "full",
+                  "autoColumnTags": false,
+                  "tagMode": "all",
+                  "numTags": 4,
+                  "customTags": [],
+                  "y1Units": "",
+                  "y0ScaleSIBy1024": false,
+                  "y1ScaleSIBy1024": false,
+                  "y0UnitAutoscaling": false,
+                  "y1UnitAutoscaling": false,
+                  "fixedLegendEnabled": false,
+                  "fixedLegendUseRawStats": false,
+                  "fixedLegendPosition": "RIGHT",
+                  "fixedLegendDisplayStats": [
+                    "CURRENT"
+                  ],
+                  "fixedLegendFilterSort": "TOP",
+                  "fixedLegendFilterLimit": 5,
+                  "fixedLegendFilterField": "CURRENT",
+                  "sparklineDisplayValueType": "VALUE",
+                  "sparklineDisplayColor": "rgba(255,255,255,1)",
+                  "sparklineDisplayHorizontalPosition": "MIDDLE",
+                  "sparklineDisplayFontSize": "100",
+                  "sparklineSize": "NONE",
+                  "sparklineLineColor": "rgba(217,83,79,1)",
+                  "sparklineValueColorMapColors": [
+                    "rgba(134,192,66,1)",
+                    "rgba(217,83,79,1)"
+                  ],
+                  "sparklineValueColorMapValuesV2": [
+                    1
+                  ],
+                  "sparklineValueColorMapApplyTo": "BACKGROUND",
+                  "sparklineValueTextMapText": [
+                    "GOOD",
+                    "BAD"
+                  ],
+                  "sparklineValueTextMapThresholds": [
+                    1
+                  ]
+                },
+                "interpolatePoints": false,
+                "name": "FDB SSD Fingerprint"
+              },
+              {
+                "base": 0,
+                "units": "0 = good, 1 = bad",
+                "description": "This is critical and requires immediate action or we'll start queuing points. Failover immediately if this is the serving side. \n\nTo clear, issue the following fdbcli commands:\nclear \\x02__cluster_fingerprint__\\x00",
+                "sources": [
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderEnabled": false,
+                    "sourceDescription": "",
+                    "query": "ts(\"telegraf.exec.fingerprint.mem\", tag=\"${mirror}\" and host=\"*db1*\")",
+                    "name": "me fingerprint"
+                  }
+                ],
+                "includeObsoleteMetrics": false,
+                "noDefaultEvents": false,
+                "chartAttributes": null,
+                "summarization": "MAX",
+                "chartSettings": {
+                  "type": "sparkline",
+                  "lineType": "linear",
+                  "windowing": "full",
+                  "autoColumnTags": false,
+                  "tagMode": "all",
+                  "numTags": 4,
+                  "customTags": [],
+                  "y1Units": "",
+                  "y0ScaleSIBy1024": false,
+                  "y1ScaleSIBy1024": false,
+                  "y0UnitAutoscaling": false,
+                  "y1UnitAutoscaling": false,
+                  "fixedLegendEnabled": false,
+                  "fixedLegendUseRawStats": false,
+                  "fixedLegendPosition": "RIGHT",
+                  "fixedLegendDisplayStats": [
+                    "CURRENT"
+                  ],
+                  "fixedLegendFilterSort": "TOP",
+                  "fixedLegendFilterLimit": 5,
+                  "fixedLegendFilterField": "CURRENT",
+                  "sparklineDisplayValueType": "VALUE",
+                  "sparklineDisplayColor": "rgba(255,255,255,1)",
+                  "sparklineDisplayHorizontalPosition": "MIDDLE",
+                  "sparklineDisplayFontSize": "100",
+                  "sparklineSize": "NONE",
+                  "sparklineLineColor": "rgba(217,83,79,1)",
+                  "sparklineValueColorMapColors": [
+                    "rgba(134,192,66,1)",
+                    "rgba(217,83,79,1)"
+                  ],
+                  "sparklineValueColorMapValuesV2": [
+                    1
+                  ],
+                  "sparklineValueColorMapApplyTo": "BACKGROUND",
+                  "sparklineValueTextMapText": [
+                    "GOOD",
+                    "BAD"
+                  ],
+                  "sparklineValueTextMapThresholds": [
+                    1
+                  ]
+                },
+                "interpolatePoints": false,
+                "name": "FDB MEM Fingerprint"
+              }
+            ],
+            "heightFactor": 45
+          },
+          {
+            "charts": [
+              {
+                "base": 10,
+                "units": "s",
+                "sources": [
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderEnabled": false,
+                    "sourceDescription": "",
+                    "query": "sum(ts(telegraf.exec.fdbcli.cluster.latency.probe.*.seconds, tag=\"${mirror}\" and host=\"*db1*\"))",
+                    "name": "SSD DB Latency"
+                  },
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderEnabled": false,
+                    "sourceDescription": "",
+                    "query": "sum(ts(telegraf.exec.fdbcli-memory.cluster.latency.probe.*.seconds, tag=\"${mirror}\" and host=\"*db1*\"))",
+                    "name": "Mem DB Latency"
+                  }
+                ],
+                "includeObsoleteMetrics": false,
+                "noDefaultEvents": false,
+                "chartAttributes": null,
+                "summarization": "MEAN",
+                "chartSettings": {
+                  "type": "line",
+                  "lineType": "linear",
+                  "windowing": "full",
+                  "autoColumnTags": false,
+                  "tagMode": "all",
+                  "numTags": 4,
+                  "customTags": [],
+                  "y1Units": "",
+                  "y0ScaleSIBy1024": false,
+                  "y1ScaleSIBy1024": false,
+                  "y0UnitAutoscaling": true,
+                  "y1UnitAutoscaling": false,
+                  "fixedLegendEnabled": false,
+                  "fixedLegendUseRawStats": false,
+                  "fixedLegendPosition": "RIGHT",
+                  "fixedLegendDisplayStats": [
+                    "CURRENT"
+                  ],
+                  "fixedLegendFilterSort": "TOP",
+                  "fixedLegendFilterLimit": 5,
+                  "fixedLegendFilterField": "CURRENT"
+                },
+                "interpolatePoints": false,
+                "name": "FDB Latency"
+              },
+              {
+                "base": 10,
+                "units": "Units",
+                "sources": [
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderEnabled": false,
+                    "sourceDescription": "",
+                    "query": "max(ts(telegraf.exec.fdbcli.cluster.workload.operations.*.hz, tag=${mirror} and role=db), metrics)",
+                    "name": "ssd reads/writes"
+                  },
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderEnabled": false,
+                    "sourceDescription": "",
+                    "query": "max(ts(telegraf.exec.fdbcli-memory.cluster.workload.operations.*.hz, tag=${mirror} and role=db), metrics)",
+                    "name": "mem reads/writes"
+                  }
+                ],
+                "includeObsoleteMetrics": false,
+                "noDefaultEvents": false,
+                "chartAttributes": null,
+                "summarization": "MEAN",
+                "chartSettings": {
+                  "type": "line",
+                  "lineType": "linear",
+                  "windowing": "full",
+                  "autoColumnTags": false,
+                  "tagMode": "all",
+                  "numTags": 4,
+                  "customTags": [],
+                  "y1Units": "",
+                  "y0ScaleSIBy1024": false,
+                  "y1ScaleSIBy1024": false,
+                  "y0UnitAutoscaling": false,
+                  "y1UnitAutoscaling": false,
+                  "fixedLegendEnabled": false,
+                  "fixedLegendUseRawStats": false,
+                  "fixedLegendPosition": "RIGHT",
+                  "fixedLegendDisplayStats": [
+                    "CURRENT"
+                  ],
+                  "fixedLegendFilterSort": "TOP",
+                  "fixedLegendFilterLimit": 5,
+                  "fixedLegendFilterField": "CURRENT"
+                },
+                "interpolatePoints": false,
+                "name": "Read / Write Rates"
+              }
+            ],
+            "heightFactor": 45
+          },
+          {
+            "charts": [
+              {
+                "base": 0,
+                "units": "Units",
+                "sources": [
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderSerialization": "{\"_v\":1,\"metric\":\"\",\"filters\":[[],\"and\"],\"functions\":[]}",
+                    "querybuilderEnabled": true,
+                    "sourceDescription": "",
+                    "query": "max(ts(telegraf.exec.fdbcli-memory.cluster.qos.worst.queue.bytes.log.server, source=\"*-db*-*\"and tag=\"${mirror}\"))",
+                    "name": "Worst Queue Log"
+                  },
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderSerialization": "{\"_v\":1,\"metric\":\"\",\"filters\":[[],\"and\"],\"functions\":[]}",
+                    "querybuilderEnabled": true,
+                    "sourceDescription": "",
+                    "query": "max(ts(telegraf.exec.fdbcli-memory.cluster.qos.worst.queue.bytes.storage.server, source=\"*-db*-*\" and tag=\"${mirror}\"))",
+                    "name": "Worst Queue Storage"
+                  },
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderSerialization": "{\"_v\":1,\"metric\":\"\",\"filters\":[[],\"and\"],\"functions\":[]}",
+                    "querybuilderEnabled": true,
+                    "sourceDescription": "",
+                    "query": "1G",
+                    "name": "New Query"
+                  }
+                ],
+                "includeObsoleteMetrics": false,
+                "noDefaultEvents": false,
+                "chartAttributes": null,
+                "summarization": "MEAN",
+                "chartSettings": {
+                  "type": "line",
+                  "lineType": "linear",
+                  "windowing": "full",
+                  "autoColumnTags": false,
+                  "tagMode": "all",
+                  "numTags": 4,
+                  "customTags": [],
+                  "y1Units": "",
+                  "y0ScaleSIBy1024": false,
+                  "y1ScaleSIBy1024": false,
+                  "y0UnitAutoscaling": false,
+                  "y1UnitAutoscaling": false,
+                  "fixedLegendEnabled": false,
+                  "fixedLegendUseRawStats": false,
+                  "fixedLegendPosition": "RIGHT",
+                  "fixedLegendDisplayStats": [
+                    "CURRENT"
+                  ],
+                  "fixedLegendFilterSort": "TOP",
+                  "fixedLegendFilterLimit": 5,
+                  "fixedLegendFilterField": "CURRENT"
+                },
+                "interpolatePoints": false,
+                "name": "Worst FDB MEM storage/log queues"
+              },
+              {
+                "base": 0,
+                "units": "Units",
+                "sources": [
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderSerialization": "{\"_v\":1,\"metric\":\"\",\"filters\":[[],\"and\"],\"functions\":[]}",
+                    "querybuilderEnabled": true,
+                    "sourceDescription": "",
+                    "query": "max(ts(telegraf.exec.fdbcli.cluster.qos.worst.queue.bytes.log.server, source=\"*-db*-*\" and tag=${mirror}))",
+                    "name": "Worst Queue Log"
+                  },
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderSerialization": "{\"_v\":1,\"metric\":\"\",\"filters\":[[],\"and\"],\"functions\":[]}",
+                    "querybuilderEnabled": true,
+                    "sourceDescription": "",
+                    "query": "max(ts(telegraf.exec.fdbcli.cluster.qos.worst.queue.bytes.storage.server, source=\"*-db*-*\" and tag=${mirror}))",
+                    "name": "Worst Queue Storage"
+                  },
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderSerialization": "{\"_v\":1,\"metric\":\"\",\"filters\":[[],\"and\"],\"functions\":[]}",
+                    "querybuilderEnabled": true,
+                    "sourceDescription": "",
+                    "query": "1G",
+                    "name": "Limitting"
+                  }
+                ],
+                "includeObsoleteMetrics": false,
+                "noDefaultEvents": false,
+                "chartAttributes": null,
+                "summarization": "MEAN",
+                "chartSettings": {
+                  "type": "line",
+                  "lineType": "linear",
+                  "windowing": "full",
+                  "autoColumnTags": false,
+                  "tagMode": "all",
+                  "numTags": 4,
+                  "customTags": [],
+                  "y1Units": "",
+                  "y0ScaleSIBy1024": false,
+                  "y1ScaleSIBy1024": false,
+                  "y0UnitAutoscaling": false,
+                  "y1UnitAutoscaling": false,
+                  "fixedLegendEnabled": false,
+                  "fixedLegendUseRawStats": false,
+                  "fixedLegendPosition": "RIGHT",
+                  "fixedLegendDisplayStats": [
+                    "CURRENT"
+                  ],
+                  "fixedLegendFilterSort": "TOP",
+                  "fixedLegendFilterLimit": 5,
+                  "fixedLegendFilterField": "CURRENT"
+                },
+                "interpolatePoints": false,
+                "name": "Worst FDB SSD storage/log queues"
+              }
+            ],
+            "heightFactor": 45
+          },
+          {
+            "charts": [
+              {
+                "base": 0,
+                "units": "B",
+                "sources": [
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderEnabled": false,
+                    "sourceDescription": "",
+                    "query": "max(ts(telegraf.exec.fdbcli-memory.cluster.data.least.operating.space.bytes.*.server, tag=\"${mirror}\"), metrics)",
+                    "name": "Mem Op Space"
+                  }
+                ],
+                "includeObsoleteMetrics": false,
+                "noDefaultEvents": false,
+                "chartAttributes": null,
+                "summarization": "MEAN",
+                "chartSettings": {
+                  "type": "line",
+                  "min": 0,
+                  "max": 9663676416,
+                  "lineType": "linear",
+                  "windowing": "full",
+                  "autoColumnTags": false,
+                  "tagMode": "all",
+                  "numTags": 4,
+                  "customTags": [],
+                  "y1Units": "",
+                  "y0ScaleSIBy1024": false,
+                  "y1ScaleSIBy1024": false,
+                  "y0UnitAutoscaling": true,
+                  "y1UnitAutoscaling": false,
+                  "fixedLegendEnabled": false,
+                  "fixedLegendUseRawStats": false,
+                  "fixedLegendPosition": "RIGHT",
+                  "fixedLegendDisplayStats": [
+                    "CURRENT"
+                  ],
+                  "fixedLegendFilterSort": "TOP",
+                  "fixedLegendFilterLimit": 5,
+                  "fixedLegendFilterField": "CURRENT"
+                },
+                "interpolatePoints": false,
+                "name": "Mem Op Space"
+              },
+              {
+                "base": 1,
+                "units": "Units",
+                "description": "",
+                "sources": [
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderEnabled": false,
+                    "secondaryAxis": false,
+                    "sourceDescription": "",
+                    "query": "max(ts(telegraf.exec.fdbcli.cluster.data.least.operating.space.bytes.storage.server, tag=\"${mirror}\"))",
+                    "name": "New Query"
+                  }
+                ],
+                "includeObsoleteMetrics": false,
+                "noDefaultEvents": false,
+                "chartAttributes": null,
+                "summarization": "MEAN",
+                "chartSettings": {
+                  "type": "line",
+                  "lineType": "linear",
+                  "windowing": "full",
+                  "autoColumnTags": false,
+                  "tagMode": "all",
+                  "numTags": 4,
+                  "customTags": [],
+                  "y1Units": "",
+                  "y0ScaleSIBy1024": false,
+                  "y1ScaleSIBy1024": false,
+                  "y0UnitAutoscaling": false,
+                  "y1UnitAutoscaling": false,
+                  "fixedLegendEnabled": false,
+                  "fixedLegendUseRawStats": false,
+                  "fixedLegendPosition": "RIGHT",
+                  "fixedLegendDisplayStats": [
+                    "CURRENT"
+                  ],
+                  "fixedLegendFilterSort": "TOP",
+                  "fixedLegendFilterLimit": 5,
+                  "fixedLegendFilterField": "CURRENT"
+                },
+                "interpolatePoints": false,
+                "name": "SSD Op Space"
+              }
+            ],
+            "heightFactor": 45
+          },
+          {
+            "charts": [
+              {
+                "base": 1,
+                "units": "B",
+                "description": "",
+                "sources": [
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderEnabled": false,
+                    "secondaryAxis": false,
+                    "sourceDescription": "",
+                    "query": "max(ts(telegraf.exec.fdbcli-memory.cluster.data.total.kv.size.bytes, tag=\"${mirror}\"), metrics)",
+                    "name": "KV Store"
+                  }
+                ],
+                "includeObsoleteMetrics": false,
+                "noDefaultEvents": false,
+                "chartAttributes": null,
+                "summarization": "MEAN",
+                "chartSettings": {
+                  "type": "line",
+                  "lineType": "linear",
+                  "windowing": "full",
+                  "autoColumnTags": false,
+                  "tagMode": "all",
+                  "numTags": 4,
+                  "customTags": [],
+                  "y1Units": "",
+                  "y0ScaleSIBy1024": false,
+                  "y1ScaleSIBy1024": false,
+                  "y0UnitAutoscaling": true,
+                  "y1UnitAutoscaling": false,
+                  "fixedLegendEnabled": false,
+                  "fixedLegendUseRawStats": false,
+                  "fixedLegendPosition": "RIGHT",
+                  "fixedLegendDisplayStats": [
+                    "CURRENT"
+                  ],
+                  "fixedLegendFilterSort": "TOP",
+                  "fixedLegendFilterLimit": 5,
+                  "fixedLegendFilterField": "CURRENT"
+                },
+                "interpolatePoints": false,
+                "name": "Mem KV Store"
+              },
+              {
+                "base": 10,
+                "units": "B",
+                "sources": [
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderSerialization": "{\"_v\":1,\"metric\":\"\",\"filters\":[[],\"and\"],\"functions\":[]}",
+                    "querybuilderEnabled": true,
+                    "sourceDescription": "",
+                    "query": "max(ts(telegraf.exec.fdbcli.cluster.data.total.kv.size.bytes, tag=\"${mirror}\"), metrics)",
+                    "name": "KV Store"
+                  },
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderEnabled": false,
+                    "sourceDescription": "",
+                    "query": "max(ts(telegraf.exec.fdbcli.cluster.data.total.disk.used.bytes, tag=\"${mirror}\"), metrics)",
+                    "name": "Size on Disk"
+                  }
+                ],
+                "includeObsoleteMetrics": false,
+                "noDefaultEvents": false,
+                "chartAttributes": null,
+                "summarization": "MEAN",
+                "chartSettings": {
+                  "type": "line",
+                  "lineType": "linear",
+                  "windowing": "full",
+                  "autoColumnTags": false,
+                  "tagMode": "all",
+                  "numTags": 4,
+                  "customTags": [],
+                  "y1Units": "",
+                  "y0ScaleSIBy1024": false,
+                  "y1ScaleSIBy1024": false,
+                  "y0UnitAutoscaling": true,
+                  "y1UnitAutoscaling": false,
+                  "fixedLegendEnabled": false,
+                  "fixedLegendUseRawStats": false,
+                  "fixedLegendPosition": "RIGHT",
+                  "fixedLegendDisplayStats": [
+                    "CURRENT"
+                  ],
+                  "fixedLegendFilterSort": "TOP",
+                  "fixedLegendFilterLimit": 5,
+                  "fixedLegendFilterField": "CURRENT"
+                },
+                "interpolatePoints": false,
+                "name": "SSD KV Store"
+              }
+            ],
+            "heightFactor": 45
+          },
+          {
+            "charts": [
+              {
+                "base": 0,
+                "units": "B",
+                "sources": [
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderEnabled": false,
+                    "sourceDescription": "",
+                    "query": "max(ts(telegraf.exec.fdbcli-memory.cluster.data.moving.data.in.flight.bytes, tag=\"${mirror}\"))",
+                    "disabled": true,
+                    "name": "Moving Bytes in Flight"
+                  },
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderEnabled": false,
+                    "sourceDescription": "",
+                    "query": "max(ts(telegraf.exec.fdbcli-memory.cluster.data.moving.data.in.queue.bytes, tag=\"${mirror}\"))",
+                    "disabled": true,
+                    "name": "Moving Bytes Queued"
+                  },
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderEnabled": false,
+                    "sourceDescription": "",
+                    "query": "${Moving Bytes in Flight} + ${Moving Bytes Queued}",
+                    "name": "Moving Data"
+                  }
+                ],
+                "includeObsoleteMetrics": false,
+                "noDefaultEvents": false,
+                "chartAttributes": null,
+                "summarization": "MEAN",
+                "chartSettings": {
+                  "type": "line",
+                  "lineType": "linear",
+                  "windowing": "full",
+                  "autoColumnTags": false,
+                  "tagMode": "all",
+                  "numTags": 4,
+                  "customTags": [],
+                  "y1Units": "",
+                  "y0ScaleSIBy1024": false,
+                  "y1ScaleSIBy1024": false,
+                  "y0UnitAutoscaling": true,
+                  "y1UnitAutoscaling": false,
+                  "fixedLegendEnabled": false,
+                  "fixedLegendUseRawStats": false,
+                  "fixedLegendPosition": "RIGHT",
+                  "fixedLegendDisplayStats": [
+                    "CURRENT"
+                  ],
+                  "fixedLegendFilterSort": "TOP",
+                  "fixedLegendFilterLimit": 5,
+                  "fixedLegendFilterField": "CURRENT"
+                },
+                "interpolatePoints": false,
+                "name": "MEM Moving Data"
+              },
+              {
+                "base": 0,
+                "units": "B",
+                "sources": [
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderEnabled": false,
+                    "sourceDescription": "",
+                    "query": "max(ts(telegraf.exec.fdbcli.cluster.data.moving.data.in.flight.bytes, tag=\"${mirror}\"))",
+                    "disabled": true,
+                    "name": "Moving Bytes in Flight"
+                  },
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderEnabled": false,
+                    "sourceDescription": "",
+                    "query": "max(ts(telegraf.exec.fdbcli.cluster.data.moving.data.in.queue.bytes, tag=\"${mirror}\"))",
+                    "disabled": true,
+                    "name": "Moving Bytes Queued"
+                  },
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderEnabled": false,
+                    "sourceDescription": "",
+                    "query": "${Moving Bytes in Flight} + ${Moving Bytes Queued}",
+                    "name": "Moving Data"
+                  },
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderEnabled": false,
+                    "secondaryAxis": true,
+                    "sourceDescription": "",
+                    "query": "highpass(0, mavg(10m, ${Moving Data} / (lag(1m, ${Moving Data}) - ${Moving Data})))",
+                    "disabled": true,
+                    "name": "Move ETA"
+                  }
+                ],
+                "includeObsoleteMetrics": false,
+                "noDefaultEvents": false,
+                "chartAttributes": null,
+                "summarization": "MEAN",
+                "chartSettings": {
+                  "type": "line",
+                  "lineType": "linear",
+                  "windowing": "full",
+                  "autoColumnTags": false,
+                  "tagMode": "all",
+                  "numTags": 4,
+                  "customTags": [],
+                  "y1Units": "min",
+                  "y0ScaleSIBy1024": false,
+                  "y1ScaleSIBy1024": false,
+                  "y0UnitAutoscaling": true,
+                  "y1UnitAutoscaling": true,
+                  "fixedLegendEnabled": false,
+                  "fixedLegendUseRawStats": false,
+                  "fixedLegendPosition": "RIGHT",
+                  "fixedLegendDisplayStats": [
+                    "CURRENT"
+                  ],
+                  "fixedLegendFilterSort": "TOP",
+                  "fixedLegendFilterLimit": 5,
+                  "fixedLegendFilterField": "CURRENT"
+                },
+                "interpolatePoints": false,
+                "name": "SSD Moving Data"
+              }
+            ],
+            "heightFactor": 45
+          }
+        ],
+        "name": "Wavefront Sample FDB Health"
+      },
+      {
+        "rows": [
+          {
+            "charts": [
+              {
+                "base": 1,
+                "units": "",
+                "description": "",
+                "sources": [
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderEnabled": false,
+                    "secondaryAxis": false,
+                    "sourceDescription": "",
+                    "query": "ts(telegraf.exec.fdbcli-memory.cluster.configuration.logs, tag=${mirror})",
+                    "name": "New Query"
+                  }
+                ],
+                "includeObsoleteMetrics": false,
+                "noDefaultEvents": false,
+                "chartAttributes": null,
+                "summarization": "MEAN",
+                "chartSettings": {
+                  "type": "sparkline",
+                  "lineType": "linear",
+                  "windowing": "full",
+                  "autoColumnTags": false,
+                  "tagMode": "all",
+                  "numTags": 4,
+                  "customTags": [],
+                  "y1Units": "",
+                  "y0ScaleSIBy1024": false,
+                  "y1ScaleSIBy1024": false,
+                  "y0UnitAutoscaling": false,
+                  "y1UnitAutoscaling": false,
+                  "fixedLegendEnabled": false,
+                  "fixedLegendUseRawStats": false,
+                  "fixedLegendPosition": "RIGHT",
+                  "fixedLegendDisplayStats": [
+                    "CURRENT"
+                  ],
+                  "fixedLegendFilterSort": "TOP",
+                  "fixedLegendFilterLimit": 5,
+                  "fixedLegendFilterField": "CURRENT",
+                  "sparklineDisplayValueType": "VALUE",
+                  "sparklineDisplayColor": "rgba(255,255,255,1)",
+                  "sparklineDisplayHorizontalPosition": "MIDDLE",
+                  "sparklineDisplayFontSize": "200",
+                  "sparklineDisplayPrefix": " ",
+                  "sparklineSize": "NONE",
+                  "sparklineValueColorMapColors": [
+                    "rgba(134,192,66,1)",
+                    "rgba(134,192,66,1)"
+                  ],
+                  "sparklineValueColorMapValuesV2": [
+                    10
+                  ],
+                  "sparklineValueColorMapApplyTo": "BACKGROUND",
+                  "sparklineDecimalPrecision": 0
+                },
+                "interpolatePoints": false,
+                "name": "Configured Logs"
+              },
+              {
+                "base": 1,
+                "units": "",
+                "description": "",
+                "sources": [
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderEnabled": false,
+                    "sourceDescription": "",
+                    "query": "ts(telegraf.exec.fdbcli-memory.cluster.configuration.proxies, tag=${mirror})",
+                    "name": "New Query"
+                  }
+                ],
+                "includeObsoleteMetrics": false,
+                "noDefaultEvents": false,
+                "chartAttributes": null,
+                "summarization": "MEAN",
+                "chartSettings": {
+                  "type": "sparkline",
+                  "lineType": "linear",
+                  "windowing": "full",
+                  "autoColumnTags": false,
+                  "tagMode": "all",
+                  "numTags": 4,
+                  "customTags": [],
+                  "y1Units": "",
+                  "y0ScaleSIBy1024": false,
+                  "y1ScaleSIBy1024": false,
+                  "y0UnitAutoscaling": false,
+                  "y1UnitAutoscaling": false,
+                  "fixedLegendEnabled": false,
+                  "fixedLegendUseRawStats": false,
+                  "fixedLegendPosition": "RIGHT",
+                  "fixedLegendDisplayStats": [
+                    "CURRENT"
+                  ],
+                  "fixedLegendFilterSort": "TOP",
+                  "fixedLegendFilterLimit": 5,
+                  "fixedLegendFilterField": "CURRENT",
+                  "sparklineDisplayValueType": "VALUE",
+                  "sparklineDisplayColor": "rgba(255,255,255,1)",
+                  "sparklineDisplayHorizontalPosition": "MIDDLE",
+                  "sparklineDisplayFontSize": "200",
+                  "sparklineDisplayPrefix": " ",
+                  "sparklineSize": "NONE",
+                  "sparklineValueColorMapColors": [
+                    "rgba(134,192,66,1)",
+                    "rgba(134,192,66,1)"
+                  ],
+                  "sparklineValueColorMapValuesV2": [
+                    10
+                  ],
+                  "sparklineValueColorMapApplyTo": "BACKGROUND",
+                  "sparklineDecimalPrecision": 0
+                },
+                "interpolatePoints": false,
+                "name": "Configured Proxies"
+              },
+              {
+                "base": 1,
+                "units": "",
+                "description": "",
+                "sources": [
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderEnabled": false,
+                    "sourceDescription": "",
+                    "query": "ts(telegraf.exec.fdbcli-memory.cluster.configuration.resolvers, tag=${mirror})",
+                    "name": "New Query"
+                  }
+                ],
+                "includeObsoleteMetrics": false,
+                "noDefaultEvents": false,
+                "chartAttributes": null,
+                "summarization": "MEAN",
+                "chartSettings": {
+                  "type": "sparkline",
+                  "lineType": "linear",
+                  "windowing": "full",
+                  "autoColumnTags": false,
+                  "tagMode": "all",
+                  "numTags": 4,
+                  "customTags": [],
+                  "y1Units": "",
+                  "y0ScaleSIBy1024": false,
+                  "y1ScaleSIBy1024": false,
+                  "y0UnitAutoscaling": false,
+                  "y1UnitAutoscaling": false,
+                  "fixedLegendEnabled": false,
+                  "fixedLegendUseRawStats": false,
+                  "fixedLegendPosition": "RIGHT",
+                  "fixedLegendDisplayStats": [
+                    "CURRENT"
+                  ],
+                  "fixedLegendFilterSort": "TOP",
+                  "fixedLegendFilterLimit": 5,
+                  "fixedLegendFilterField": "CURRENT",
+                  "sparklineDisplayValueType": "VALUE",
+                  "sparklineDisplayColor": "rgba(255,255,255,1)",
+                  "sparklineDisplayHorizontalPosition": "MIDDLE",
+                  "sparklineDisplayFontSize": "200",
+                  "sparklineDisplayPrefix": " ",
+                  "sparklineSize": "NONE",
+                  "sparklineValueColorMapColors": [
+                    "rgba(134,192,66,1)",
+                    "rgba(134,192,66,1)"
+                  ],
+                  "sparklineValueColorMapValuesV2": [
+                    10
+                  ],
+                  "sparklineValueColorMapApplyTo": "BACKGROUND",
+                  "sparklineDecimalPrecision": 0
+                },
+                "interpolatePoints": false,
+                "name": "Configured Resolvers"
+              }
+            ],
+            "heightFactor": 30
+          },
+          {
+            "charts": [
+              {
+                "base": 0,
+                "units": "Units",
+                "sources": [
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderSerialization": "{\"_v\":1,\"metric\":\"\",\"filters\":[[],\"and\"],\"functions\":[]}",
+                    "querybuilderEnabled": true,
+                    "sourceDescription": "",
+                    "query": "highpass(0, ts(fdb.trace.46*.role.storage_server, tag=${mirror} and source=${dbhost}))",
+                    "name": "storage"
+                  },
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderSerialization": "{\"_v\":1,\"metric\":\"\",\"filters\":[[],\"and\"],\"functions\":[]}",
+                    "querybuilderEnabled": true,
+                    "sourceDescription": "",
+                    "query": "highpass(0, ts(fdb.trace.46*.role.resolver, tag=${mirror} and source=${dbhost}))",
+                    "name": "resolver"
+                  },
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderSerialization": "{\"_v\":1,\"metric\":\"\",\"filters\":[[],\"and\"],\"functions\":[]}",
+                    "querybuilderEnabled": true,
+                    "sourceDescription": "",
+                    "query": "highpass(0, ts(fdb.trace.46*.role.master_proxy_server, tag=${mirror} and source=${dbhost}))",
+                    "name": "proxy"
+                  },
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderSerialization": "{\"_v\":1,\"metric\":\"\",\"filters\":[[],\"and\"],\"functions\":[]}",
+                    "querybuilderEnabled": true,
+                    "sourceDescription": "",
+                    "query": "highpass(0, ts(fdb.trace.46*.role.t_log, tag=${mirror} and source=${dbhost}))",
+                    "name": "tlog"
+                  },
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderSerialization": "{\"_v\":1,\"metric\":\"\",\"filters\":[[],\"and\"],\"functions\":[]}",
+                    "querybuilderEnabled": true,
+                    "sourceDescription": "",
+                    "query": "highpass(0, ts(fdb.trace.46*.role.master_server, tag=${mirror} and source=${dbhost}))",
+                    "name": "masters"
+                  },
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderEnabled": false,
+                    "sourceDescription": "",
+                    "query": "highpass(0, ts(fdb.trace.46*.role.cluster_controller, tag=${mirror} and source=${dbhost}))",
+                    "name": "controllers"
+                  }
+                ],
+                "includeObsoleteMetrics": false,
+                "noDefaultEvents": false,
+                "chartAttributes": null,
+                "summarization": "MEAN",
+                "chartSettings": {
+                  "type": "table",
+                  "lineType": "linear",
+                  "stackType": "zero",
+                  "windowing": "full",
+                  "showHosts": true,
+                  "showLabels": true,
+                  "showRawValues": false,
+                  "autoColumnTags": false,
+                  "tagMode": "all",
+                  "numTags": 4,
+                  "customTags": [],
+                  "groupBySource": false,
+                  "sortValuesDescending": true,
+                  "y1Units": "",
+                  "y0ScaleSIBy1024": false,
+                  "y1ScaleSIBy1024": false,
+                  "y0UnitAutoscaling": false,
+                  "y1UnitAutoscaling": false,
+                  "fixedLegendEnabled": false,
+                  "fixedLegendUseRawStats": false,
+                  "fixedLegendPosition": "RIGHT",
+                  "fixedLegendDisplayStats": [
+                    "CURRENT"
+                  ],
+                  "fixedLegendFilterSort": "TOP",
+                  "fixedLegendFilterLimit": 5,
+                  "fixedLegendFilterField": "CURRENT"
+                },
+                "interpolatePoints": true,
+                "name": "Role Information"
+              },
+              {
+                "base": 1,
+                "units": "",
+                "description": "",
+                "sources": [
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderEnabled": false,
+                    "secondaryAxis": false,
+                    "sourceDescription": "",
+                    "query": "if (deriv(ts(fdb.trace.46*.role.*, tag=${mirror})) != 0, deriv(ts(fdb.trace.46*.role.*, tag=${mirror})))",
+                    "name": "storage"
+                  }
+                ],
+                "includeObsoleteMetrics": false,
+                "noDefaultEvents": true,
+                "chartAttributes": null,
+                "summarization": "MEAN",
+                "chartSettings": {
+                  "type": "scatterplot",
+                  "lineType": "linear",
+                  "stackType": "zero",
+                  "windowing": "full",
+                  "showHosts": false,
+                  "showLabels": false,
+                  "showRawValues": false,
+                  "autoColumnTags": false,
+                  "tagMode": "all",
+                  "numTags": 4,
+                  "customTags": [],
+                  "groupBySource": false,
+                  "sortValuesDescending": false,
+                  "y1Units": "",
+                  "y0ScaleSIBy1024": false,
+                  "y1ScaleSIBy1024": false,
+                  "y0UnitAutoscaling": false,
+                  "y1UnitAutoscaling": false,
+                  "fixedLegendEnabled": false,
+                  "fixedLegendUseRawStats": false,
+                  "fixedLegendPosition": "TOP",
+                  "fixedLegendDisplayStats": [],
+                  "fixedLegendFilterSort": "BOTTOM",
+                  "fixedLegendFilterLimit": 5,
+                  "fixedLegendFilterField": "COUNT"
+                },
+                "interpolatePoints": false,
+                "name": "Role Changes"
+              }
+            ],
+            "heightFactor": 100
+          },
+          {
+            "charts": [
+              {
+                "base": 1,
+                "units": "Units",
+                "description": "",
+                "sources": [
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderEnabled": false,
+                    "secondaryAxis": false,
+                    "sourceDescription": "",
+                    "query": "sum(ts(fdb.trace.46*.bytes_durable, tag=\"${mirror}\" and source=${dbhost}), sources)",
+                    "disabled": true,
+                    "name": "ssd bytes durable"
+                  },
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderEnabled": false,
+                    "secondaryAxis": false,
+                    "sourceDescription": "",
+                    "query": "sum(ts(fdb.trace.46*.bytes_input, tag=\"${mirror}\" and source=${dbhost}), sources)",
+                    "disabled": true,
+                    "name": "ssd bytes input"
+                  },
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderEnabled": false,
+                    "secondaryAxis": false,
+                    "sourceDescription": "",
+                    "query": "${ssd bytes input} - ${ssd bytes durable}",
+                    "name": "New Query"
+                  }
+                ],
+                "includeObsoleteMetrics": false,
+                "noDefaultEvents": false,
+                "chartAttributes": null,
+                "summarization": "MEAN",
+                "chartSettings": {
+                  "type": "line",
+                  "lineType": "linear",
+                  "windowing": "full",
+                  "autoColumnTags": false,
+                  "tagMode": "all",
+                  "numTags": 4,
+                  "customTags": [],
+                  "y1Units": "",
+                  "y0ScaleSIBy1024": false,
+                  "y1ScaleSIBy1024": false,
+                  "y0UnitAutoscaling": false,
+                  "y1UnitAutoscaling": false,
+                  "fixedLegendEnabled": false,
+                  "fixedLegendUseRawStats": false,
+                  "fixedLegendPosition": "RIGHT",
+                  "fixedLegendDisplayStats": [
+                    "CURRENT"
+                  ],
+                  "fixedLegendFilterSort": "TOP",
+                  "fixedLegendFilterLimit": 5,
+                  "fixedLegendFilterField": "CURRENT"
+                },
+                "interpolatePoints": false,
+                "name": "MEM Durable Bytes Vs. Input"
+              }
+            ],
+            "heightFactor": 45
+          },
+          {
+            "charts": [
+              {
+                "base": 1,
+                "units": "Units",
+                "description": "",
+                "sources": [
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderEnabled": false,
+                    "secondaryAxis": false,
+                    "sourceDescription": "",
+                    "query": "ts(fdb.trace.46*.bytes_durable, tag=\"${mirror}\" and source=${dbhost})",
+                    "disabled": true,
+                    "name": "ssd bytes durable"
+                  },
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderEnabled": false,
+                    "secondaryAxis": false,
+                    "sourceDescription": "",
+                    "query": "ts(fdb.trace.46*.bytes_input, tag=\"${mirror}\" and source=${dbhost})",
+                    "disabled": true,
+                    "name": "ssd bytes input"
+                  },
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderSerialization": "{\"_v\":1,\"metric\":\"\",\"filters\":[[],\"and\"],\"functions\":[]}",
+                    "querybuilderEnabled": true,
+                    "secondaryAxis": false,
+                    "sourceDescription": "",
+                    "query": "${ssd bytes input} - ${ssd bytes durable}",
+                    "name": "New Query"
+                  }
+                ],
+                "includeObsoleteMetrics": false,
+                "noDefaultEvents": false,
+                "chartAttributes": null,
+                "summarization": "MEAN",
+                "chartSettings": {
+                  "type": "line",
+                  "lineType": "linear",
+                  "windowing": "full",
+                  "autoColumnTags": false,
+                  "tagMode": "all",
+                  "numTags": 4,
+                  "customTags": [],
+                  "y1Units": "",
+                  "y0ScaleSIBy1024": false,
+                  "y1ScaleSIBy1024": false,
+                  "y0UnitAutoscaling": false,
+                  "y1UnitAutoscaling": false,
+                  "fixedLegendEnabled": false,
+                  "fixedLegendUseRawStats": false,
+                  "fixedLegendPosition": "RIGHT",
+                  "fixedLegendDisplayStats": [
+                    "CURRENT"
+                  ],
+                  "fixedLegendFilterSort": "TOP",
+                  "fixedLegendFilterLimit": 5,
+                  "fixedLegendFilterField": "CURRENT"
+                },
+                "interpolatePoints": false,
+                "name": "MEM Durable Bytes Vs. Input By Process"
+              }
+            ],
+            "heightFactor": 45
+          },
+          {
+            "charts": [
+              {
+                "base": 0,
+                "units": "Units",
+                "sources": [
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderEnabled": false,
+                    "sourceDescription": "",
+                    "query": "ts(fdb.trace.46*.memory and not fdb.trace.465*.memory, tag=\"${mirror}\" and source=${dbhost})",
+                    "name": "Memory"
+                  }
+                ],
+                "includeObsoleteMetrics": false,
+                "noDefaultEvents": false,
+                "chartAttributes": null,
+                "summarization": "MEAN",
+                "chartSettings": {
+                  "type": "line",
+                  "lineType": "linear",
+                  "windowing": "full",
+                  "autoColumnTags": false,
+                  "tagMode": "all",
+                  "numTags": 4,
+                  "customTags": [],
+                  "y1Units": "",
+                  "y0ScaleSIBy1024": false,
+                  "y1ScaleSIBy1024": false,
+                  "y0UnitAutoscaling": false,
+                  "y1UnitAutoscaling": false,
+                  "fixedLegendEnabled": false,
+                  "fixedLegendUseRawStats": false,
+                  "fixedLegendPosition": "RIGHT",
+                  "fixedLegendDisplayStats": [
+                    "CURRENT"
+                  ],
+                  "fixedLegendFilterSort": "TOP",
+                  "fixedLegendFilterLimit": 5,
+                  "fixedLegendFilterField": "CURRENT"
+                },
+                "interpolatePoints": false,
+                "name": "MEM Storage Memory Utilization "
+              },
+              {
+                "base": 0,
+                "units": "Units",
+                "sources": [
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderEnabled": false,
+                    "sourceDescription": "",
+                    "query": "ts(fdb.trace.465*.memory, tag=\"${mirror}\" and source=${dbhost})",
+                    "name": "Mem Trans"
+                  }
+                ],
+                "includeObsoleteMetrics": false,
+                "noDefaultEvents": false,
+                "chartAttributes": null,
+                "summarization": "MEAN",
+                "chartSettings": {
+                  "type": "line",
+                  "lineType": "linear",
+                  "windowing": "full",
+                  "autoColumnTags": false,
+                  "tagMode": "all",
+                  "numTags": 4,
+                  "customTags": [],
+                  "y1Units": "",
+                  "y0ScaleSIBy1024": false,
+                  "y1ScaleSIBy1024": false,
+                  "y0UnitAutoscaling": false,
+                  "y1UnitAutoscaling": false,
+                  "fixedLegendEnabled": false,
+                  "fixedLegendUseRawStats": false,
+                  "fixedLegendPosition": "RIGHT",
+                  "fixedLegendDisplayStats": [
+                    "CURRENT"
+                  ],
+                  "fixedLegendFilterSort": "TOP",
+                  "fixedLegendFilterLimit": 5,
+                  "fixedLegendFilterField": "CURRENT"
+                },
+                "interpolatePoints": false,
+                "name": "MEM Transaction Proc Memory"
+              },
+              {
+                "base": 0,
+                "units": "Units",
+                "description": "Processes reach a steady state where memory fluctuates very little, while FDB is healing though you can see processes memory growing.  This can help identify which processes are still healing without having to know which exact DB is undergoing the healing. ",
+                "sources": [
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderSerialization": "{\"_v\":1,\"metric\":\"\",\"filters\":[[],\"and\"],\"functions\":[]}",
+                    "querybuilderEnabled": true,
+                    "sourceDescription": "",
+                    "query": "ts(fdb.trace.465*.memory, tag=\"${mirror}\" and source=${dbhost})",
+                    "disabled": true,
+                    "name": "Mem Trans"
+                  },
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderEnabled": false,
+                    "sourceDescription": "",
+                    "query": "rate(${Mem Trans}) != 0",
+                    "disabled": true,
+                    "name": "rate"
+                  },
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderSerialization": "{\"_v\":1,\"metric\":\"\",\"filters\":[[],\"and\"],\"functions\":[]}",
+                    "querybuilderEnabled": true,
+                    "sourceDescription": "",
+                    "query": "${Mem Trans} * ${rate}",
+                    "name": "Growing Processes"
+                  }
+                ],
+                "includeObsoleteMetrics": false,
+                "noDefaultEvents": false,
+                "chartAttributes": null,
+                "summarization": "MEAN",
+                "chartSettings": {
+                  "type": "line",
+                  "lineType": "linear",
+                  "windowing": "full",
+                  "autoColumnTags": false,
+                  "tagMode": "all",
+                  "numTags": 4,
+                  "customTags": [],
+                  "y1Units": "",
+                  "y0ScaleSIBy1024": false,
+                  "y1ScaleSIBy1024": false,
+                  "y0UnitAutoscaling": false,
+                  "y1UnitAutoscaling": false,
+                  "fixedLegendEnabled": false,
+                  "fixedLegendUseRawStats": false,
+                  "fixedLegendPosition": "RIGHT",
+                  "fixedLegendDisplayStats": [
+                    "CURRENT"
+                  ],
+                  "fixedLegendFilterSort": "TOP",
+                  "fixedLegendFilterLimit": 5,
+                  "fixedLegendFilterField": "CURRENT"
+                },
+                "interpolatePoints": false,
+                "name": "MEM Transaction Proc Healing"
+              }
+            ],
+            "heightFactor": 100
+          },
+          {
+            "charts": [
+              {
+                "base": 0,
+                "units": "s",
+                "sources": [
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderEnabled": false,
+                    "sourceDescription": "",
+                    "query": "ts(fdb.trace.460*.cpu_seconds, fdb.trace.461*.cpu_seconds, tag=\"${mirror}\" and source=${dbhost})",
+                    "name": "CPU Seconds"
+                  }
+                ],
+                "includeObsoleteMetrics": false,
+                "noDefaultEvents": false,
+                "chartAttributes": null,
+                "summarization": "MEAN",
+                "chartSettings": {
+                  "type": "line",
+                  "lineType": "linear",
+                  "windowing": "full",
+                  "autoColumnTags": false,
+                  "tagMode": "all",
+                  "numTags": 4,
+                  "customTags": [],
+                  "y1Units": "",
+                  "y0ScaleSIBy1024": false,
+                  "y1ScaleSIBy1024": false,
+                  "y0UnitAutoscaling": true,
+                  "y1UnitAutoscaling": false,
+                  "fixedLegendEnabled": false,
+                  "fixedLegendUseRawStats": false,
+                  "fixedLegendPosition": "RIGHT",
+                  "fixedLegendDisplayStats": [
+                    "CURRENT"
+                  ],
+                  "fixedLegendFilterSort": "TOP",
+                  "fixedLegendFilterLimit": 5,
+                  "fixedLegendFilterField": "CURRENT"
+                },
+                "interpolatePoints": false,
+                "name": "MEM Storage CPU Secs"
+              },
+              {
+                "base": 1,
+                "units": "s",
+                "description": "",
+                "sources": [
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderEnabled": false,
+                    "secondaryAxis": false,
+                    "sourceDescription": "",
+                    "query": "ts(fdb.trace.465*.cpu_seconds, tag=\"${mirror}\" and source=${dbhost})",
+                    "name": "CPU Seconds"
+                  }
+                ],
+                "includeObsoleteMetrics": false,
+                "noDefaultEvents": false,
+                "chartAttributes": null,
+                "summarization": "MEAN",
+                "chartSettings": {
+                  "type": "line",
+                  "lineType": "linear",
+                  "windowing": "full",
+                  "autoColumnTags": false,
+                  "tagMode": "all",
+                  "numTags": 4,
+                  "customTags": [],
+                  "y1Units": "",
+                  "y0ScaleSIBy1024": false,
+                  "y1ScaleSIBy1024": false,
+                  "y0UnitAutoscaling": true,
+                  "y1UnitAutoscaling": false,
+                  "fixedLegendEnabled": false,
+                  "fixedLegendUseRawStats": false,
+                  "fixedLegendPosition": "RIGHT",
+                  "fixedLegendDisplayStats": [
+                    "CURRENT"
+                  ],
+                  "fixedLegendFilterSort": "TOP",
+                  "fixedLegendFilterLimit": 5,
+                  "fixedLegendFilterField": "CURRENT"
+                },
+                "interpolatePoints": false,
+                "name": "MEM Transaction CPU Secs"
+              }
+            ],
+            "heightFactor": 100
+          },
+          {
+            "charts": [
+              {
+                "base": 0,
+                "units": "Units",
+                "description": "Pegged processes can identify a process that is not particularly behaving properly within the cluster and degrading the current state of the cluster.  Pegged processes can be killed with kill -9 or via the /opt/wavefront/repo/tools/killFdbProcesses.sh script",
+                "sources": [
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderEnabled": false,
+                    "sourceDescription": "",
+                    "query": "interpolate(ts(fdb.trace.46*.cpu_seconds, tag=\"${mirror}\" and source=${dbhost}))",
+                    "disabled": true,
+                    "name": "procs"
+                  },
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderEnabled": false,
+                    "sourceDescription": "",
+                    "query": "(rate(${procs}) = 0)",
+                    "disabled": true,
+                    "name": "r"
+                  },
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderEnabled": false,
+                    "sourceDescription": "",
+                    "query": "mcount(3m, align(1m, highpass(0, ${procs} * ${r}))) = 3",
+                    "disabled": true,
+                    "name": "count"
+                  },
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderEnabled": false,
+                    "sourceDescription": "",
+                    "query": "${procs} * ${count}",
+                    "name": "New Query"
+                  }
+                ],
+                "includeObsoleteMetrics": false,
+                "noDefaultEvents": false,
+                "chartAttributes": null,
+                "summarization": "MEAN",
+                "chartSettings": {
+                  "type": "line",
+                  "lineType": "linear",
+                  "windowing": "full",
+                  "autoColumnTags": false,
+                  "tagMode": "all",
+                  "numTags": 4,
+                  "customTags": [],
+                  "y1Units": "",
+                  "y0ScaleSIBy1024": false,
+                  "y1ScaleSIBy1024": false,
+                  "y0UnitAutoscaling": false,
+                  "y1UnitAutoscaling": false,
+                  "fixedLegendEnabled": false,
+                  "fixedLegendUseRawStats": false,
+                  "fixedLegendPosition": "RIGHT",
+                  "fixedLegendDisplayStats": [
+                    "CURRENT"
+                  ],
+                  "fixedLegendFilterSort": "TOP",
+                  "fixedLegendFilterLimit": 5,
+                  "fixedLegendFilterField": "CURRENT"
+                },
+                "interpolatePoints": false,
+                "name": "Pegged CPU Processes"
+              },
+              {
+                "base": 0,
+                "units": "B",
+                "description": "File sizes represented here are an indication of the maximum log file size on disk for any given node.  If file sizes exceed the storage_memory configuration for a cluster (typically 3GiB) this can cause a cluster to become stuck and unable to recover.  ",
+                "sources": [
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderEnabled": false,
+                    "sourceDescription": "",
+                    "query": "rawmax(ts(telegraf.filestat.size.bytes, tag=\"${mirror}\" and source=${dbhost} and file=\"/mnt/mem1/*\"), sources)",
+                    "disabled": true,
+                    "name": "New Query"
+                  },
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderEnabled": false,
+                    "sourceDescription": "",
+                    "sourceColor": "rgb(134,192,66)",
+                    "query": "sum(taggify(ts(telegraf.filestat.size.bytes, tag=\"${mirror}\" and source=${dbhost} and (file=\"/mnt/mem1/*\" or file=\"/mnt/tlogs1/*\")), tagk, \"file\", \"port\", 3, \"/\"), sources, port)",
+                    "name": "file sizes (green)"
+                  },
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderEnabled": false,
+                    "sourceDescription": "",
+                    "sourceColor": "rgb(0,0,0)",
+                    "query": "ts(telegraf.exec.fdbcli-memory.cluster.qos.worst.queue.bytes.log.server, tag=\"${mirror}\" and source=${dbhost})",
+                    "name": "log queues (black)"
+                  },
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderEnabled": false,
+                    "sourceDescription": "",
+                    "query": "-1 * (ts(fdb.trace.465*.memory, tag=\"${mirror}\" and source=${dbhost}) as memory * (rate($memory) != 0))",
+                    "name": "memory healing"
+                  }
+                ],
+                "includeObsoleteMetrics": false,
+                "noDefaultEvents": true,
+                "chartAttributes": null,
+                "summarization": "MEAN",
+                "chartSettings": {
+                  "type": "line",
+                  "lineType": "linear",
+                  "windowing": "full",
+                  "autoColumnTags": false,
+                  "tagMode": "all",
+                  "numTags": 4,
+                  "customTags": [],
+                  "y1Units": "",
+                  "y0ScaleSIBy1024": false,
+                  "y1ScaleSIBy1024": false,
+                  "y0UnitAutoscaling": true,
+                  "y1UnitAutoscaling": false,
+                  "fixedLegendEnabled": false,
+                  "fixedLegendUseRawStats": false,
+                  "fixedLegendPosition": "RIGHT",
+                  "fixedLegendDisplayStats": [
+                    "CURRENT"
+                  ],
+                  "fixedLegendFilterSort": "TOP",
+                  "fixedLegendFilterLimit": 5,
+                  "fixedLegendFilterField": "CURRENT",
+                  "expectedDataSpacing": 500
+                },
+                "interpolatePoints": false,
+                "name": "Mem Transaction Procs Filesize"
+              }
+            ],
+            "heightFactor": 68
+          }
+        ],
+        "name": "FDB MEM Process Health"
+      },
+      {
+        "rows": [
+          {
+            "charts": [
+              {
+                "base": 1,
+                "units": "",
+                "description": "",
+                "sources": [
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderEnabled": false,
+                    "sourceDescription": "",
+                    "query": "ts(telegraf.exec.fdbcli.cluster.configuration.logs, tag=${mirror})",
+                    "name": "New Query"
+                  }
+                ],
+                "includeObsoleteMetrics": false,
+                "noDefaultEvents": false,
+                "chartAttributes": null,
+                "summarization": "MEAN",
+                "chartSettings": {
+                  "type": "sparkline",
+                  "lineType": "linear",
+                  "windowing": "full",
+                  "autoColumnTags": false,
+                  "tagMode": "all",
+                  "numTags": 4,
+                  "customTags": [],
+                  "y1Units": "",
+                  "y0ScaleSIBy1024": false,
+                  "y1ScaleSIBy1024": false,
+                  "y0UnitAutoscaling": false,
+                  "y1UnitAutoscaling": false,
+                  "fixedLegendEnabled": false,
+                  "fixedLegendUseRawStats": false,
+                  "fixedLegendPosition": "RIGHT",
+                  "fixedLegendDisplayStats": [
+                    "CURRENT"
+                  ],
+                  "fixedLegendFilterSort": "TOP",
+                  "fixedLegendFilterLimit": 5,
+                  "fixedLegendFilterField": "CURRENT",
+                  "sparklineDisplayValueType": "VALUE",
+                  "sparklineDisplayColor": "rgba(255,255,255,1)",
+                  "sparklineDisplayHorizontalPosition": "MIDDLE",
+                  "sparklineDisplayFontSize": "200",
+                  "sparklineDisplayPrefix": " ",
+                  "sparklineSize": "NONE",
+                  "sparklineValueColorMapColors": [
+                    "rgba(134,192,66,1)",
+                    "rgba(134,192,66,1)"
+                  ],
+                  "sparklineValueColorMapValuesV2": [
+                    10
+                  ],
+                  "sparklineValueColorMapApplyTo": "BACKGROUND",
+                  "sparklineDecimalPrecision": 0
+                },
+                "interpolatePoints": false,
+                "name": "Configured Logs"
+              },
+              {
+                "base": 1,
+                "description": "",
+                "sources": [
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderEnabled": false,
+                    "sourceDescription": "",
+                    "query": "ts(telegraf.exec.fdbcli.cluster.configuration.resolvers, tag=${mirror})",
+                    "name": "New Query"
+                  }
+                ],
+                "includeObsoleteMetrics": false,
+                "noDefaultEvents": false,
+                "chartAttributes": null,
+                "summarization": "MEAN",
+                "chartSettings": {
+                  "type": "sparkline",
+                  "lineType": "linear",
+                  "windowing": "full",
+                  "autoColumnTags": false,
+                  "tagMode": "all",
+                  "numTags": 4,
+                  "customTags": [],
+                  "y1Units": "",
+                  "y0ScaleSIBy1024": false,
+                  "y1ScaleSIBy1024": false,
+                  "y0UnitAutoscaling": false,
+                  "y1UnitAutoscaling": false,
+                  "fixedLegendEnabled": false,
+                  "fixedLegendUseRawStats": false,
+                  "fixedLegendPosition": "RIGHT",
+                  "fixedLegendDisplayStats": [
+                    "CURRENT"
+                  ],
+                  "fixedLegendFilterSort": "TOP",
+                  "fixedLegendFilterLimit": 5,
+                  "fixedLegendFilterField": "CURRENT",
+                  "sparklineDisplayValueType": "VALUE",
+                  "sparklineDisplayColor": "rgba(255,255,255,1)",
+                  "sparklineDisplayHorizontalPosition": "MIDDLE",
+                  "sparklineDisplayFontSize": "200",
+                  "sparklineDisplayPrefix": " ",
+                  "sparklineSize": "NONE",
+                  "sparklineValueColorMapColors": [
+                    "rgba(134,192,66,1)",
+                    "rgba(134,192,66,1)"
+                  ],
+                  "sparklineValueColorMapValuesV2": [
+                    10
+                  ],
+                  "sparklineValueColorMapApplyTo": "BACKGROUND",
+                  "sparklineDecimalPrecision": 0
+                },
+                "interpolatePoints": false,
+                "name": "Configured Resolvers"
+              },
+              {
+                "base": 1,
+                "description": "",
+                "sources": [
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderEnabled": false,
+                    "sourceDescription": "",
+                    "query": "ts(telegraf.exec.fdbcli.cluster.configuration.proxies, tag=${mirror})",
+                    "name": "New Query"
+                  }
+                ],
+                "includeObsoleteMetrics": false,
+                "noDefaultEvents": false,
+                "chartAttributes": null,
+                "summarization": "MEAN",
+                "chartSettings": {
+                  "type": "sparkline",
+                  "lineType": "linear",
+                  "windowing": "full",
+                  "autoColumnTags": false,
+                  "tagMode": "all",
+                  "numTags": 4,
+                  "customTags": [],
+                  "y1Units": "",
+                  "y0ScaleSIBy1024": false,
+                  "y1ScaleSIBy1024": false,
+                  "y0UnitAutoscaling": false,
+                  "y1UnitAutoscaling": false,
+                  "fixedLegendEnabled": false,
+                  "fixedLegendUseRawStats": false,
+                  "fixedLegendPosition": "RIGHT",
+                  "fixedLegendDisplayStats": [
+                    "CURRENT"
+                  ],
+                  "fixedLegendFilterSort": "TOP",
+                  "fixedLegendFilterLimit": 5,
+                  "fixedLegendFilterField": "CURRENT",
+                  "sparklineDisplayValueType": "VALUE",
+                  "sparklineDisplayColor": "rgba(255,255,255,1)",
+                  "sparklineDisplayHorizontalPosition": "MIDDLE",
+                  "sparklineDisplayFontSize": "200",
+                  "sparklineDisplayPrefix": " ",
+                  "sparklineSize": "NONE",
+                  "sparklineValueColorMapColors": [
+                    "rgba(134,192,66,1)",
+                    "rgba(134,192,66,1)"
+                  ],
+                  "sparklineValueColorMapValuesV2": [
+                    10
+                  ],
+                  "sparklineValueColorMapApplyTo": "BACKGROUND",
+                  "sparklineDecimalPrecision": 0
+                },
+                "interpolatePoints": false,
+                "name": "Configured Proxies"
+              }
+            ],
+            "heightFactor": 30
+          },
+          {
+            "charts": [
+              {
+                "base": 0,
+                "units": "Units",
+                "sources": [
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderSerialization": "{\"_v\":1,\"metric\":\"\",\"filters\":[[],\"and\"],\"functions\":[]}",
+                    "querybuilderEnabled": true,
+                    "sourceDescription": "",
+                    "query": "highpass(0, ts(fdb.trace.45*.role.storage_server, tag=${mirror} and source=${dbhost}))",
+                    "name": "storage"
+                  },
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderSerialization": "{\"_v\":1,\"metric\":\"\",\"filters\":[[],\"and\"],\"functions\":[]}",
+                    "querybuilderEnabled": true,
+                    "sourceDescription": "",
+                    "query": "highpass(0, ts(fdb.trace.45*.role.resolver, tag=${mirror} and source=${dbhost}))",
+                    "name": "resolver"
+                  },
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderSerialization": "{\"_v\":1,\"metric\":\"\",\"filters\":[[],\"and\"],\"functions\":[]}",
+                    "querybuilderEnabled": true,
+                    "sourceDescription": "",
+                    "query": "highpass(0, ts(fdb.trace.45*.role.master_proxy_server, tag=${mirror} and source=${dbhost}))",
+                    "name": "proxy"
+                  },
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderSerialization": "{\"_v\":1,\"metric\":\"\",\"filters\":[[],\"and\"],\"functions\":[]}",
+                    "querybuilderEnabled": true,
+                    "sourceDescription": "",
+                    "query": "highpass(0, ts(fdb.trace.45*.role.t_log, tag=${mirror} and source=${dbhost}))",
+                    "name": "tlog"
+                  },
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderSerialization": "{\"_v\":1,\"metric\":\"\",\"filters\":[[],\"and\"],\"functions\":[]}",
+                    "querybuilderEnabled": true,
+                    "sourceDescription": "",
+                    "query": "highpass(0, ts(fdb.trace.45*.role.master_server, tag=${mirror} and source=${dbhost}))",
+                    "name": "masters"
+                  },
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderEnabled": false,
+                    "sourceDescription": "",
+                    "query": "highpass(0, ts(fdb.trace.45*.role.cluster_controller, tag=${mirror} and source=${dbhost}))",
+                    "name": "controllers"
+                  }
+                ],
+                "includeObsoleteMetrics": false,
+                "noDefaultEvents": false,
+                "chartAttributes": null,
+                "summarization": "MEAN",
+                "chartSettings": {
+                  "type": "table",
+                  "lineType": "linear",
+                  "stackType": "zero",
+                  "windowing": "full",
+                  "showHosts": true,
+                  "showLabels": true,
+                  "showRawValues": false,
+                  "autoColumnTags": false,
+                  "tagMode": "all",
+                  "numTags": 4,
+                  "customTags": [],
+                  "groupBySource": false,
+                  "sortValuesDescending": true,
+                  "y1Units": "",
+                  "y0ScaleSIBy1024": false,
+                  "y1ScaleSIBy1024": false,
+                  "y0UnitAutoscaling": false,
+                  "y1UnitAutoscaling": false,
+                  "fixedLegendEnabled": false,
+                  "fixedLegendUseRawStats": false,
+                  "fixedLegendPosition": "RIGHT",
+                  "fixedLegendDisplayStats": [
+                    "CURRENT"
+                  ],
+                  "fixedLegendFilterSort": "TOP",
+                  "fixedLegendFilterLimit": 5,
+                  "fixedLegendFilterField": "CURRENT"
+                },
+                "interpolatePoints": true,
+                "name": "Role Information"
+              },
+              {
+                "base": 1,
+                "units": "Units",
+                "description": "",
+                "sources": [
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderEnabled": false,
+                    "secondaryAxis": false,
+                    "sourceDescription": "",
+                    "query": "if (deriv(ts(fdb.trace.45*.role.*, tag=${mirror})) != 0, deriv(ts(fdb.trace.45*.role.*, tag=${mirror})))",
+                    "name": "storage"
+                  }
+                ],
+                "includeObsoleteMetrics": false,
+                "noDefaultEvents": true,
+                "chartAttributes": null,
+                "summarization": "MEAN",
+                "chartSettings": {
+                  "type": "scatterplot",
+                  "lineType": "linear",
+                  "stackType": "zero",
+                  "windowing": "full",
+                  "showHosts": false,
+                  "showLabels": false,
+                  "showRawValues": false,
+                  "autoColumnTags": false,
+                  "tagMode": "all",
+                  "numTags": 4,
+                  "customTags": [],
+                  "groupBySource": false,
+                  "sortValuesDescending": false,
+                  "y1Units": "",
+                  "y0ScaleSIBy1024": false,
+                  "y1ScaleSIBy1024": false,
+                  "y0UnitAutoscaling": false,
+                  "y1UnitAutoscaling": false,
+                  "fixedLegendEnabled": false,
+                  "fixedLegendUseRawStats": false,
+                  "fixedLegendPosition": "TOP",
+                  "fixedLegendDisplayStats": [],
+                  "fixedLegendFilterSort": "BOTTOM",
+                  "fixedLegendFilterLimit": 5,
+                  "fixedLegendFilterField": "COUNT"
+                },
+                "interpolatePoints": false,
+                "name": "Role Changes"
+              }
+            ],
+            "heightFactor": 100
+          },
+          {
+            "charts": [
+              {
+                "base": 1,
+                "units": "Units",
+                "description": "",
+                "sources": [
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderEnabled": false,
+                    "secondaryAxis": false,
+                    "sourceDescription": "",
+                    "query": "sum(ts(fdb.trace.45*.bytes_durable, tag=\"${mirror}\" and source=${dbhost}), sources)",
+                    "disabled": true,
+                    "name": "ssd bytes durable"
+                  },
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderEnabled": false,
+                    "secondaryAxis": false,
+                    "sourceDescription": "",
+                    "query": "sum(ts(fdb.trace.45*.bytes_input, tag=\"${mirror}\" and source=${dbhost}), sources)",
+                    "disabled": true,
+                    "name": "ssd bytes input"
+                  },
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderEnabled": false,
+                    "secondaryAxis": false,
+                    "sourceDescription": "",
+                    "query": "${ssd bytes input} - ${ssd bytes durable}",
+                    "name": "Bytes"
+                  }
+                ],
+                "includeObsoleteMetrics": false,
+                "noDefaultEvents": false,
+                "chartAttributes": null,
+                "summarization": "MEAN",
+                "chartSettings": {
+                  "type": "line",
+                  "lineType": "linear",
+                  "windowing": "full",
+                  "autoColumnTags": false,
+                  "tagMode": "all",
+                  "numTags": 4,
+                  "customTags": [],
+                  "y1Units": "",
+                  "y0ScaleSIBy1024": false,
+                  "y1ScaleSIBy1024": false,
+                  "y0UnitAutoscaling": false,
+                  "y1UnitAutoscaling": false,
+                  "fixedLegendEnabled": false,
+                  "fixedLegendUseRawStats": false,
+                  "fixedLegendPosition": "RIGHT",
+                  "fixedLegendDisplayStats": [
+                    "CURRENT"
+                  ],
+                  "fixedLegendFilterSort": "TOP",
+                  "fixedLegendFilterLimit": 5,
+                  "fixedLegendFilterField": "CURRENT"
+                },
+                "interpolatePoints": false,
+                "name": "SSD Durable Bytes Vs. Input"
+              }
+            ],
+            "heightFactor": 45
+          },
+          {
+            "charts": [
+              {
+                "base": 1,
+                "units": "Units",
+                "description": "",
+                "sources": [
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderEnabled": false,
+                    "secondaryAxis": false,
+                    "sourceDescription": "",
+                    "query": "ts(fdb.trace.45*.bytes_durable, tag=\"${mirror}\" and source=${dbhost})",
+                    "disabled": true,
+                    "name": "ssd bytes durable"
+                  },
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderEnabled": false,
+                    "secondaryAxis": false,
+                    "sourceDescription": "",
+                    "query": "ts(fdb.trace.45*.bytes_input, tag=\"${mirror}\" and source=${dbhost})",
+                    "disabled": true,
+                    "name": "ssd bytes input"
+                  },
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderEnabled": false,
+                    "secondaryAxis": false,
+                    "sourceDescription": "",
+                    "query": "${ssd bytes input} - ${ssd bytes durable}",
+                    "name": "Bytes"
+                  }
+                ],
+                "includeObsoleteMetrics": false,
+                "noDefaultEvents": false,
+                "chartAttributes": null,
+                "summarization": "MEAN",
+                "chartSettings": {
+                  "type": "line",
+                  "lineType": "linear",
+                  "windowing": "full",
+                  "autoColumnTags": false,
+                  "tagMode": "all",
+                  "numTags": 4,
+                  "customTags": [],
+                  "y1Units": "",
+                  "y0ScaleSIBy1024": false,
+                  "y1ScaleSIBy1024": false,
+                  "y0UnitAutoscaling": false,
+                  "y1UnitAutoscaling": false,
+                  "fixedLegendEnabled": false,
+                  "fixedLegendUseRawStats": false,
+                  "fixedLegendPosition": "RIGHT",
+                  "fixedLegendDisplayStats": [
+                    "CURRENT"
+                  ],
+                  "fixedLegendFilterSort": "TOP",
+                  "fixedLegendFilterLimit": 5,
+                  "fixedLegendFilterField": "CURRENT"
+                },
+                "interpolatePoints": false,
+                "name": "SSD Durable Bytes Vs. Input By Process"
+              }
+            ],
+            "heightFactor": 45
+          },
+          {
+            "charts": [
+              {
+                "base": 0,
+                "units": "Units",
+                "sources": [
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderEnabled": false,
+                    "sourceDescription": "",
+                    "query": "ts(fdb.trace.45*.memory and not fdb.trace.455*.memory and not fdb.trace.456*.memory, tag=\"${mirror}\" and source=${dbhost})",
+                    "name": "Memory"
+                  }
+                ],
+                "includeObsoleteMetrics": false,
+                "noDefaultEvents": false,
+                "chartAttributes": null,
+                "summarization": "MEAN",
+                "chartSettings": {
+                  "type": "line",
+                  "lineType": "linear",
+                  "windowing": "full",
+                  "autoColumnTags": false,
+                  "tagMode": "all",
+                  "numTags": 4,
+                  "customTags": [],
+                  "y1Units": "",
+                  "y0ScaleSIBy1024": false,
+                  "y1ScaleSIBy1024": false,
+                  "y0UnitAutoscaling": false,
+                  "y1UnitAutoscaling": false,
+                  "fixedLegendEnabled": false,
+                  "fixedLegendUseRawStats": false,
+                  "fixedLegendPosition": "RIGHT",
+                  "fixedLegendDisplayStats": [
+                    "CURRENT"
+                  ],
+                  "fixedLegendFilterSort": "TOP",
+                  "fixedLegendFilterLimit": 5,
+                  "fixedLegendFilterField": "CURRENT"
+                },
+                "interpolatePoints": false,
+                "name": "SSD Storage Memory Utilization "
+              },
+              {
+                "base": 0,
+                "units": "Units",
+                "sources": [
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderEnabled": false,
+                    "sourceDescription": "",
+                    "query": "ts(fdb.trace.455*.memory, fdb.trace.456*.memory, tag=\"${mirror}\" and source=${dbhost})",
+                    "name": "Mem Trans"
+                  }
+                ],
+                "includeObsoleteMetrics": false,
+                "noDefaultEvents": false,
+                "chartAttributes": null,
+                "summarization": "MEAN",
+                "chartSettings": {
+                  "type": "line",
+                  "lineType": "linear",
+                  "windowing": "full",
+                  "autoColumnTags": false,
+                  "tagMode": "all",
+                  "numTags": 4,
+                  "customTags": [],
+                  "y1Units": "",
+                  "y0ScaleSIBy1024": false,
+                  "y1ScaleSIBy1024": false,
+                  "y0UnitAutoscaling": false,
+                  "y1UnitAutoscaling": false,
+                  "fixedLegendEnabled": false,
+                  "fixedLegendUseRawStats": false,
+                  "fixedLegendPosition": "RIGHT",
+                  "fixedLegendDisplayStats": [
+                    "CURRENT"
+                  ],
+                  "fixedLegendFilterSort": "TOP",
+                  "fixedLegendFilterLimit": 5,
+                  "fixedLegendFilterField": "CURRENT"
+                },
+                "interpolatePoints": false,
+                "name": "SSD Transaction Memory Utilization"
+              },
+              {
+                "base": 0,
+                "units": "Units",
+                "description": "Processes reach a steady state where memory fluctuates very little, while FDB is healing though you can see processes memory growing.  This can help identify which processes are still healing without having to know which exact DB is undergoing the healing. ",
+                "sources": [
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderEnabled": false,
+                    "sourceDescription": "",
+                    "query": "ts(fdb.trace.455*.memory, fdb.trace.456*.memory, tag=\"${mirror}\" and source=${dbhost})",
+                    "disabled": true,
+                    "name": "Mem Trans"
+                  },
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderSerialization": "{\"_v\":1,\"metric\":\"\",\"filters\":[[],\"and\"],\"functions\":[]}",
+                    "querybuilderEnabled": true,
+                    "sourceDescription": "",
+                    "query": "rate(${Mem Trans}) > 0",
+                    "disabled": true,
+                    "name": "rate"
+                  },
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderSerialization": "{\"_v\":1,\"metric\":\"\",\"filters\":[[],\"and\"],\"functions\":[]}",
+                    "querybuilderEnabled": true,
+                    "sourceDescription": "",
+                    "query": "${Mem Trans} * ${rate}",
+                    "name": "Growing Processes"
+                  }
+                ],
+                "includeObsoleteMetrics": false,
+                "noDefaultEvents": false,
+                "chartAttributes": null,
+                "summarization": "MEAN",
+                "chartSettings": {
+                  "type": "line",
+                  "lineType": "linear",
+                  "windowing": "full",
+                  "autoColumnTags": false,
+                  "tagMode": "all",
+                  "numTags": 4,
+                  "customTags": [],
+                  "y1Units": "",
+                  "y0ScaleSIBy1024": false,
+                  "y1ScaleSIBy1024": false,
+                  "y0UnitAutoscaling": false,
+                  "y1UnitAutoscaling": false,
+                  "fixedLegendEnabled": false,
+                  "fixedLegendUseRawStats": false,
+                  "fixedLegendPosition": "RIGHT",
+                  "fixedLegendDisplayStats": [
+                    "CURRENT"
+                  ],
+                  "fixedLegendFilterSort": "TOP",
+                  "fixedLegendFilterLimit": 5,
+                  "fixedLegendFilterField": "CURRENT"
+                },
+                "interpolatePoints": false,
+                "name": "SSD Transaction Proc Healing"
+              }
+            ],
+            "heightFactor": 67
+          },
+          {
+            "charts": [
+              {
+                "base": 1,
+                "units": "s",
+                "description": "",
+                "sources": [
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderEnabled": false,
+                    "secondaryAxis": false,
+                    "sourceDescription": "",
+                    "query": "ts(fdb.trace.450*.cpu_seconds, tag=\"${mirror}\" and source=${dbhost})",
+                    "name": "CPU Seconds"
+                  }
+                ],
+                "includeObsoleteMetrics": false,
+                "noDefaultEvents": false,
+                "chartAttributes": null,
+                "summarization": "MEAN",
+                "chartSettings": {
+                  "type": "line",
+                  "lineType": "linear",
+                  "windowing": "full",
+                  "autoColumnTags": false,
+                  "tagMode": "all",
+                  "numTags": 4,
+                  "customTags": [],
+                  "y1Units": "",
+                  "y0ScaleSIBy1024": false,
+                  "y1ScaleSIBy1024": false,
+                  "y0UnitAutoscaling": true,
+                  "y1UnitAutoscaling": false,
+                  "fixedLegendEnabled": false,
+                  "fixedLegendUseRawStats": false,
+                  "fixedLegendPosition": "RIGHT",
+                  "fixedLegendDisplayStats": [
+                    "CURRENT"
+                  ],
+                  "fixedLegendFilterSort": "TOP",
+                  "fixedLegendFilterLimit": 5,
+                  "fixedLegendFilterField": "CURRENT"
+                },
+                "interpolatePoints": false,
+                "name": "SSD Storage CPU Secs"
+              },
+              {
+                "base": 0,
+                "units": "s",
+                "sources": [
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderEnabled": false,
+                    "sourceDescription": "",
+                    "query": "ts(fdb.trace.455*.cpu_seconds or fdb.trace.456*.cpu_seconds, tag=\"${mirror}\" and source=${dbhost})",
+                    "name": "CPU Seconds"
+                  }
+                ],
+                "includeObsoleteMetrics": false,
+                "noDefaultEvents": false,
+                "chartAttributes": null,
+                "summarization": "MEAN",
+                "chartSettings": {
+                  "type": "line",
+                  "lineType": "linear",
+                  "windowing": "full",
+                  "autoColumnTags": false,
+                  "tagMode": "all",
+                  "numTags": 4,
+                  "customTags": [],
+                  "y1Units": "",
+                  "y0ScaleSIBy1024": false,
+                  "y1ScaleSIBy1024": false,
+                  "y0UnitAutoscaling": true,
+                  "y1UnitAutoscaling": false,
+                  "fixedLegendEnabled": false,
+                  "fixedLegendUseRawStats": false,
+                  "fixedLegendPosition": "RIGHT",
+                  "fixedLegendDisplayStats": [
+                    "CURRENT"
+                  ],
+                  "fixedLegendFilterSort": "TOP",
+                  "fixedLegendFilterLimit": 5,
+                  "fixedLegendFilterField": "CURRENT"
+                },
+                "interpolatePoints": false,
+                "name": "SSD Transaction CPU Secs"
+              },
+              {
+                "base": 0,
+                "units": "s",
+                "sources": [
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderEnabled": false,
+                    "sourceDescription": "",
+                    "query": "interpolate(ts(fdb.trace.45*.cpu_seconds, tag=\"${mirror}\" and source=${dbhost}))",
+                    "disabled": true,
+                    "name": "CPU Seconds"
+                  },
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderEnabled": false,
+                    "sourceDescription": "",
+                    "query": "deriv(${CPU Seconds}) = 0",
+                    "disabled": true,
+                    "name": "r"
+                  },
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderEnabled": false,
+                    "sourceDescription": "",
+                    "query": "mcount(3m, align(1m, highpass(0, ${CPU Seconds} * ${r}))) = 3",
+                    "disabled": true,
+                    "name": "count"
+                  },
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderEnabled": false,
+                    "sourceDescription": "",
+                    "query": "${CPU Seconds} * ${count}",
+                    "name": "Pegged Processes"
+                  }
+                ],
+                "includeObsoleteMetrics": false,
+                "noDefaultEvents": true,
+                "chartAttributes": null,
+                "summarization": "MEAN",
+                "chartSettings": {
+                  "type": "line",
+                  "lineType": "linear",
+                  "windowing": "full",
+                  "autoColumnTags": false,
+                  "tagMode": "all",
+                  "numTags": 4,
+                  "customTags": [],
+                  "y1Units": "",
+                  "y0ScaleSIBy1024": false,
+                  "y1ScaleSIBy1024": false,
+                  "y0UnitAutoscaling": true,
+                  "y1UnitAutoscaling": false,
+                  "fixedLegendEnabled": false,
+                  "fixedLegendUseRawStats": false,
+                  "fixedLegendPosition": "RIGHT",
+                  "fixedLegendDisplayStats": [
+                    "CURRENT"
+                  ],
+                  "fixedLegendFilterSort": "TOP",
+                  "fixedLegendFilterLimit": 5,
+                  "fixedLegendFilterField": "CURRENT"
+                },
+                "interpolatePoints": false,
+                "name": "Pegged Processes"
+              }
+            ],
+            "heightFactor": 67
+          }
+        ],
+        "name": "FDB SSD Process Health"
+      },
+      {
+        "rows": [
+          {
+            "charts": [
+              {
+                "base": 0,
+                "units": "sockets",
+                "description": "TIME_WAIT indicates that local endpoint (this side) has closed the connection. The connection is being kept around so that any delayed packets can be matched to the connection and handled appropriately.\n\ndb1 will typically always be higher than the rest \n\nExceptionally high wait times across multiple DBs can identify significant network latencies, during outages we should attempt to exclude or stop/start clusters to return wait times to normal levels.",
+                "sources": [
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderEnabled": false,
+                    "sourceDescription": "",
+                    "query": "ts(telegraf.netstat.tcp.time.wait, tag=${mirror} and role=db and source=${dbhost})",
+                    "name": "time_wait"
+                  }
+                ],
+                "includeObsoleteMetrics": false,
+                "noDefaultEvents": true,
+                "chartAttributes": null,
+                "summarization": "MEAN",
+                "chartSettings": {
+                  "type": "line",
+                  "lineType": "linear",
+                  "windowing": "full",
+                  "autoColumnTags": false,
+                  "tagMode": "all",
+                  "numTags": 4,
+                  "customTags": [],
+                  "y1Units": "",
+                  "y0ScaleSIBy1024": false,
+                  "y1ScaleSIBy1024": false,
+                  "y0UnitAutoscaling": false,
+                  "y1UnitAutoscaling": false,
+                  "fixedLegendEnabled": false,
+                  "fixedLegendUseRawStats": false,
+                  "fixedLegendPosition": "RIGHT",
+                  "fixedLegendDisplayStats": [
+                    "CURRENT"
+                  ],
+                  "fixedLegendFilterSort": "TOP",
+                  "fixedLegendFilterLimit": 5,
+                  "fixedLegendFilterField": "CURRENT"
+                },
+                "interpolatePoints": false,
+                "name": "TCP TIME_WAIT"
+              }
+            ],
+            "heightFactor": 45
+          },
+          {
+            "charts": [
+              {
+                "base": 0,
+                "units": "%",
+                "sources": [
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderEnabled": false,
+                    "sourceDescription": "",
+                    "query": "topk(100, 100-max(ts(telegraf.cpu.usage.idle, tag=\"${mirror}\" and role=db and source=${dbhost} and not cpu=cpu-total), sources, cpu))",
+                    "name": "New Query"
+                  }
+                ],
+                "includeObsoleteMetrics": false,
+                "noDefaultEvents": true,
+                "chartAttributes": null,
+                "summarization": "MEAN",
+                "chartSettings": {
+                  "type": "line",
+                  "lineType": "linear",
+                  "windowing": "full",
+                  "autoColumnTags": false,
+                  "tagMode": "all",
+                  "numTags": 4,
+                  "customTags": [],
+                  "y1Units": "",
+                  "y0ScaleSIBy1024": false,
+                  "y1ScaleSIBy1024": false,
+                  "y0UnitAutoscaling": false,
+                  "y1UnitAutoscaling": false,
+                  "fixedLegendEnabled": false,
+                  "fixedLegendUseRawStats": false,
+                  "fixedLegendPosition": "RIGHT",
+                  "fixedLegendDisplayStats": [
+                    "CURRENT"
+                  ],
+                  "fixedLegendFilterSort": "TOP",
+                  "fixedLegendFilterLimit": 5,
+                  "fixedLegendFilterField": "CURRENT"
+                },
+                "interpolatePoints": false,
+                "name": "Top 100 CPUs Utilized By Core"
+              },
+              {
+                "base": 0,
+                "units": "%",
+                "sources": [
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderSerialization": "{\"_v\":1,\"metric\":\"\",\"filters\":[[],\"and\"],\"functions\":[]}",
+                    "querybuilderEnabled": true,
+                    "sourceDescription": "",
+                    "query": "100-ts(telegraf.cpu.usage.idle, tag=${mirror} and role=db and cpu=cpu-total and source=${dbhost})",
+                    "name": "CPU Utilization"
+                  },
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderEnabled": false,
+                    "sourceDescription": "",
+                    "query": "aliasMetric(50, \"possible-over-subscription\")",
+                    "name": "hot"
+                  }
+                ],
+                "includeObsoleteMetrics": false,
+                "noDefaultEvents": true,
+                "chartAttributes": null,
+                "summarization": "MEAN",
+                "chartSettings": {
+                  "type": "line",
+                  "lineType": "linear",
+                  "stackType": "zero",
+                  "windowing": "full",
+                  "autoColumnTags": false,
+                  "tagMode": "all",
+                  "numTags": 4,
+                  "customTags": [],
+                  "y1Units": "",
+                  "y0ScaleSIBy1024": false,
+                  "y1ScaleSIBy1024": false,
+                  "y0UnitAutoscaling": false,
+                  "y1UnitAutoscaling": false,
+                  "fixedLegendEnabled": false,
+                  "fixedLegendUseRawStats": false,
+                  "fixedLegendPosition": "RIGHT",
+                  "fixedLegendDisplayStats": [
+                    "CURRENT"
+                  ],
+                  "fixedLegendFilterSort": "TOP",
+                  "fixedLegendFilterLimit": 5,
+                  "fixedLegendFilterField": "CURRENT"
+                },
+                "interpolatePoints": false,
+                "name": "CPU Utilization"
+              }
+            ],
+            "heightFactor": 100
+          },
+          {
+            "charts": [
+              {
+                "base": 0,
+                "units": "%",
+                "sources": [
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderEnabled": false,
+                    "sourceDescription": "",
+                    "query": "ts(telegraf.mem.used.percent, tag=${mirror} and role=db and source=${dbhost})",
+                    "name": "% mem used"
+                  }
+                ],
+                "includeObsoleteMetrics": false,
+                "noDefaultEvents": true,
+                "chartAttributes": null,
+                "summarization": "MEAN",
+                "chartSettings": {
+                  "type": "line",
+                  "lineType": "linear",
+                  "windowing": "full",
+                  "autoColumnTags": false,
+                  "tagMode": "all",
+                  "numTags": 4,
+                  "customTags": [],
+                  "y1Units": "",
+                  "y0ScaleSIBy1024": false,
+                  "y1ScaleSIBy1024": false,
+                  "y0UnitAutoscaling": false,
+                  "y1UnitAutoscaling": false,
+                  "fixedLegendEnabled": false,
+                  "fixedLegendUseRawStats": false,
+                  "fixedLegendPosition": "RIGHT",
+                  "fixedLegendDisplayStats": [
+                    "CURRENT"
+                  ],
+                  "fixedLegendFilterSort": "TOP",
+                  "fixedLegendFilterLimit": 5,
+                  "fixedLegendFilterField": "CURRENT"
+                },
+                "interpolatePoints": false,
+                "name": "Memory Utilization"
+              },
+              {
+                "base": 0,
+                "description": "If you need to upsize the transaction procs this dashboard provides you with how much headroom per proc is available - if there is less than 3G per proc this should not be done as we are oversubscribed on the node.  ",
+                "sources": [
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderSerialization": "{\"_v\":1,\"metric\":\"\",\"filters\":[[],\"and\"],\"functions\":[]}",
+                    "querybuilderEnabled": true,
+                    "sourceDescription": "",
+                    "query": "max(ts(telegraf.mem.free, tag=${mirror} and role=db and source=${dbhost}), sources)",
+                    "disabled": true,
+                    "name": "Free Mem"
+                  },
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderEnabled": false,
+                    "sourceDescription": "",
+                    "query": "count(ts(fdb.trace.46*.role.worker, tag=${mirror} and tag=db and source=${dbhost}), sources)",
+                    "disabled": true,
+                    "name": "trans procs"
+                  },
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderSerialization": "{\"_v\":1,\"metric\":\"\",\"filters\":[[],\"and\"],\"functions\":[]}",
+                    "querybuilderEnabled": true,
+                    "sourceDescription": "",
+                    "query": "min(floor(${Free Mem} / ${trans procs}))",
+                    "name": "headroom"
+                  }
+                ],
+                "includeObsoleteMetrics": false,
+                "noDefaultEvents": true,
+                "chartAttributes": null,
+                "summarization": "MEAN",
+                "chartSettings": {
+                  "type": "sparkline",
+                  "lineType": "linear",
+                  "windowing": "full",
+                  "autoColumnTags": false,
+                  "tagMode": "all",
+                  "numTags": 4,
+                  "customTags": [],
+                  "y1Units": "",
+                  "y0ScaleSIBy1024": false,
+                  "y1ScaleSIBy1024": false,
+                  "y0UnitAutoscaling": false,
+                  "y1UnitAutoscaling": false,
+                  "fixedLegendEnabled": false,
+                  "fixedLegendUseRawStats": false,
+                  "fixedLegendPosition": "RIGHT",
+                  "fixedLegendDisplayStats": [
+                    "CURRENT"
+                  ],
+                  "fixedLegendFilterSort": "TOP",
+                  "fixedLegendFilterLimit": 5,
+                  "fixedLegendFilterField": "CURRENT",
+                  "sparklineDisplayValueType": "VALUE",
+                  "sparklineDisplayColor": "rgba(255,255,255,1)",
+                  "sparklineDisplayHorizontalPosition": "MIDDLE",
+                  "sparklineDisplayFontSize": "100",
+                  "sparklineSize": "BACKGROUND",
+                  "sparklineLineColor": "rgba(255,255,255,1)",
+                  "sparklineFillColor": "rgba(255,255,255,0.5)",
+                  "sparklineValueColorMapColors": [
+                    "rgba(255,224,61,1)",
+                    "rgba(134,192,66,1)"
+                  ],
+                  "sparklineValueColorMapValuesV2": [
+                    3
+                  ],
+                  "sparklineValueColorMapApplyTo": "BACKGROUND"
+                },
+                "interpolatePoints": false,
+                "name": "Proc Upsize Headroom"
+              }
+            ],
+            "heightFactor": 100
+          },
+          {
+            "charts": [
+              {
+                "base": 0,
+                "units": "",
+                "sources": [
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderSerialization": "{\"_v\":1,\"metric\":\"\",\"filters\":[[],\"and\"],\"functions\":[]}",
+                    "querybuilderEnabled": true,
+                    "sourceDescription": "",
+                    "query": "ts(\"aws.ebs.volumewriteops.sum\", tag=${mirror} and not tag=eval and tag=db and source=${dbhost})",
+                    "disabled": true,
+                    "name": "writeops"
+                  },
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderSerialization": "{\"_v\":1,\"metric\":\"\",\"filters\":[[],\"and\"],\"functions\":[]}",
+                    "querybuilderEnabled": true,
+                    "sourceDescription": "",
+                    "query": "ts(\"aws.ebs.volumereadops.sum\", tag=${mirror} and not tag=eval and tag=db and source=${dbhost})",
+                    "disabled": true,
+                    "name": "readops"
+                  },
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderEnabled": false,
+                    "sourceDescription": "",
+                    "query": "rate(ts(telegraf.diskio.reads, tag=${mirror} and not tag=eval and tag=db and source=${dbhost} and name=\"dm-*\"))",
+                    "disabled": true,
+                    "name": "telegraf-readbytes"
+                  },
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderEnabled": false,
+                    "sourceDescription": "",
+                    "query": "rate(ts(telegraf.diskio.writes, tag=${mirror} and not tag=eval and tag=db and source=${dbhost} and name=\"dm-*\"))",
+                    "disabled": true,
+                    "name": "telegraf-writebytes"
+                  },
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderSerialization": "{\"_v\":1,\"metric\":\"\",\"filters\":[[],\"and\"],\"functions\":[]}",
+                    "querybuilderEnabled": true,
+                    "sourceDescription": "",
+                    "query": "${telegraf-readbytes} + ${telegraf-writebytes}",
+                    "name": "telegraf IO Bytes"
+                  },
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderSerialization": "{\"_v\":1,\"metric\":\"\",\"filters\":[[],\"and\"],\"functions\":[]}",
+                    "querybuilderEnabled": true,
+                    "sourceDescription": "",
+                    "query": "sum((${writeops}+${readops}) / 300, sources, volumeid)",
+                    "disabled": true,
+                    "name": "IOPS Consumed"
+                  }
+                ],
+                "includeObsoleteMetrics": false,
+                "noDefaultEvents": true,
+                "chartAttributes": null,
+                "summarization": "MEAN",
+                "chartSettings": {
+                  "type": "line",
+                  "lineType": "linear",
+                  "windowing": "full",
+                  "autoColumnTags": false,
+                  "tagMode": "all",
+                  "numTags": 4,
+                  "customTags": [],
+                  "y1Units": "",
+                  "y0ScaleSIBy1024": false,
+                  "y1ScaleSIBy1024": false,
+                  "y0UnitAutoscaling": true,
+                  "y1UnitAutoscaling": false,
+                  "fixedLegendEnabled": false,
+                  "fixedLegendUseRawStats": false,
+                  "fixedLegendPosition": "RIGHT",
+                  "fixedLegendDisplayStats": [
+                    "CURRENT"
+                  ],
+                  "fixedLegendFilterSort": "TOP",
+                  "fixedLegendFilterLimit": 5,
+                  "fixedLegendFilterField": "CURRENT"
+                },
+                "interpolatePoints": false,
+                "name": "Disk Raid IOPS"
+              },
+              {
+                "base": 1,
+                "units": "",
+                "sources": [
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderEnabled": false,
+                    "secondaryAxis": false,
+                    "sourceDescription": "",
+                    "query": "rate(ts(telegraf.diskio.reads, tag=${mirror} and not tag=eval and tag=db and source=${dbhost} and (name=\"xvdc\" or name=\"xvdb\" or name=\"nvme*\"or name=\"*eiocache\")))",
+                    "disabled": true,
+                    "name": "telegraf-readbytes"
+                  },
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderEnabled": false,
+                    "secondaryAxis": false,
+                    "sourceDescription": "",
+                    "query": "rate(ts(telegraf.diskio.writes, tag=${mirror} and not tag=eval and tag=db and source=${dbhost} and (name=\"xvdc\" or name=\"xvdb\" or name=\"nvme*\")))",
+                    "disabled": true,
+                    "name": "telegraf-writebytes"
+                  },
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderEnabled": false,
+                    "secondaryAxis": false,
+                    "sourceDescription": "",
+                    "query": "sum(${telegraf-readbytes} + ${telegraf-writebytes}, sources)",
+                    "name": "telegraf IO Bytes"
+                  }
+                ],
+                "includeObsoleteMetrics": false,
+                "noDefaultEvents": true,
+                "chartAttributes": null,
+                "summarization": "MEAN",
+                "chartSettings": {
+                  "type": "line",
+                  "lineType": "linear",
+                  "windowing": "full",
+                  "autoColumnTags": false,
+                  "tagMode": "all",
+                  "numTags": 4,
+                  "customTags": [],
+                  "y1Units": "",
+                  "y0ScaleSIBy1024": false,
+                  "y1ScaleSIBy1024": false,
+                  "y0UnitAutoscaling": true,
+                  "y1UnitAutoscaling": false,
+                  "fixedLegendEnabled": false,
+                  "fixedLegendUseRawStats": false,
+                  "fixedLegendPosition": "RIGHT",
+                  "fixedLegendDisplayStats": [
+                    "CURRENT"
+                  ],
+                  "fixedLegendFilterSort": "TOP",
+                  "fixedLegendFilterLimit": 5,
+                  "fixedLegendFilterField": "CURRENT"
+                },
+                "interpolatePoints": false,
+                "name": "SSD IOPS"
+              },
+              {
+                "base": 0,
+                "sources": [
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderEnabled": false,
+                    "sourceDescription": "",
+                    "query": "ts(telegraf.diskio.iops.in.progress, tag=${mirror} and not tag=eval and tag=db and source=${dbhost} and (name=\"xvdb\" or name=\"nvme*\"))",
+                    "name": "SSD/NVME"
+                  },
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderEnabled": false,
+                    "sourceDescription": "",
+                    "query": "ts(telegraf.diskio.iops.in.progress, tag=${mirror} and not tag=eval and tag=db and source=${dbhost} and name=\"dm-*\")",
+                    "name": "LVM Raid"
+                  }
+                ],
+                "includeObsoleteMetrics": false,
+                "noDefaultEvents": true,
+                "chartAttributes": null,
+                "summarization": "MEAN",
+                "chartSettings": {
+                  "type": "line",
+                  "lineType": "linear",
+                  "windowing": "full",
+                  "autoColumnTags": false,
+                  "tagMode": "all",
+                  "numTags": 4,
+                  "customTags": [],
+                  "y1Units": "",
+                  "y0ScaleSIBy1024": false,
+                  "y1ScaleSIBy1024": false,
+                  "y0UnitAutoscaling": true,
+                  "y1UnitAutoscaling": false,
+                  "fixedLegendEnabled": false,
+                  "fixedLegendUseRawStats": false,
+                  "fixedLegendPosition": "RIGHT",
+                  "fixedLegendDisplayStats": [
+                    "CURRENT"
+                  ],
+                  "fixedLegendFilterSort": "TOP",
+                  "fixedLegendFilterLimit": 5,
+                  "fixedLegendFilterField": "CURRENT"
+                },
+                "interpolatePoints": false,
+                "name": "Disk IO Queue Depth"
+              },
+              {
+                "base": 1,
+                "units": "%",
+                "description": "",
+                "sources": [
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderEnabled": false,
+                    "sourceDescription": "",
+                    "query": "ts(aws.ebs.burstbalance, tag=${mirror} and not tag=eval and tag=db)",
+                    "name": "Burst Balance"
+                  }
+                ],
+                "includeObsoleteMetrics": false,
+                "noDefaultEvents": true,
+                "chartAttributes": null,
+                "summarization": "MEAN",
+                "chartSettings": {
+                  "type": "line",
+                  "min": 0,
+                  "max": 100,
+                  "lineType": "linear",
+                  "windowing": "full",
+                  "autoColumnTags": false,
+                  "tagMode": "all",
+                  "numTags": 4,
+                  "customTags": [],
+                  "y1Units": "",
+                  "y0ScaleSIBy1024": false,
+                  "y1ScaleSIBy1024": false,
+                  "y0UnitAutoscaling": false,
+                  "y1UnitAutoscaling": false,
+                  "fixedLegendEnabled": false,
+                  "fixedLegendUseRawStats": false,
+                  "fixedLegendPosition": "RIGHT",
+                  "fixedLegendDisplayStats": [
+                    "CURRENT"
+                  ],
+                  "fixedLegendFilterSort": "TOP",
+                  "fixedLegendFilterLimit": 5,
+                  "fixedLegendFilterField": "CURRENT"
+                },
+                "interpolatePoints": false,
+                "name": "EC2 Burst Balance"
+              }
+            ],
+            "heightFactor": 100
+          }
+        ],
+        "name": "Environment"
+      },
+      {
+        "rows": [
+          {
+            "charts": [
+              {
+                "base": 0,
+                "units": "",
+                "sources": [
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderSerialization": "{\"_v\":1,\"metric\":\"\",\"filters\":[[],\"and\"],\"functions\":[]}",
+                    "querybuilderEnabled": true,
+                    "sourceDescription": "",
+                    "query": "ts(\"aws.ebs.volumewriteops.sum\", tag=${mirror} and not tag=eval and tag=db and source=${dbhost})",
+                    "disabled": true,
+                    "name": "writeops"
+                  },
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderSerialization": "{\"_v\":1,\"metric\":\"\",\"filters\":[[],\"and\"],\"functions\":[]}",
+                    "querybuilderEnabled": true,
+                    "sourceDescription": "",
+                    "query": "ts(\"aws.ebs.volumereadops.sum\", tag=${mirror} and not tag=eval and tag=db and source=${dbhost})",
+                    "disabled": true,
+                    "name": "readops"
+                  },
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderEnabled": false,
+                    "sourceDescription": "",
+                    "query": "rate(ts(telegraf.diskio.reads, tag=${mirror} and not tag=eval and tag=db and source=${dbhost} and name=\"dm-*\"))",
+                    "disabled": true,
+                    "name": "telegraf-readio"
+                  },
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderEnabled": false,
+                    "sourceDescription": "",
+                    "query": "rate(ts(telegraf.diskio.writes, tag=${mirror} and not tag=eval and tag=db and source=${dbhost} and name=\"dm-*\"))",
+                    "disabled": true,
+                    "name": "telegraf-writeio"
+                  },
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderSerialization": "{\"_v\":1,\"metric\":\"\",\"filters\":[[],\"and\"],\"functions\":[]}",
+                    "querybuilderEnabled": true,
+                    "sourceDescription": "",
+                    "query": "${telegraf-readio} + ${telegraf-writeio}",
+                    "name": "telegraf IO"
+                  },
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderSerialization": "{\"_v\":1,\"metric\":\"\",\"filters\":[[],\"and\"],\"functions\":[]}",
+                    "querybuilderEnabled": true,
+                    "sourceDescription": "",
+                    "query": "sum((${writeops}+${readops}) / 300, sources, volumeid)",
+                    "disabled": true,
+                    "name": "IOPS Consumed"
+                  }
+                ],
+                "includeObsoleteMetrics": false,
+                "noDefaultEvents": true,
+                "chartAttributes": null,
+                "summarization": "MEAN",
+                "chartSettings": {
+                  "type": "line",
+                  "lineType": "linear",
+                  "windowing": "full",
+                  "autoColumnTags": false,
+                  "tagMode": "all",
+                  "numTags": 4,
+                  "customTags": [],
+                  "y1Units": "",
+                  "y0ScaleSIBy1024": false,
+                  "y1ScaleSIBy1024": false,
+                  "y0UnitAutoscaling": true,
+                  "y1UnitAutoscaling": false,
+                  "fixedLegendEnabled": false,
+                  "fixedLegendUseRawStats": false,
+                  "fixedLegendPosition": "RIGHT",
+                  "fixedLegendDisplayStats": [
+                    "CURRENT"
+                  ],
+                  "fixedLegendFilterSort": "TOP",
+                  "fixedLegendFilterLimit": 5,
+                  "fixedLegendFilterField": "CURRENT"
+                },
+                "interpolatePoints": false,
+                "name": "LVM IOPS (SSD)"
+              },
+              {
+                "base": 1,
+                "units": "",
+                "description": "",
+                "sources": [
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderEnabled": false,
+                    "sourceDescription": "",
+                    "query": "rate(ts(telegraf.diskio.reads, tag=${mirror} and not tag=eval and tag=db and source=${dbhost} and not (name=\"xvdc\" or name=\"xvdb\" or name=\"nvme*\" or name=dm-*)))",
+                    "disabled": true,
+                    "name": "telegraf-readio"
+                  },
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderEnabled": false,
+                    "sourceDescription": "",
+                    "query": "rate(ts(telegraf.diskio.writes, tag=${mirror} and not tag=eval and tag=db and source=${dbhost} and not (name=\"xvdc\" or name=\"xvdb\" or name=\"nvme*\" or name=dm-*)))",
+                    "disabled": true,
+                    "name": "telegraf-writeio"
+                  },
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderEnabled": false,
+                    "sourceDescription": "",
+                    "query": "sum(${telegraf-readio} + ${telegraf-writeio}, sources, name)",
+                    "name": "telegraf IO"
+                  }
+                ],
+                "includeObsoleteMetrics": false,
+                "noDefaultEvents": true,
+                "chartAttributes": null,
+                "summarization": "MEAN",
+                "chartSettings": {
+                  "type": "line",
+                  "lineType": "linear",
+                  "windowing": "full",
+                  "autoColumnTags": false,
+                  "tagMode": "all",
+                  "numTags": 4,
+                  "customTags": [],
+                  "y1Units": "",
+                  "y0ScaleSIBy1024": false,
+                  "y1ScaleSIBy1024": false,
+                  "y0UnitAutoscaling": true,
+                  "y1UnitAutoscaling": false,
+                  "fixedLegendEnabled": false,
+                  "fixedLegendUseRawStats": false,
+                  "fixedLegendPosition": "RIGHT",
+                  "fixedLegendDisplayStats": [
+                    "CURRENT"
+                  ],
+                  "fixedLegendFilterSort": "TOP",
+                  "fixedLegendFilterLimit": 5,
+                  "fixedLegendFilterField": "CURRENT"
+                },
+                "interpolatePoints": false,
+                "name": "EBS (Total) IOPS"
+              },
+              {
+                "base": 0,
+                "units": "",
+                "sources": [
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderEnabled": false,
+                    "sourceDescription": "",
+                    "query": "rate(ts(telegraf.diskio.reads, tag=${mirror} and not tag=eval and tag=db and source=${dbhost} and (name=\"xvdc\" or name=\"xvdb\" or name=\"nvme*\")))",
+                    "disabled": true,
+                    "name": "telegraf-readio"
+                  },
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderEnabled": false,
+                    "sourceDescription": "",
+                    "query": "rate(ts(telegraf.diskio.writes, tag=${mirror} and not tag=eval and tag=db and source=${dbhost} and (name=\"xvdc\" or name=\"xvdb\" or name=\"nvme*\")))",
+                    "disabled": true,
+                    "name": "telegraf-writeio"
+                  },
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderEnabled": false,
+                    "sourceDescription": "",
+                    "query": "sum(${telegraf-readio} + ${telegraf-writeio}, sources)",
+                    "name": "telegraf IO"
+                  }
+                ],
+                "includeObsoleteMetrics": false,
+                "noDefaultEvents": true,
+                "chartAttributes": null,
+                "summarization": "MEAN",
+                "chartSettings": {
+                  "type": "line",
+                  "lineType": "linear",
+                  "windowing": "full",
+                  "autoColumnTags": false,
+                  "tagMode": "all",
+                  "numTags": 4,
+                  "customTags": [],
+                  "y1Units": "",
+                  "y0ScaleSIBy1024": false,
+                  "y1ScaleSIBy1024": false,
+                  "y0UnitAutoscaling": true,
+                  "y1UnitAutoscaling": false,
+                  "fixedLegendEnabled": false,
+                  "fixedLegendUseRawStats": false,
+                  "fixedLegendPosition": "RIGHT",
+                  "fixedLegendDisplayStats": [
+                    "CURRENT"
+                  ],
+                  "fixedLegendFilterSort": "TOP",
+                  "fixedLegendFilterLimit": 5,
+                  "fixedLegendFilterField": "CURRENT"
+                },
+                "interpolatePoints": false,
+                "name": "Instance Cache (xvdb/nvme) IOPS"
+              }
+            ],
+            "heightFactor": 100
+          },
+          {
+            "charts": [
+              {
+                "base": 1,
+                "units": "",
+                "description": "",
+                "sources": [
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderEnabled": false,
+                    "secondaryAxis": false,
+                    "sourceDescription": "",
+                    "query": "rate(ts(telegraf.diskio.reads, tag=${mirror} and not tag=eval and tag=db and source=${dbhost} and not (name='xvdl' or name='xvda*' or name=\"xvdc\" or name=\"xvdb\" or name=\"nvme*\" or name=dm-*)))",
+                    "disabled": true,
+                    "name": "telegraf-readio"
+                  },
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderEnabled": false,
+                    "secondaryAxis": false,
+                    "sourceDescription": "",
+                    "query": "rate(ts(telegraf.diskio.writes, tag=${mirror} and not tag=eval and tag=db and source=${dbhost} and not (name='xvdl' or name='xvda*' or name=\"xvdc\" or name=\"xvdb\" or name=\"nvme*\" or name=dm-*)))",
+                    "disabled": true,
+                    "name": "telegraf-writeio"
+                  },
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderEnabled": false,
+                    "secondaryAxis": false,
+                    "sourceDescription": "",
+                    "query": "sum(${telegraf-readio} + ${telegraf-writeio}, sources, name)",
+                    "name": "telegraf IO"
+                  }
+                ],
+                "includeObsoleteMetrics": false,
+                "noDefaultEvents": true,
+                "chartAttributes": null,
+                "summarization": "MEAN",
+                "chartSettings": {
+                  "type": "line",
+                  "lineType": "linear",
+                  "windowing": "full",
+                  "autoColumnTags": false,
+                  "tagMode": "all",
+                  "numTags": 4,
+                  "customTags": [],
+                  "y1Units": "",
+                  "y0ScaleSIBy1024": false,
+                  "y1ScaleSIBy1024": false,
+                  "y0UnitAutoscaling": true,
+                  "y1UnitAutoscaling": false,
+                  "fixedLegendEnabled": false,
+                  "fixedLegendUseRawStats": false,
+                  "fixedLegendPosition": "RIGHT",
+                  "fixedLegendDisplayStats": [
+                    "CURRENT"
+                  ],
+                  "fixedLegendFilterSort": "TOP",
+                  "fixedLegendFilterLimit": 5,
+                  "fixedLegendFilterField": "CURRENT"
+                },
+                "interpolatePoints": false,
+                "name": "SSD (Telemetry) Tier EBS IOPS"
+              },
+              {
+                "base": 1,
+                "units": "",
+                "description": "",
+                "sources": [
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderEnabled": false,
+                    "secondaryAxis": false,
+                    "sourceDescription": "",
+                    "query": "rate(ts(telegraf.diskio.reads, tag=${mirror} and not tag=eval and tag=db and source=${dbhost} and name='xvdl'))",
+                    "disabled": true,
+                    "name": "telegraf-readio"
+                  },
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderEnabled": false,
+                    "secondaryAxis": false,
+                    "sourceDescription": "",
+                    "query": "rate(ts(telegraf.diskio.writes, tag=${mirror} and not tag=eval and tag=db and source=${dbhost} and name='xvdl'))",
+                    "disabled": true,
+                    "name": "telegraf-writeio"
+                  },
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderEnabled": false,
+                    "secondaryAxis": false,
+                    "sourceDescription": "",
+                    "query": "sum(${telegraf-readio} + ${telegraf-writeio}, sources, name)",
+                    "name": "telegraf IO"
+                  }
+                ],
+                "includeObsoleteMetrics": false,
+                "noDefaultEvents": true,
+                "chartAttributes": null,
+                "summarization": "MEAN",
+                "chartSettings": {
+                  "type": "line",
+                  "lineType": "linear",
+                  "windowing": "full",
+                  "autoColumnTags": false,
+                  "tagMode": "all",
+                  "numTags": 4,
+                  "customTags": [],
+                  "y1Units": "",
+                  "y0ScaleSIBy1024": false,
+                  "y1ScaleSIBy1024": false,
+                  "y0UnitAutoscaling": true,
+                  "y1UnitAutoscaling": false,
+                  "fixedLegendEnabled": false,
+                  "fixedLegendUseRawStats": false,
+                  "fixedLegendPosition": "RIGHT",
+                  "fixedLegendDisplayStats": [
+                    "CURRENT"
+                  ],
+                  "fixedLegendFilterSort": "TOP",
+                  "fixedLegendFilterLimit": 5,
+                  "fixedLegendFilterField": "CURRENT"
+                },
+                "interpolatePoints": false,
+                "name": "Mem (Buffer) Tier EBS IOPS"
+              }
+            ],
+            "heightFactor": 100
+          },
+          {
+            "charts": [
+              {
+                "base": 1,
+                "units": "",
+                "sources": [
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderEnabled": false,
+                    "secondaryAxis": false,
+                    "sourceDescription": "",
+                    "query": "rate(ts(telegraf.diskio.read.bytes, tag=${mirror} and not tag=eval and tag=db and source=${dbhost} and name=\"dm-*\"))",
+                    "disabled": true,
+                    "name": "telegraf-readbytes"
+                  },
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderEnabled": false,
+                    "secondaryAxis": false,
+                    "sourceDescription": "",
+                    "query": "rate(ts(telegraf.diskio.write.bytes, tag=${mirror} and not tag=eval and tag=db and source=${dbhost} and name=\"dm-*\"))",
+                    "disabled": true,
+                    "name": "telegraf-writebytes"
+                  },
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderSerialization": "{\"_v\":1,\"metric\":\"\",\"filters\":[[],\"and\"],\"functions\":[]}",
+                    "querybuilderEnabled": true,
+                    "secondaryAxis": false,
+                    "sourceDescription": "",
+                    "query": "${telegraf-readbytes} + ${telegraf-writebytes}",
+                    "name": "telegraf IO"
+                  },
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderSerialization": "{\"_v\":1,\"metric\":\"\",\"filters\":[[],\"and\"],\"functions\":[]}",
+                    "querybuilderEnabled": true,
+                    "secondaryAxis": false,
+                    "sourceDescription": "",
+                    "query": "sum((${writeops}+${readops}) / 300, sources, volumeid)",
+                    "disabled": true,
+                    "name": "IOPS Consumed"
+                  }
+                ],
+                "includeObsoleteMetrics": false,
+                "noDefaultEvents": true,
+                "chartAttributes": null,
+                "summarization": "MEAN",
+                "chartSettings": {
+                  "type": "line",
+                  "lineType": "linear",
+                  "windowing": "full",
+                  "autoColumnTags": false,
+                  "tagMode": "all",
+                  "numTags": 4,
+                  "customTags": [],
+                  "y1Units": "",
+                  "y0ScaleSIBy1024": false,
+                  "y1ScaleSIBy1024": false,
+                  "y0UnitAutoscaling": true,
+                  "y1UnitAutoscaling": false,
+                  "fixedLegendEnabled": false,
+                  "fixedLegendUseRawStats": false,
+                  "fixedLegendPosition": "RIGHT",
+                  "fixedLegendDisplayStats": [
+                    "CURRENT"
+                  ],
+                  "fixedLegendFilterSort": "TOP",
+                  "fixedLegendFilterLimit": 5,
+                  "fixedLegendFilterField": "CURRENT"
+                },
+                "interpolatePoints": false,
+                "name": "LVM Bytes (R+W) (SSD)"
+              },
+              {
+                "base": 1,
+                "units": "B",
+                "description": "",
+                "sources": [
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderEnabled": false,
+                    "sourceDescription": "",
+                    "query": "rate(ts(telegraf.diskio.read.bytes, tag=${mirror} and not tag=eval and tag=db and source=${dbhost} and not (name=\"xvdc\" or name=\"xvdb\" or name=\"nvme*\" or name=dm-*)))",
+                    "disabled": true,
+                    "name": "telegraf-readbytes"
+                  },
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderEnabled": false,
+                    "sourceDescription": "",
+                    "query": "rate(ts(telegraf.diskio.write.bytes, tag=${mirror} and not tag=eval and tag=db and source=${dbhost} and not (name=\"xvdc\" or name=\"xvdb\" or name=\"nvme*\" or name=dm-*)))",
+                    "disabled": true,
+                    "name": "telegraf-writebytes"
+                  },
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderEnabled": false,
+                    "sourceDescription": "",
+                    "query": "sum(${telegraf-readbytes} + ${telegraf-writebytes}, sources, name)",
+                    "name": "telegraf IO"
+                  }
+                ],
+                "includeObsoleteMetrics": false,
+                "noDefaultEvents": true,
+                "chartAttributes": null,
+                "summarization": "MEAN",
+                "chartSettings": {
+                  "type": "line",
+                  "lineType": "linear",
+                  "windowing": "full",
+                  "autoColumnTags": false,
+                  "tagMode": "all",
+                  "numTags": 4,
+                  "customTags": [],
+                  "y1Units": "",
+                  "y0ScaleSIBy1024": false,
+                  "y1ScaleSIBy1024": false,
+                  "y0UnitAutoscaling": true,
+                  "y1UnitAutoscaling": false,
+                  "fixedLegendEnabled": false,
+                  "fixedLegendUseRawStats": false,
+                  "fixedLegendPosition": "RIGHT",
+                  "fixedLegendDisplayStats": [
+                    "CURRENT"
+                  ],
+                  "fixedLegendFilterSort": "TOP",
+                  "fixedLegendFilterLimit": 5,
+                  "fixedLegendFilterField": "CURRENT"
+                },
+                "interpolatePoints": false,
+                "name": "EBS (Total) Bytes (R+W)"
+              },
+              {
+                "base": 1,
+                "units": "",
+                "sources": [
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderEnabled": false,
+                    "secondaryAxis": false,
+                    "sourceDescription": "",
+                    "query": "rate(ts(telegraf.diskio.reads, tag=${mirror} and not tag=eval and tag=db and source=${dbhost} and (name=\"xvdc\" or name=\"xvdb\" or name=\"nvme*\")))",
+                    "disabled": true,
+                    "name": "telegraf-readbytes"
+                  },
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderEnabled": false,
+                    "secondaryAxis": false,
+                    "sourceDescription": "",
+                    "query": "rate(ts(telegraf.diskio.writes, tag=${mirror} and not tag=eval and tag=db and source=${dbhost} and (name=\"xvdc\" or name=\"xvdb\" or name=\"nvme*\")))",
+                    "disabled": true,
+                    "name": "telegraf-writebytes"
+                  },
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderSerialization": "{\"_v\":1,\"metric\":\"\",\"filters\":[[],\"and\"],\"functions\":[]}",
+                    "querybuilderEnabled": true,
+                    "secondaryAxis": false,
+                    "sourceDescription": "",
+                    "query": "sum(${telegraf-readbytes} + ${telegraf-writebytes}, sources)",
+                    "name": "telegraf IO"
+                  }
+                ],
+                "includeObsoleteMetrics": false,
+                "noDefaultEvents": true,
+                "chartAttributes": null,
+                "summarization": "MEAN",
+                "chartSettings": {
+                  "type": "line",
+                  "lineType": "linear",
+                  "windowing": "full",
+                  "autoColumnTags": false,
+                  "tagMode": "all",
+                  "numTags": 4,
+                  "customTags": [],
+                  "y1Units": "",
+                  "y0ScaleSIBy1024": false,
+                  "y1ScaleSIBy1024": false,
+                  "y0UnitAutoscaling": true,
+                  "y1UnitAutoscaling": false,
+                  "fixedLegendEnabled": false,
+                  "fixedLegendUseRawStats": false,
+                  "fixedLegendPosition": "RIGHT",
+                  "fixedLegendDisplayStats": [
+                    "CURRENT"
+                  ],
+                  "fixedLegendFilterSort": "TOP",
+                  "fixedLegendFilterLimit": 5,
+                  "fixedLegendFilterField": "CURRENT"
+                },
+                "interpolatePoints": false,
+                "name": "Instance Cache (nvme/xvdb) Bytes (R+W)"
+              }
+            ],
+            "heightFactor": 100
+          },
+          {
+            "charts": [
+              {
+                "base": 1,
+                "units": "B",
+                "description": "",
+                "sources": [
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderEnabled": false,
+                    "secondaryAxis": false,
+                    "sourceDescription": "",
+                    "query": "rate(ts(telegraf.diskio.read.bytes, tag=${mirror} and not tag=eval and tag=db and source=${dbhost} and not (name='xvdl' or name='xvda*' or name=\"xvdc\" or name=\"xvdb\" or name=\"nvme*\" or name=dm-*)))",
+                    "disabled": true,
+                    "name": "telegraf-readbytes"
+                  },
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderEnabled": false,
+                    "secondaryAxis": false,
+                    "sourceDescription": "",
+                    "query": "rate(ts(telegraf.diskio.write.bytes, tag=${mirror} and not tag=eval and tag=db and source=${dbhost} and not (name='xvdl' or name='xvda*' or name=\"xvdc\" or name=\"xvdb\" or name=\"nvme*\" or name=dm-*)))",
+                    "disabled": true,
+                    "name": "telegraf-writebytes"
+                  },
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderEnabled": false,
+                    "secondaryAxis": false,
+                    "sourceDescription": "",
+                    "query": "sum(${telegraf-readbytes} + ${telegraf-writebytes}, sources, name)",
+                    "name": "telegraf IO"
+                  }
+                ],
+                "includeObsoleteMetrics": false,
+                "noDefaultEvents": true,
+                "chartAttributes": null,
+                "summarization": "MEAN",
+                "chartSettings": {
+                  "type": "line",
+                  "lineType": "linear",
+                  "windowing": "full",
+                  "autoColumnTags": false,
+                  "tagMode": "all",
+                  "numTags": 4,
+                  "customTags": [],
+                  "y1Units": "",
+                  "y0ScaleSIBy1024": false,
+                  "y1ScaleSIBy1024": false,
+                  "y0UnitAutoscaling": true,
+                  "y1UnitAutoscaling": false,
+                  "fixedLegendEnabled": false,
+                  "fixedLegendUseRawStats": false,
+                  "fixedLegendPosition": "RIGHT",
+                  "fixedLegendDisplayStats": [
+                    "CURRENT"
+                  ],
+                  "fixedLegendFilterSort": "TOP",
+                  "fixedLegendFilterLimit": 5,
+                  "fixedLegendFilterField": "CURRENT"
+                },
+                "interpolatePoints": false,
+                "name": "SSD (Telemetry) EBS Bytes (R+W)"
+              },
+              {
+                "base": 1,
+                "units": "B",
+                "description": "",
+                "sources": [
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderEnabled": false,
+                    "secondaryAxis": false,
+                    "sourceDescription": "",
+                    "query": "rate(ts(telegraf.diskio.read.bytes, tag=${mirror} and not tag=eval and tag=db and source=${dbhost} and name='xvdl'))",
+                    "disabled": true,
+                    "name": "telegraf-readbytes"
+                  },
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderEnabled": false,
+                    "secondaryAxis": false,
+                    "sourceDescription": "",
+                    "query": "rate(ts(telegraf.diskio.write.bytes, tag=${mirror} and not tag=eval and tag=db and source=${dbhost} and name='xvdl'))",
+                    "disabled": true,
+                    "name": "telegraf-writebytes"
+                  },
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderEnabled": false,
+                    "secondaryAxis": false,
+                    "sourceDescription": "",
+                    "query": "sum(${telegraf-readbytes} + ${telegraf-writebytes}, sources, name)",
+                    "name": "telegraf IO"
+                  }
+                ],
+                "includeObsoleteMetrics": false,
+                "noDefaultEvents": true,
+                "chartAttributes": null,
+                "summarization": "MEAN",
+                "chartSettings": {
+                  "type": "line",
+                  "lineType": "linear",
+                  "windowing": "full",
+                  "autoColumnTags": false,
+                  "tagMode": "all",
+                  "numTags": 4,
+                  "customTags": [],
+                  "y1Units": "",
+                  "y0ScaleSIBy1024": false,
+                  "y1ScaleSIBy1024": false,
+                  "y0UnitAutoscaling": true,
+                  "y1UnitAutoscaling": false,
+                  "fixedLegendEnabled": false,
+                  "fixedLegendUseRawStats": false,
+                  "fixedLegendPosition": "RIGHT",
+                  "fixedLegendDisplayStats": [
+                    "CURRENT"
+                  ],
+                  "fixedLegendFilterSort": "TOP",
+                  "fixedLegendFilterLimit": 5,
+                  "fixedLegendFilterField": "CURRENT"
+                },
+                "interpolatePoints": false,
+                "name": "MEM (Buffer) EBS Bytes (R+W)"
+              }
+            ],
+            "heightFactor": 100
+          }
+        ],
+        "name": "Disk IO"
+      },
+      {
+        "rows": [
+          {
+            "charts": [
+              {
+                "base": 0,
+                "description": "% of Cache Hits (Read/Write)",
+                "sources": [
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderEnabled": false,
+                    "sourceDescription": "",
+                    "query": "ts(\"telegraf.exec.enhanceio.*.stats.read.hit.pct\", tag=${mirror} and not tag=eval and tag=db and source=${dbhost})",
+                    "name": "Read Hit %"
+                  },
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderEnabled": false,
+                    "sourceDescription": "",
+                    "query": "-1 * ts(\"telegraf.exec.enhanceio.*.stats.write.hit.pct\", tag=${mirror} and not tag=eval and tag=db and source=${dbhost})",
+                    "name": "Write Hit %"
+                  }
+                ],
+                "includeObsoleteMetrics": false,
+                "noDefaultEvents": true,
+                "chartAttributes": null,
+                "summarization": "MEAN",
+                "chartSettings": {
+                  "type": "line",
+                  "min": -100,
+                  "max": 100,
+                  "lineType": "linear",
+                  "stackType": "zero",
+                  "windowing": "full",
+                  "showHosts": false,
+                  "showLabels": false,
+                  "showRawValues": false,
+                  "autoColumnTags": false,
+                  "tagMode": "all",
+                  "numTags": 4,
+                  "customTags": [],
+                  "groupBySource": false,
+                  "sortValuesDescending": false,
+                  "y1Units": "",
+                  "y0ScaleSIBy1024": false,
+                  "y1ScaleSIBy1024": false,
+                  "y0UnitAutoscaling": false,
+                  "y1UnitAutoscaling": false,
+                  "fixedLegendEnabled": false,
+                  "fixedLegendUseRawStats": false,
+                  "fixedLegendPosition": "RIGHT",
+                  "fixedLegendDisplayStats": [
+                    "CURRENT"
+                  ],
+                  "fixedLegendFilterSort": "TOP",
+                  "fixedLegendFilterLimit": 5,
+                  "fixedLegendFilterField": "CURRENT"
+                },
+                "interpolatePoints": false,
+                "name": "Cache Hit Rate % (Read/Write)"
+              }
+            ],
+            "heightFactor": 100
+          },
+          {
+            "charts": [
+              {
+                "base": 0,
+                "sources": [
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderEnabled": false,
+                    "sourceDescription": "",
+                    "query": "rate(ts(\"telegraf.exec.enhanceio.*.errors.*\", tag=${mirror} and not tag=eval and tag=db and source=${dbhost}))",
+                    "name": "eio errors"
+                  }
+                ],
+                "includeObsoleteMetrics": false,
+                "noDefaultEvents": true,
+                "chartAttributes": null,
+                "summarization": "MEAN",
+                "chartSettings": {
+                  "type": "line",
+                  "lineType": "linear",
+                  "stackType": "zero",
+                  "windowing": "full",
+                  "showHosts": false,
+                  "showLabels": false,
+                  "showRawValues": false,
+                  "autoColumnTags": false,
+                  "tagMode": "all",
+                  "numTags": 4,
+                  "customTags": [],
+                  "groupBySource": false,
+                  "sortValuesDescending": false,
+                  "y1Units": "",
+                  "y0ScaleSIBy1024": false,
+                  "y1ScaleSIBy1024": false,
+                  "y0UnitAutoscaling": true,
+                  "y1UnitAutoscaling": false,
+                  "fixedLegendEnabled": false,
+                  "fixedLegendUseRawStats": false,
+                  "fixedLegendPosition": "RIGHT",
+                  "fixedLegendDisplayStats": [
+                    "CURRENT"
+                  ],
+                  "fixedLegendFilterSort": "TOP",
+                  "fixedLegendFilterLimit": 5,
+                  "fixedLegendFilterField": "CURRENT"
+                },
+                "interpolatePoints": false,
+                "name": "EIO Errors"
+              },
+              {
+                "base": 0,
+                "units": "",
+                "sources": [
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderEnabled": false,
+                    "sourceDescription": "",
+                    "query": "rate(ts(\"telegraf.exec.enhanceio.*.stats.*\", tag=${mirror} and not tag=eval and tag=db and source=${dbhost}))",
+                    "name": "eio stats"
+                  }
+                ],
+                "includeObsoleteMetrics": false,
+                "noDefaultEvents": true,
+                "chartAttributes": null,
+                "summarization": "MEAN",
+                "chartSettings": {
+                  "type": "line",
+                  "lineType": "linear",
+                  "stackType": "zero",
+                  "windowing": "full",
+                  "showHosts": false,
+                  "showLabels": false,
+                  "showRawValues": false,
+                  "autoColumnTags": false,
+                  "tagMode": "all",
+                  "numTags": 4,
+                  "customTags": [],
+                  "groupBySource": false,
+                  "sortValuesDescending": false,
+                  "y1Units": "",
+                  "y0ScaleSIBy1024": false,
+                  "y1ScaleSIBy1024": false,
+                  "y0UnitAutoscaling": true,
+                  "y1UnitAutoscaling": false,
+                  "fixedLegendEnabled": false,
+                  "fixedLegendUseRawStats": false,
+                  "fixedLegendPosition": "RIGHT",
+                  "fixedLegendDisplayStats": [
+                    "CURRENT"
+                  ],
+                  "fixedLegendFilterSort": "TOP",
+                  "fixedLegendFilterLimit": 5,
+                  "fixedLegendFilterField": "CURRENT"
+                },
+                "interpolatePoints": false,
+                "name": "EIO Stats"
+              }
+            ],
+            "heightFactor": 100
+          }
+        ],
+        "name": "EnhanceIO"
+      },
+      {
+        "rows": [
+          {
+            "charts": [
+              {
+                "base": 1,
+                "units": "Units",
+                "description": "",
+                "sources": [
+                  {
+                    "scatterPlotSource": "Y",
+                    "querybuilderSerialization": "{\"_v\":1,\"metric\":\"\",\"filters\":[[],\"and\"],\"functions\":[]}",
+                    "querybuilderEnabled": true,
+                    "sourceDescription": "",
+                    "query": "",
+                    "disabled": true,
+                    "name": "New Query"
+                  }
+                ],
+                "includeObsoleteMetrics": false,
+                "noDefaultEvents": false,
+                "chartAttributes": null,
+                "summarization": "MEAN",
+                "chartSettings": {
+                  "type": "markdown-widget",
+                  "windowing": "full",
+                  "autoColumnTags": false,
+                  "tagMode": "all",
+                  "numTags": 4,
+                  "customTags": [],
+                  "y1Units": "",
+                  "y0ScaleSIBy1024": false,
+                  "y1ScaleSIBy1024": false,
+                  "y0UnitAutoscaling": false,
+                  "y1UnitAutoscaling": false,
+                  "fixedLegendEnabled": false,
+                  "fixedLegendUseRawStats": false,
+                  "fixedLegendPosition": "RIGHT",
+                  "fixedLegendDisplayStats": [
+                    "CURRENT"
+                  ],
+                  "fixedLegendFilterSort": "TOP",
+                  "fixedLegendFilterLimit": 5,
+                  "fixedLegendFilterField": "CURRENT",
+                  "plainMarkdownContent": "## FDB Basics\nIdentifying Common FDB\n1. Look for low latency, latency can be an early indicator of cluster overall health\n2. Check that storage and log queues aren't __pegged__ (stuck at, or above 1G of data in queue and not dropping)\n3. Check that bytes input into the SSD cluster does not exceed the durable bytes by more than 200M for any given length of time. \n4. Work through the hosts 1-by-1 and identify possibly __stuck__ processes by inspecting the CPU Seconds / Disk IO (MEM and SSD respectively). These processes may require restarting via the `killFdbProcess.sh` script.  \n5. Are proccesses flapping in and out of a cluster? It's possible that a process is still warming up, check memory utilization to ensure that a process is not still coming online and warming up (after an foundationdb conf change or restart of a process)\n6. Look for Moving Data - moving data consumes a lot of CPU/IOPS and can cause delayed ingestion of indices and even (in extreme circumstances) delayed ingestion of telemetry (if SSD is pegged moving or mem tier is moving data)\n7. Check that Disk IO is not flatlined on a host. This can indicate issues in AWS with reachability to EBS or degraded SSD/NVME storage. "
+                },
+                "interpolatePoints": false,
+                "name": "Overview"
+              }
+            ],
+            "heightFactor": 150
+          }
+        ],
+        "name": "Overview"
+      }
+    ],
+    "parameterDetails": {
+      "dbhost": {
+        "label": "dbhost",
+        "hideFromView": false,
+        "dynamicFieldType": "SOURCE",
+        "queryValue": "collect((ts(telegraf.cpu.usage.guest, role=db and tag=${mirror} and cpu=cpu-total and not tag=retired)), (aliasSource(0, \"\\\"*-db*-*\\\"\")))",
+        "parameterType": "DYNAMIC",
+        "defaultValue": "defaultQuery",
+        "valuesToReadableStrings": {
+          "defaultQuery": "\"*-db*-*\""
+        }
+      },
+      "mirror": {
+        "label": "mirror",
+        "hideFromView": false,
+        "dynamicFieldType": "SOURCE_TAG",
+        "queryValue": "max(ts(buffercopy.moved, tag=\"*-primary\" or tag=\"*-secondary\"), hosttags)",
+        "parameterType": "DYNAMIC",
+        "defaultValue": "Label",
+        "valuesToReadableStrings": {
+          "Label": "metrics-primary"
+        }
+      }
+    },
+    "displayDescription": false,
+    "displaySectionTableOfContents": true,
+    "displayQueryParameters": true,
+    "chartTitleScalar": 0,
+    "eventQuery": "",
+    "defaultTimeWindow": "2h",
+    "viewsLastDay": 23,
+    "viewsLastWeek": 131,
+    "viewsLastMonth": 555,
+    "createdEpochMillis": 1508367535986,
+    "updatedEpochMillis": 1543340910510,
+    "deleted": false,
+    "numFavorites": 20,
+    "numCharts": 64,
+    "favorite": false,
+    "name": "Wavefront Sample FDB Health"
+  }
