@@ -172,7 +172,7 @@ public class FDBLogListener extends TailerListenerAdapter {
                         case "StorageMetrics": {
                             String port = getPort(map);
                             addDoubleGauges(map, port, Arrays.asList("Fetch"));
-                            addDoubleGauges(map, port, Arrays.asList("bytes", "StorageVersion",
+                            addDoubleGauges(map, port, Arrays.asList("bytes", "Bytes", "StorageVersion",
                                     "DurableVersion", "LoopsPerSecond", "MutationBytesPerSecond",
                                     "QueriesPerSecond", "Query", "Version", "IdleTime",
                                     "ChangesPerSecond", "ElapsedTime", "BytesFetchedPerSecond"));
