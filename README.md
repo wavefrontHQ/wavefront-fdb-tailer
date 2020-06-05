@@ -64,7 +64,7 @@ The command line argument options are as follows:
      
 --type
      The type of reporter that should be used to report the metrics gathered.
-     Possible Values: [DIRECT, PROXY, GRAPHITE]
+     Possible Values: [DIRECT, PROXY, GRAPHITE, SHARDED]
 
 ```
 
@@ -143,4 +143,14 @@ If you are running a Graphite server, a Graphite reporter can also be used by sp
     --graphitePort 2003
     --dir "/usr/local/foundationdb/logs"
     --matching ".*"
+```
+
+### Using the Sharded Reporter
+
+If you are running FDB with a sharded memory tier, a special reporter can also be used to apply an additional point tag to all metrics indicating which shard the point is coming from.  The new point tag's key is `cluster_file` and the value is whichever cluster file that shard is using (read from the top of each log). Currently this reporter requires a Wavefront proxy, but if there is interest in extending that please file a github issue.
+```
+    --type SHARDED
+    --proxyHost 127.0.0.1
+    --dir "/usr/local/foundationdb/logs"
+    --matching ".*\\.xml$"
 ```
