@@ -8,6 +8,7 @@ import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 import com.google.common.util.concurrent.AtomicDouble;
 import com.wavefront.dropwizard.metrics.DropwizardMetricsReporter;
+import com.wavefront.internal.reporter.WavefrontInternalReporter;
 import com.wavefront.sdk.common.WavefrontSender;
 import com.wavefront.sdk.direct_ingestion.WavefrontDirectIngestionClient;
 import com.wavefront.sdk.proxy.WavefrontProxyClient;
@@ -40,6 +41,8 @@ public class FDBMetricsReporter {
     }
 
     private ScheduledReporter reporter;
+
+    private WavefrontInternalReporter shardedReporter = null;
 
     private WavefrontSender sender;
 
@@ -93,6 +96,8 @@ public class FDBMetricsReporter {
             initDirect(arguments.getServer(), arguments.getToken());
         } else if (arguments.getReporterType() == FDBMetricsReporterArguments.ReporterType.GRAPHITE) {
             initGraphite(arguments.getGraphiteServer(), arguments.getGraphitePort());
+        } else if (arguments.getReporterType() == FDBMetricsReporterArguments.ReporterType.SHARDED) {
+            initSharded(arguments.getProxyHost(), arguments.getProxyPort());
         }
     }
 
@@ -128,6 +133,17 @@ public class FDBMetricsReporter {
 
     }
 
+    private void initSharded(String proxyHostname, int proxyPort) throws UnknownHostException {
+        this.sender = new WavefrontProxyClient.Builder(proxyHostname).metricsPort(proxyPort).build();
+
+        this.shardedReporter = new WavefrontInternalReporter.Builder().
+                withSource(getHostName()).
+                withReporterPointTag("service", SERVICE_NAME).
+                includeJvmMetrics().
+                build(this.sender);
+    }
+
+
     private String getHostName() {
         try {
             return InetAddress.getLocalHost().getHostName();
@@ -138,7 +154,11 @@ public class FDBMetricsReporter {
     }
 
     void start() {
-        this.reporter.start(METRICS_REPORTING_PERIOD, TimeUnit.SECONDS);
+        if (this.shardedReporter != null) {
+            this.shardedReporter.start(METRICS_REPORTING_PERIOD, TimeUnit.SECONDS);
+        } else {
+            this.reporter.start(METRICS_REPORTING_PERIOD, TimeUnit.SECONDS);
+        }
         collectMetrics();
     }
 
@@ -201,7 +221,7 @@ public class FDBMetricsReporter {
                     return;
                 }
 
-                Tailer tailer = new Tailer(logFile, new FDBLogListener(prefix, values, gauges), 1000, true);
+                Tailer tailer = new Tailer(logFile, new FDBLogListener(prefix, values, gauges, shardedReporter), 1000, true);
                 es.submit(tailer);
                 if (files.putIfAbsent(logFile, tailer) != null) {
                     // The put didn't succeed, stop the tailer.

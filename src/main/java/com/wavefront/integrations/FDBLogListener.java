@@ -11,6 +11,9 @@ import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 import com.google.common.collect.Iterables;
 import com.google.common.util.concurrent.AtomicDouble;
+import com.wavefront.internal.reporter.WavefrontInternalReporter;
+import com.wavefront.internal_reporter_java.io.dropwizard.metrics5.MetricName;
+import com.wavefront.internal_reporter_java.io.dropwizard.metrics5.Reporter;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.input.Tailer;
 import org.apache.commons.io.input.TailerListenerAdapter;
@@ -19,16 +22,14 @@ import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
 
+import javax.annotation.Nullable;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.RandomAccessFile;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -43,6 +44,7 @@ public class FDBLogListener extends TailerListenerAdapter {
     private static final Logger logger = Logger.getLogger(FDBLogListener.class.getCanonicalName());
 
     private static final String END_TRACE = "</Trace>";
+    private static final String CLUSTER_TAG_KEY = "ClusterFile=\"";
 
     private static DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 
@@ -63,15 +65,24 @@ public class FDBLogListener extends TailerListenerAdapter {
 
     private String prefix;
 
-    private String metricName(String name) {
+    private String clusterFile;
+
+    private Map<String, String> tags;
+
+    private WavefrontInternalReporter reporter;
+
+    private String addPrefix(String name) {
         return prefix + name;
     }
 
-    public FDBLogListener(String prefix, LoadingCache<String, AtomicDouble> values, LoadingCache<String, Gauge<Double>> gauges) {
+    public FDBLogListener(String prefix, LoadingCache<String, AtomicDouble> values,
+                          LoadingCache<String, Gauge<Double>> gauges, WavefrontInternalReporter reporter) {
         this.prefix = prefix;
         this.values = values;
         this.gauges = gauges;
-        this.failed = SharedMetricRegistries.getDefault().counter(metricName("listener_failed"));
+        this.reporter = reporter;
+        this.failed = SharedMetricRegistries.getDefault().counter(addPrefix("listener_failed"));
+        this.tags = new HashMap<String, String>();
     }
 
     @Override
@@ -88,12 +99,41 @@ public class FDBLogListener extends TailerListenerAdapter {
             if (END_TRACE.equals(endOfFile)) {
                 done();
             }
+
+            // Code to get the cluster file for sharded reporter
+            Scanner sc = new Scanner(tailer.getFile());
+            sc.useDelimiter("\n");
+            boolean found = false;
+            while (sc.hasNextLine()) {
+                String line = sc.nextLine();
+                String clusterFile = getClusterFile(line);
+                if (clusterFile != null) {
+                    tags.put("cluster_file", clusterFile);
+                    logger.info("cluster_file point tag set to " + clusterFile);
+                    found = true;
+                    break;
+                }
+            }
+            assert(found);
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         } finally {
             IOUtils.closeQuietly(raf);
         }
         initSeverityMetrics();
+    }
+
+    public String getClusterFile(String line) {
+
+        int index = line.indexOf(CLUSTER_TAG_KEY);
+        if (index == -1) {
+            return null;
+        }
+        int startIndex = index + CLUSTER_TAG_KEY.length();
+        int endIndex = line.indexOf('\"', startIndex);
+        assert(endIndex != -1);
+        return line.substring(startIndex, endIndex);
     }
 
     @Override
@@ -113,7 +153,7 @@ public class FDBLogListener extends TailerListenerAdapter {
 
     private void initSeverityMetrics() {
         for (String sev : Arrays.asList("10", "20", "30", "40", "50")) {
-            severityMetrics.put(sev, SharedMetricRegistries.getDefault().counter(metricName("severity_" + sev)));
+            severityMetrics.put(sev, SharedMetricRegistries.getDefault().counter(addPrefix("severity_" + sev)));
         }
     }
 
@@ -151,8 +191,12 @@ public class FDBLogListener extends TailerListenerAdapter {
                             boolean begin = map.getNamedItem("Transition").getNodeValue().equals("Begin");
                             String port = getPort(map);
                             String as = map.getNamedItem("As").getNodeValue();
-                            String metricName = port + ".role." + encode(as);
-                            gauges.getUnchecked(metricName);
+                            String metricName = addPrefix(port + ".role." + encode(as));
+                            if (reporter == null) {
+                                gauges.getUnchecked(metricName);
+                            } else {
+                                reporter.newGauge(new MetricName(metricName, tags), () -> () -> values.getUnchecked(metricName).doubleValue());
+                            }
                             AtomicDouble value = values.getUnchecked(metricName);
                             value.set(begin ? 1 : 0);
                             break;
@@ -264,8 +308,13 @@ public class FDBLogListener extends TailerListenerAdapter {
     }
 
     private void addDoubleGauge(NamedNodeMap map, String prefix, String name) {
-        String metricName = prefix + "." + encode(name);
-        gauges.getUnchecked(metricName);
+        String metricName = addPrefix(prefix + "." + encode(name));
+        if (reporter == null) {
+            gauges.getUnchecked(metricName);
+        } else {
+            reporter.newGauge(new MetricName(metricName, tags), () -> () -> values.getUnchecked(metricName).doubleValue());
+            logger.info(metricName + " was attempted to be added");
+        }
         AtomicDouble value = values.getUnchecked(metricName);
         Node nodeValue = map.getNamedItem(name);
         if (nodeValue != null) {

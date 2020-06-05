@@ -51,7 +51,12 @@ public class FDBMetricsReporterInit {
             if (arguments.getServer() == null || arguments.getToken() == null) {
                 return false;
             }
-        } else if (arguments.getReporterType() != FDBMetricsReporterArguments.ReporterType.PROXY) {
+        } else if (arguments.getReporterType() == FDBMetricsReporterArguments.ReporterType.PROXY ||
+                    arguments.getReporterType() == FDBMetricsReporterArguments.ReporterType.SHARDED) {
+            if (arguments.getProxyHost() == null) {
+                return false;
+            }
+        } else {
             return false;
         }
         return true;

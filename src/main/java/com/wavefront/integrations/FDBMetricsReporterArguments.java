@@ -11,7 +11,7 @@ import java.util.List;
 public class FDBMetricsReporterArguments {
 
     enum ReporterType {
-        DIRECT, PROXY, GRAPHITE;
+        DIRECT, PROXY, GRAPHITE, SHARDED;
     }
 
     private static final String ALL_FILES = ".*";
@@ -22,7 +22,7 @@ public class FDBMetricsReporterArguments {
 
     /**
      * @param reporterType The type of reporter that should be used to report the metrics gathered.  Current options are PROXY,
-     *             DIRECT, and GRAPHITE.
+     *             DIRECT, GRAPHITE, and SHARDED.
      */
     @Parameter(names = {"--type"}, description = "The type of reporter that should be used to report the metrics gathered.")
     private ReporterType reporterType;

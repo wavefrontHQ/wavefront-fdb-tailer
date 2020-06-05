@@ -27,6 +27,8 @@ public class FDBLogListenerTest {
 
     private String prefix = "fdb.trace.";
 
+    private String sampleLogLine = "<Event Severity=\"10\" Time=\"1555440637.134462\" OriginalTime=\"1555357055.000500\" Type=\"ClientStart\" Machine=\"10.9.0.61:5911\" ID=\"0000000000000000\" SourceVersion=\"e6d43ba4c52200b534529820e33cddeae402ab3a\" Version=\"5.2.26-PRERELEASE\" PackageName=\"5.2\" ClusterFile=\"/etc/foundationdb/fdb.cluster\" ConnectionString=\"telemetry:asdfasdf@10.9.0.15:4500,10.9.0.29:4500,10.9.0.37:4500\" ActualTime=\"1555357054\" ApiVersion=\"-1\" ImageOffset=\"(nil)\" logGroup=\"default\" TrackLatestType=\"Rolled\"/>";
+
     private String metricName(String name) {
         return prefix + name;
     }
@@ -63,7 +65,7 @@ public class FDBLogListenerTest {
                 }
         );
 
-        listener = new FDBLogListener(prefix, values, gauges);
+        listener = new FDBLogListener(prefix, values, gauges, null);
     }
 
     @Test
@@ -74,6 +76,13 @@ public class FDBLogListenerTest {
             listener.handleLine(line);
         }
         assertEquals(SharedMetricRegistries.getDefault().getMetrics().size(), 25);
+    }
+
+    @Test
+    public void testShardParsing() {
+        String clusterFile = listener.getClusterFile(sampleLogLine);
+        assert(clusterFile != null);
+        System.out.println(clusterFile);
     }
 
     @Test
