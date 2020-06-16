@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Joiner;
-import org.apache.commons.lang3.ObjectUtils;
 
 import java.io.File;
 import java.net.UnknownHostException;
@@ -48,11 +47,10 @@ public class FDBMetricsReporterInit {
                 return false;
             }
         } else if (arguments.getReporterType() == FDBMetricsReporterArguments.ReporterType.DIRECT) {
-            if (arguments.getServer() == null || arguments.getToken() == null) {
+            if ((arguments.getServer() == null && arguments.getToken() == null) && arguments.getEndPoints() == null) {
                 return false;
             }
-        } else if (arguments.getReporterType() == FDBMetricsReporterArguments.ReporterType.PROXY ||
-                    arguments.getReporterType() == FDBMetricsReporterArguments.ReporterType.SHARDED) {
+        } else if (arguments.getReporterType() == FDBMetricsReporterArguments.ReporterType.PROXY) {
             if (arguments.getProxyHost() == null) {
                 return false;
             }

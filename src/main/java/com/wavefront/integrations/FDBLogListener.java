@@ -6,14 +6,10 @@ import com.codahale.metrics.SharedMetricRegistries;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Charsets;
 import com.google.common.base.Splitter;
-import com.google.common.cache.CacheBuilder;
-import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 import com.google.common.collect.Iterables;
 import com.google.common.util.concurrent.AtomicDouble;
-import com.wavefront.internal.reporter.WavefrontInternalReporter;
-import com.wavefront.internal_reporter_java.io.dropwizard.metrics5.MetricName;
-import com.wavefront.internal_reporter_java.io.dropwizard.metrics5.Reporter;
+import com.wavefront.sdk.common.WavefrontSender;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.input.Tailer;
 import org.apache.commons.io.input.TailerListenerAdapter;
@@ -22,7 +18,6 @@ import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
 
-import javax.annotation.Nullable;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -65,22 +60,20 @@ public class FDBLogListener extends TailerListenerAdapter {
 
     private String prefix;
 
-    private String clusterFile;
-
     private Map<String, String> tags;
 
-    private WavefrontInternalReporter reporter;
+    private WavefrontSender wavefrontSender;
 
     private String addPrefix(String name) {
         return prefix + name;
     }
 
     public FDBLogListener(String prefix, LoadingCache<String, AtomicDouble> values,
-                          LoadingCache<String, Gauge<Double>> gauges, WavefrontInternalReporter reporter) {
+                          LoadingCache<String, Gauge<Double>> gauges, WavefrontSender wavefrontSender) {
         this.prefix = prefix;
         this.values = values;
         this.gauges = gauges;
-        this.reporter = reporter;
+        this.wavefrontSender = wavefrontSender;
         this.failed = SharedMetricRegistries.getDefault().counter(addPrefix("listener_failed"));
         this.tags = new HashMap<String, String>();
     }
@@ -109,7 +102,6 @@ public class FDBLogListener extends TailerListenerAdapter {
                 String clusterFile = getClusterFile(line);
                 if (clusterFile != null) {
                     tags.put("cluster_file", clusterFile);
-                    logger.info("cluster_file point tag set to " + clusterFile);
                     found = true;
                     break;
                 }
@@ -192,10 +184,14 @@ public class FDBLogListener extends TailerListenerAdapter {
                             String port = getPort(map);
                             String as = map.getNamedItem("As").getNodeValue();
                             String metricName = addPrefix(port + ".role." + encode(as));
-                            if (reporter == null) {
+                            if (this.wavefrontSender == null) {
                                 gauges.getUnchecked(metricName);
                             } else {
-                                reporter.newGauge(new MetricName(metricName, tags), () -> () -> values.getUnchecked(metricName).doubleValue());
+                                this.wavefrontSender.sendMetric(metricName,
+                                        values.getUnchecked(metricName).doubleValue(),
+                                        null,
+                                        null,
+                                        tags);
                             }
                             AtomicDouble value = values.getUnchecked(metricName);
                             value.set(begin ? 1 : 0);
@@ -296,7 +292,7 @@ public class FDBLogListener extends TailerListenerAdapter {
         }
     }
 
-    private void addDoubleGauges(NamedNodeMap map, String port, List<String> list) {
+    private void addDoubleGauges(NamedNodeMap map, String port, List<String> list) throws IOException {
         for (int i = 0; i < map.getLength(); ++i) {
             String name = map.item(i).getNodeName();
             for (String prefix : list) {
@@ -307,13 +303,16 @@ public class FDBLogListener extends TailerListenerAdapter {
         }
     }
 
-    private void addDoubleGauge(NamedNodeMap map, String prefix, String name) {
+    private void addDoubleGauge(NamedNodeMap map, String prefix, String name) throws IOException {
         String metricName = addPrefix(prefix + "." + encode(name));
-        if (reporter == null) {
+        if (this.wavefrontSender == null) {
             gauges.getUnchecked(metricName);
         } else {
-            reporter.newGauge(new MetricName(metricName, tags), () -> () -> values.getUnchecked(metricName).doubleValue());
-            logger.info(metricName + " was attempted to be added");
+            this.wavefrontSender.sendMetric(metricName,
+                    values.getUnchecked(metricName).doubleValue(),
+                    null,
+                    null,
+                    tags);
         }
         AtomicDouble value = values.getUnchecked(metricName);
         Node nodeValue = map.getNamedItem(name);
