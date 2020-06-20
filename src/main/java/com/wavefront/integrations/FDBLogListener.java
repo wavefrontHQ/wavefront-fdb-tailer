@@ -69,13 +69,13 @@ public class FDBLogListener extends TailerListenerAdapter {
     }
 
     public FDBLogListener(String prefix, LoadingCache<String, AtomicDouble> values,
-                          LoadingCache<String, Gauge<Double>> gauges, WavefrontSender wavefrontSender) {
+                          LoadingCache<String, Gauge<Double>> gauges, WavefrontSender wavefrontSender, String serviceName) {
         this.prefix = prefix;
         this.values = values;
         this.gauges = gauges;
         this.wavefrontSender = wavefrontSender;
         this.failed = SharedMetricRegistries.getDefault().counter(addPrefix("listener_failed"));
-        this.tags = new HashMap<String, String>();
+        this.tags = new HashMap<String, String>() {{put("service", serviceName);}};
     }
 
     @Override

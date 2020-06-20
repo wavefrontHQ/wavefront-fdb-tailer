@@ -234,7 +234,7 @@ public class FDBMetricsReporter {
                     return;
                 }
 
-                Tailer tailer = new Tailer(logFile, new FDBLogListener(prefix, values, gauges, wavefrontSender), 1000, true);
+                Tailer tailer = new Tailer(logFile, new FDBLogListener(prefix, values, gauges, wavefrontSender, SERVICE_NAME), 1000, true);
                 es.submit(tailer);
                 if (files.putIfAbsent(logFile, tailer) != null) {
                     // The put didn't succeed, stop the tailer.

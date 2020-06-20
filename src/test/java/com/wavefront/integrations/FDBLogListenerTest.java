@@ -33,6 +33,8 @@ public class FDBLogListenerTest {
         return prefix + name;
     }
 
+    private String serviceName = "fdbtailer";
+
     static {
         SharedMetricRegistries.setDefault("defaultFDBMetrics", new MetricRegistry());
     }
@@ -65,7 +67,7 @@ public class FDBLogListenerTest {
                 }
         );
 
-        listener = new FDBLogListener(prefix, values, gauges, null);
+        listener = new FDBLogListener(prefix, values, gauges, null, serviceName);
     }
 
     @Test
