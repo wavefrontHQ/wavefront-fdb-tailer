@@ -34,11 +34,11 @@ public class FDBMetricsReporter {
 
     private final static int METRICS_REPORTING_PERIOD = 60;
 
-    private final static int BATCH_SIZE = 20_000;
+    private final static int BATCH_SIZE = 50_000;
 
     private final static int MAX_QUEUE_SIZE = 100_000;
 
-    private final static int FLUSH_INTERVAL_SECONDS = 2;
+    private final static int FLUSH_INTERVAL_SECONDS = 60;
 
     static {
         SharedMetricRegistries.setDefault("defaultFDBMetrics", new MetricRegistry());
