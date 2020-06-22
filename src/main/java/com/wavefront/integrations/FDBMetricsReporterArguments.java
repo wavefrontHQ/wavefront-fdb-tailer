@@ -4,6 +4,7 @@ import com.beust.jcommander.Parameter;
 
 import java.io.File;
 import java.util.List;
+import java.util.Map;
 
 /**
  * This class holds the configuration parameters for the fdb-metrics jar.
@@ -11,7 +12,7 @@ import java.util.List;
 public class FDBMetricsReporterArguments {
 
     enum ReporterType {
-        DIRECT, PROXY, GRAPHITE, SHARDED;
+        DIRECT, PROXY, GRAPHITE;
     }
 
     private static final String ALL_FILES = ".*";
@@ -19,6 +20,8 @@ public class FDBMetricsReporterArguments {
     private static final String DEFAULT_HOST = "localhost";
 
     private static final int DEFAULT_PORT = 2878;
+
+    private static final String DEFAULT_SERVICE_NAME = "fdbtailer";
 
     /**
      * @param reporterType The type of reporter that should be used to report the metrics gathered.  Current options are PROXY,
@@ -69,6 +72,14 @@ public class FDBMetricsReporterArguments {
     private String token;
 
     /**
+     * @param endPoints Array of URL endpoints to send metrics to. Only used if reporterType is set to DIRECT.
+     */
+    @Parameter(names = {"--endPoints"},
+            description = "List of endpoints if sending to multiple Wavefront instances. Accepts a comma separated" +
+                    "list in the form of `token@wavefronturl`. Only used if --type is set to DIRECT.")
+    private List<Map<String, String>> endPoints;
+
+    /**
      * @param graphiteServer The name of the machine running a Graphite server.  Only used if reporterType is set to
      *                       GRAPHITE.
      */
@@ -103,6 +114,14 @@ public class FDBMetricsReporterArguments {
             description = "A prefix to attach to all metrics collected.  The default is \"fdb.trace.\" if not specified.")
     private String prefix = "fdb.trace.";
 
+    /**
+     * @param serviceName An optional name for the service. Defaults to \"fdbtailer\" if not specified.
+     */
+    @Parameter(names = {"--serviceName", "-n"},
+            description = "Change the service name to another string. The default is \"fdbtailer\" if not specified.")
+    private String serviceName = DEFAULT_SERVICE_NAME;
+
+
     @Parameter(description = "")
     private List<String> unparsedParams;
 
@@ -130,6 +149,10 @@ public class FDBMetricsReporterArguments {
         this.token = token;
     }
 
+    public void setEndPoints(List<Map<String, String>> endPoints) {
+        this.endPoints = endPoints;
+    }
+
     public void setGraphiteServer(String graphiteServer) {
         this.graphiteServer = graphiteServer;
     }
@@ -140,6 +163,10 @@ public class FDBMetricsReporterArguments {
 
     public void setReporterType(ReporterType reporterType) {
         this.reporterType = reporterType;
+    }
+
+    public void setServiceName(String serviceName) {
+        this.serviceName = serviceName;
     }
 
     public String getDirectory() {
@@ -165,6 +192,8 @@ public class FDBMetricsReporterArguments {
     public String getToken() {
         return token;
     }
+
+    public List<Map<String, String>> getEndPoints() { return endPoints; }
 
     public String getGraphiteServer() {
         return graphiteServer;
@@ -205,4 +234,6 @@ public class FDBMetricsReporterArguments {
     public List<String> getUnparsedParams() {
         return unparsedParams;
     }
+
+    public String getServiceName() { return serviceName; }
 }

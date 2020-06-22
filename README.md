@@ -59,8 +59,14 @@ The command line argument options are as follows:
      --type is set to DIRECT.
      
 --token
-     The API token for Wavefront direct ingestion.  Used only if --type is set to
+     The API token for Wavefront direct ingestion. Used only if --type is set to
      DIRECT.
+
+--endPoints
+    A list of Wavefront endpoints to send metrics. Used only if --type is set to DIRECT.
+
+--serviceName
+    Optional variable to control the name of the service reported. Defaults to fdbtailer.
      
 --type
      The type of reporter that should be used to report the metrics gathered.
@@ -87,6 +93,8 @@ proxyPort:
 reporterType:
 server:
 token:
+endPoints:
+serviceName
 ```
 
 An example YAML configuration file is included as example_config.yaml in this repo, and is reproduced here:
@@ -145,12 +153,14 @@ If you are running a Graphite server, a Graphite reporter can also be used by sp
     --matching ".*"
 ```
 
-### Using the Sharded Reporter
+### Using multiple Wavefront endpoints
 
-If you are running FDB with a sharded memory tier, a special reporter can also be used to apply an additional point tag to all metrics indicating which shard the point is coming from.  The new point tag's key is `cluster_file` and the value is whichever cluster file that shard is using (read from the top of each log). Currently this reporter requires a Wavefront proxy, but if there is interest in extending that please file a github issue.
+In order to send metrics to multiple Wavefront endpoint, you will need to provide a list of endpoints and the [Wavefront API](https://docs.wavefront.com/wavefront_api.html#generating-an-api-token) token. Here is an example of the options to provide in a YAML configuration file. Note that the reporter type must be `DIRECT`. 
 ```
-    --type SHARDED
-    --proxyHost 127.0.0.1
-    --dir "/usr/local/foundationdb/logs"
-    --matching ".*\\.xml$"
+    directory: "/usr/local/foundationdb/logs"
+    matching: ".*\\.xml$"
+    reporterType: DIRECT
+    endPoints:
+        - endPoint1: token@endPoint1.wavefront.com
+        - endPoint2: token@endPoint2.wavefront.com
 ```

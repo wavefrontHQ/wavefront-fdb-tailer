@@ -8,16 +8,16 @@ import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 import com.google.common.util.concurrent.AtomicDouble;
 import com.wavefront.dropwizard.metrics.DropwizardMetricsReporter;
-import com.wavefront.internal.reporter.WavefrontInternalReporter;
 import com.wavefront.sdk.common.WavefrontSender;
-import com.wavefront.sdk.direct_ingestion.WavefrontDirectIngestionClient;
-import com.wavefront.sdk.proxy.WavefrontProxyClient;
+import com.wavefront.sdk.common.clients.WavefrontClientFactory;
 import org.apache.commons.io.input.Tailer;
 
 import java.io.File;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.UnknownHostException;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -30,11 +30,15 @@ public class FDBMetricsReporter {
 
     private final static Logger logger = Logger.getLogger(FDBMetricsReporter.class.getCanonicalName());
 
-    private final static String SERVICE_NAME = "fdbtailer";
-
     private final static int FILE_PARSING_PERIOD = 30;
 
     private final static int METRICS_REPORTING_PERIOD = 60;
+
+    private final static int BATCH_SIZE = 50_000;
+
+    private final static int MAX_QUEUE_SIZE = 100_000;
+
+    private final static int FLUSH_INTERVAL_SECONDS = 60;
 
     static {
         SharedMetricRegistries.setDefault("defaultFDBMetrics", new MetricRegistry());
@@ -42,9 +46,7 @@ public class FDBMetricsReporter {
 
     private ScheduledReporter reporter;
 
-    private WavefrontInternalReporter shardedReporter = null;
-
-    private WavefrontSender sender;
+    private WavefrontSender wavefrontSender;
 
     private String directory;
 
@@ -55,6 +57,8 @@ public class FDBMetricsReporter {
     private LoadingCache<String, AtomicDouble> values;
 
     private LoadingCache<String, Gauge<Double>> gauges;
+
+    private String SERVICE_NAME = "fdbtailer";
 
     String metricName(String name) {
         return prefix + name;
@@ -90,36 +94,51 @@ public class FDBMetricsReporter {
                 }
         );
 
+        if (arguments.getServiceName() != null) {
+            SERVICE_NAME = arguments.getServiceName();
+        }
+
         if (arguments.getReporterType() == FDBMetricsReporterArguments.ReporterType.PROXY) {
             initProxy(arguments.getProxyHost(), arguments.getProxyPort());
         } else if (arguments.getReporterType() == FDBMetricsReporterArguments.ReporterType.DIRECT) {
-            initDirect(arguments.getServer(), arguments.getToken());
+            initDirect(arguments.getServer(), arguments.getToken(), arguments.getEndPoints());
         } else if (arguments.getReporterType() == FDBMetricsReporterArguments.ReporterType.GRAPHITE) {
             initGraphite(arguments.getGraphiteServer(), arguments.getGraphitePort());
-        } else if (arguments.getReporterType() == FDBMetricsReporterArguments.ReporterType.SHARDED) {
-            initSharded(arguments.getProxyHost(), arguments.getProxyPort());
         }
     }
 
-    private void initDirect(String server, String token) {
-        this.sender = new WavefrontDirectIngestionClient.Builder(server, token).build();
+    private void initDirect(String server, String token, List<Map<String, String>> endPoints) {
+        WavefrontClientFactory wavefrontClientFactory = new WavefrontClientFactory();
+
+        if (endPoints != null) {
+            for (Map<String, String> endPointMap : endPoints) {
+                for (Map.Entry<String, String> entry : endPointMap.entrySet()) {
+                    String endPoint = "https://" + entry.getValue();
+                    this.wavefrontSender = addWavefrontClient(wavefrontClientFactory, endPoint);
+                }
+            }
+        } else {
+            String endPoint = "https://" + token + "@" + server;
+            this.wavefrontSender = addWavefrontClient(wavefrontClientFactory, endPoint);
+        }
 
         this.reporter = DropwizardMetricsReporter.forRegistry(SharedMetricRegistries.getDefault()).
                 withSource(getHostName()).
                 withReporterPointTag("service", SERVICE_NAME).
                 withJvmMetrics().
-                build(this.sender);
+                build(this.wavefrontSender);
     }
 
     private void initProxy(String proxyHostname, int proxyPort) throws UnknownHostException {
-        this.sender = new WavefrontProxyClient.Builder(proxyHostname).metricsPort(proxyPort).build();
+        String proxyURL = "proxy://" + proxyHostname + ":" + proxyPort;
+        WavefrontClientFactory wavefrontClientFactory = new WavefrontClientFactory();
+        this.wavefrontSender = addWavefrontClient(wavefrontClientFactory, proxyURL);
 
         this.reporter = DropwizardMetricsReporter.forRegistry(SharedMetricRegistries.getDefault()).
                 withSource(getHostName()).
                 withReporterPointTag("service", SERVICE_NAME).
                 withJvmMetrics().
-                build(this.sender);
-
+                build(this.wavefrontSender);
     }
 
     private void initGraphite(String graphiteServer, int graphitePort) {
@@ -130,19 +149,17 @@ public class FDBMetricsReporter {
                 convertDurationsTo(TimeUnit.MILLISECONDS).
                 filter(MetricFilter.ALL).
                 build(graphite);
-
     }
 
-    private void initSharded(String proxyHostname, int proxyPort) throws UnknownHostException {
-        this.sender = new WavefrontProxyClient.Builder(proxyHostname).metricsPort(proxyPort).build();
+    private WavefrontSender addWavefrontClient(WavefrontClientFactory wavefrontClientFactory, String client) {
+            wavefrontClientFactory.addClient(client,
+                    BATCH_SIZE,
+                    MAX_QUEUE_SIZE,
+                    FLUSH_INTERVAL_SECONDS,
+                    Integer.MAX_VALUE);
 
-        this.shardedReporter = new WavefrontInternalReporter.Builder().
-                withSource(getHostName()).
-                withReporterPointTag("service", SERVICE_NAME).
-                includeJvmMetrics().
-                build(this.sender);
+            return wavefrontClientFactory.getClient();
     }
-
 
     private String getHostName() {
         try {
@@ -154,11 +171,7 @@ public class FDBMetricsReporter {
     }
 
     void start() {
-        if (this.shardedReporter != null) {
-            this.shardedReporter.start(METRICS_REPORTING_PERIOD, TimeUnit.SECONDS);
-        } else {
-            this.reporter.start(METRICS_REPORTING_PERIOD, TimeUnit.SECONDS);
-        }
+        this.reporter.start(METRICS_REPORTING_PERIOD, TimeUnit.SECONDS);
         collectMetrics();
     }
 
@@ -221,7 +234,7 @@ public class FDBMetricsReporter {
                     return;
                 }
 
-                Tailer tailer = new Tailer(logFile, new FDBLogListener(prefix, values, gauges, shardedReporter), 1000, true);
+                Tailer tailer = new Tailer(logFile, new FDBLogListener(prefix, values, gauges, wavefrontSender, SERVICE_NAME), 1000, true);
                 es.submit(tailer);
                 if (files.putIfAbsent(logFile, tailer) != null) {
                     // The put didn't succeed, stop the tailer.

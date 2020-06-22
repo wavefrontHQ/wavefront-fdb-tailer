@@ -4,8 +4,7 @@ import com.beust.jcommander.JCommander;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import static com.wavefront.integrations.FDBMetricsReporterInit.isValid;
 import static com.wavefront.integrations.FDBMetricsReporterInit.parseArguments;
@@ -49,6 +48,10 @@ public class FDBMetricsReporterInitTest {
         String token = "abcde";
         int graphitePort = 3000;
         String graphiteServer = "graphite.example.com";
+        ArrayList endPoints = new ArrayList();
+        endPoints.add(new HashMap<String, String>(){{put("endPoint1", "token@endPoint1.wavefront.com");}});
+        endPoints.add(new HashMap<String, String>(){{put("endPoint2", "token@endPoint2.wavefront.com");}});
+        String serviceName = "loghead";
         FDBMetricsReporterArguments.ReporterType type = FDBMetricsReporterArguments.ReporterType.PROXY;
         String[] args = {"-f", "src/test/resources/test_config.yaml"};
         try {
@@ -63,6 +66,8 @@ public class FDBMetricsReporterInitTest {
         assertEquals(init.arguments.getServer(), server);
         assertEquals(init.arguments.getGraphitePort(), graphitePort);
         assertEquals(init.arguments.getGraphiteServer(), graphiteServer);
+        assertEquals(init.arguments.getEndPoints(), endPoints);
+        assertEquals(init.arguments.getServiceName(), serviceName);
         assertEquals(init.arguments.getReporterType(), type);
     }
 
@@ -77,7 +82,11 @@ public class FDBMetricsReporterInitTest {
         String dir = "/test/dir";
         String matching = "$a";
         FDBMetricsReporterArguments.ReporterType type = FDBMetricsReporterArguments.ReporterType.GRAPHITE;
-        String[] args = {"--type", "GRAPHITE", "--dir", "/test/dir", "--matching", "$a", "--server", "localhost", "--token", "abcdefg", "-f", "src/test/resources/test_config.yaml"};
+        String[] args = {"--type", "GRAPHITE", "--dir", "/test/dir", "--matching", "$a", "--server", "localhost",
+                "--token", "abcdefg",
+                "--serviceName", "loghead",
+                "--endPoints", "token@endPoint1.wavefront.com,token@endPoint2.wavefront.com",
+                "-f", "src/test/resources/test_config.yaml"};
         try {
             parseArguments(args, init);
 
