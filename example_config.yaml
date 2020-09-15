@@ -3,3 +3,14 @@ matching: ".*\\.xml$"
 reporterType: PROXY
 proxyHost: 127.0.0.1
 proxyPort: 2878
+server: wavefront.example.com
+token: abcde
+graphiteServer: graphite.example.com
+graphitePort: 3000
+endPoints:
+  - endPoint1: "token@endPoint1.wavefront.com"
+  - endPoint2: "token@endPoint2.wavefront.com"
+serviceName: loghead
+disableMetrics:
+  - "machineLoadDetail"
+  - "machineMetrics"

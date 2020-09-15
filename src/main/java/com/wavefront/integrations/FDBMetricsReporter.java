@@ -16,6 +16,7 @@ import java.io.File;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.*;
@@ -60,6 +61,8 @@ public class FDBMetricsReporter {
 
     private String SERVICE_NAME = "fdbtailer";
 
+    private List<String> disabledMetrics = new ArrayList<>();
+
     String metricName(String name) {
         return prefix + name;
     }
@@ -96,6 +99,10 @@ public class FDBMetricsReporter {
 
         if (arguments.getServiceName() != null) {
             SERVICE_NAME = arguments.getServiceName();
+        }
+
+        if (arguments.getDisabledMetrics() != null) {
+            disabledMetrics = arguments.getDisabledMetrics();
         }
 
         if (arguments.getReporterType() == FDBMetricsReporterArguments.ReporterType.PROXY) {
@@ -234,7 +241,7 @@ public class FDBMetricsReporter {
                     return;
                 }
 
-                Tailer tailer = new Tailer(logFile, new FDBLogListener(prefix, values, gauges, wavefrontSender, SERVICE_NAME), 1000, true);
+                Tailer tailer = new Tailer(logFile, new FDBLogListener(prefix, values, gauges, wavefrontSender, SERVICE_NAME, disabledMetrics), 1000, true);
                 es.submit(tailer);
                 if (files.putIfAbsent(logFile, tailer) != null) {
                     // The put didn't succeed, stop the tailer.
