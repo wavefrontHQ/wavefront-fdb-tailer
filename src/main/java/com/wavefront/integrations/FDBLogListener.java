@@ -338,8 +338,7 @@ public class FDBLogListener extends TailerListenerAdapter {
         return machine.substring(machine.indexOf(":") + 1);
     }
 
-    @VisibleForTesting
-    boolean enableMetricReporting(String nodeValue) {
+    private boolean enableMetricReporting(String nodeValue) {
         boolean enabled = true;
         if (disabledMetrics.toString().toLowerCase().contains(nodeValue.toLowerCase())) {
             enabled = false;
