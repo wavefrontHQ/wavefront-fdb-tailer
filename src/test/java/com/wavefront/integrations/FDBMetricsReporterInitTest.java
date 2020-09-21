@@ -52,6 +52,7 @@ public class FDBMetricsReporterInitTest {
         endPoints.add(new HashMap<String, String>(){{put("endPoint1", "token@endPoint1.wavefront.com");}});
         endPoints.add(new HashMap<String, String>(){{put("endPoint2", "token@endPoint2.wavefront.com");}});
         String serviceName = "loghead";
+        List<String> disabledMetrics = Arrays.asList("machineMetrics", "machineLoadDetails");
         FDBMetricsReporterArguments.ReporterType type = FDBMetricsReporterArguments.ReporterType.PROXY;
         String[] args = {"-f", "src/test/resources/test_config.yaml"};
         try {
@@ -69,6 +70,7 @@ public class FDBMetricsReporterInitTest {
         assertEquals(init.arguments.getEndPoints(), endPoints);
         assertEquals(init.arguments.getServiceName(), serviceName);
         assertEquals(init.arguments.getReporterType(), type);
+        assertEquals(init.arguments.getDisabledMetrics(), disabledMetrics);
     }
 
     @Test

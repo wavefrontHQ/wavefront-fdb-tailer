@@ -121,6 +121,13 @@ public class FDBMetricsReporterArguments {
             description = "Change the service name to another string. The default is \"fdbtailer\" if not specified.")
     private String serviceName = DEFAULT_SERVICE_NAME;
 
+    /**
+     * @param disableMetrics Disables metric types provided. Possible values: role, machineMetrics, processMetrics,
+     *                       storageMetrics, masterCommit, rkUpdate, totalDataInFlight, movingData, machineLoadDetails,
+     *                       programStart, memSample, memSampleSummary
+     */
+    private List<String> disabledMetrics;
+
 
     @Parameter(description = "")
     private List<String> unparsedParams;
@@ -168,6 +175,8 @@ public class FDBMetricsReporterArguments {
     public void setServiceName(String serviceName) {
         this.serviceName = serviceName;
     }
+
+    public void setDisabledMetrics(List<String> disabledMetrics) { this.disabledMetrics = disabledMetrics; }
 
     public String getDirectory() {
         return directory;
@@ -236,4 +245,6 @@ public class FDBMetricsReporterArguments {
     }
 
     public String getServiceName() { return serviceName; }
+
+    public List<String> getDisabledMetrics() { return disabledMetrics; }
 }

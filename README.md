@@ -70,7 +70,11 @@ The command line argument options are as follows:
      
 --type
      The type of reporter that should be used to report the metrics gathered.
-     Possible Values: [DIRECT, PROXY, GRAPHITE, SHARDED]
+     Possible Values: [DIRECT, PROXY, GRAPHITE]
+
+--disabledMetrics
+    Option to disable certain metrics collected by FDBTailer.
+    Possible Values: [role, machineMetrics, processMetrics, storageMetrics, masterCommit, rkUpdate, totalDataInFlight, movingData, machineLoadDetail, programStart, memSample, memSampleSummary]
 
 ```
 
@@ -105,6 +109,9 @@ matching: ".*\\.xml$"
 reporterType: PROXY
 proxyHost: 127.0.0.1
 proxyPort: 2878
+disabledMetrics:
+  - "machineLoadDetail"
+  - "memSampleSummary"
 ```
 
 This is a simple configuration that sets up the fdb-metrics application to send metrics to a Wavefront proxy running on the local machine.  It will examine all files ending with ```.xml``` in the directory ```/usr/local/foundationdb/logs```.

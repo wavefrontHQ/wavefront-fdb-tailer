@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <groupId>com.wavefront</groupId>
     <artifactId>wavefront-fdb-tailer</artifactId>
-    <version>0.9.0-SNAPSHOT</version>
+    <version>0.10.0-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>Wavefront Metrics Adaptor for FoundationDB Logs</name>
     <description>Reads FoundationDB trace logs and converts them to time-series metrics in Wavefront and

@@ -68,14 +68,17 @@ public class FDBLogListener extends TailerListenerAdapter {
         return prefix + name;
     }
 
+    private List<String> disabledMetrics;
+
     public FDBLogListener(String prefix, LoadingCache<String, AtomicDouble> values,
-                          LoadingCache<String, Gauge<Double>> gauges, WavefrontSender wavefrontSender, String serviceName) {
+                          LoadingCache<String, Gauge<Double>> gauges, WavefrontSender wavefrontSender, String serviceName, List<String> disabledMetrics) {
         this.prefix = prefix;
         this.values = values;
         this.gauges = gauges;
         this.wavefrontSender = wavefrontSender;
         this.failed = SharedMetricRegistries.getDefault().counter(addPrefix("listener_failed"));
         this.tags = new HashMap<String, String>() {{put("service", serviceName);}};
+        this.disabledMetrics = disabledMetrics;
     }
 
     @Override
@@ -175,7 +178,7 @@ public class FDBLogListener extends TailerListenerAdapter {
                 Document doc = db.parse(new ByteArrayInputStream(line.getBytes(Charsets.UTF_8)));
                 NamedNodeMap map = doc.getDocumentElement().getAttributes();
                 Node type = map.getNamedItem("Type");
-                if (type != null) {
+                if (type != null && enableMetricReporting(type.getNodeValue())) {
                     switch (type.getNodeValue()) {
                         case "Role": {
                             // Track all transitions with booleans.  It isn't clear how often
@@ -333,6 +336,14 @@ public class FDBLogListener extends TailerListenerAdapter {
     private String getPort(NamedNodeMap map) {
         String machine = map.getNamedItem("Machine").getNodeValue();
         return machine.substring(machine.indexOf(":") + 1);
+    }
+
+    private boolean enableMetricReporting(String nodeValue) {
+        boolean enabled = true;
+        if (disabledMetrics.toString().toLowerCase().contains(nodeValue.toLowerCase())) {
+            enabled = false;
+        }
+        return enabled;
     }
 
     @VisibleForTesting

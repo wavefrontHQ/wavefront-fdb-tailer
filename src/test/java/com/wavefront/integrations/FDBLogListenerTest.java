@@ -13,6 +13,8 @@ import org.junit.Test;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -34,6 +36,8 @@ public class FDBLogListenerTest {
     }
 
     private String serviceName = "fdbtailer";
+
+    private List<String> disabledMetrics = Arrays.asList("machineMetrics");
 
     static {
         SharedMetricRegistries.setDefault("defaultFDBMetrics", new MetricRegistry());
@@ -67,7 +71,7 @@ public class FDBLogListenerTest {
                 }
         );
 
-        listener = new FDBLogListener(prefix, values, gauges, null, serviceName);
+        listener = new FDBLogListener(prefix, values, gauges, null, serviceName, disabledMetrics);
     }
 
     @Test
