@@ -196,6 +196,11 @@ public class FDBMetricsReporter {
                     disableInactiveTailers();
 
                     File[] logFiles = new File(directory).listFiles(pathname -> pattern.matcher(pathname.getName()).matches());
+                    if (logFiles == null) {
+                        logger.warning("Unable to list files in " + directory +
+                            " - verify that the directory exists");
+                        return;
+                    }
 
                     for (File logFile : logFiles) {
                         if (files.containsKey(logFile) &&

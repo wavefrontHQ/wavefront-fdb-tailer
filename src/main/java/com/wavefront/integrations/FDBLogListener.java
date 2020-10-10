@@ -288,8 +288,8 @@ public class FDBLogListener extends TailerListenerAdapter {
                         counter.inc();
                     }
                 }
-            } catch (ParserConfigurationException | SAXException | IOException e) {
-                logger.log(Level.SEVERE, "Failed to parse log line", e);
+            } catch (ParserConfigurationException | SAXException | IOException | IllegalArgumentException e) {
+                logger.log(Level.SEVERE, "Failed to parse log line: " + line, e);
                 throw new RuntimeException(e);
             }
         }
@@ -334,7 +334,11 @@ public class FDBLogListener extends TailerListenerAdapter {
     }
 
     private String getPort(NamedNodeMap map) {
-        String machine = map.getNamedItem("Machine").getNodeValue();
+        Node machineNode = map.getNamedItem("Machine");
+        if (machineNode == null) {
+            throw new IllegalArgumentException("'Machine' attribute is missing");
+        }
+        String machine = machineNode.getNodeValue();
         return machine.substring(machine.indexOf(":") + 1);
     }
 
