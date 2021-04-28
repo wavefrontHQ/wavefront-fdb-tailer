@@ -24,6 +24,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
 
+import org.apache.maven.model.Model;
+import org.apache.maven.model.io.xpp3.MavenXpp3Reader;
+import java.io.InputStreamReader;
+
+import com.google.common.collect.ImmutableMap;
+
 /**
  * This class collects and periodically reports metrics via Wavefront Proxy, Wavefront Direct Ingestion, or GraphiteReporter.
  */
@@ -62,6 +68,10 @@ public class FDBMetricsReporter {
     private String SERVICE_NAME = "fdbtailer";
 
     private List<String> disabledMetrics = new ArrayList<>();
+
+    private long metricTimestamp = System.currentTimeMillis();
+
+    private final String metricHost = InetAddress.getLocalHost().getCanonicalHostName();
 
     String metricName(String name) {
         return prefix + name;
@@ -194,6 +204,7 @@ public class FDBMetricsReporter {
             public void run() {
                 try {
                     disableInactiveTailers();
+                    sendFDBTailerVersionMetric();
 
                     File[] logFiles = new File(directory).listFiles(pathname -> pattern.matcher(pathname.getName()).matches());
                     if (logFiles == null) {
@@ -251,6 +262,29 @@ public class FDBMetricsReporter {
                 if (files.putIfAbsent(logFile, tailer) != null) {
                     // The put didn't succeed, stop the tailer.
                     tailer.stop();
+                }
+            }
+
+            /*  
+            **  This method fetches the fdbtailer version number from the pom.xml file,
+            **  creates a custom metric and pushes it to the wavefront.
+            */
+            private void sendFDBTailerVersionMetric() throws Exception {
+                try {
+                    String metricName = "fdbtailer.version";
+                    ImmutableMap<String, String> metrictags = ImmutableMap.<String, String>builder().put("fdbtailer", "version_number").build();
+
+                    MavenXpp3Reader reader = new MavenXpp3Reader();
+                    Model model = reader.read(new InputStreamReader(FDBMetricsReporter.class
+                                    .getResourceAsStream("/META-INF/maven/com.wavefront/wavefront-fdb-tailer/pom.xml")));
+                    
+                    String metricValue = model.getVersion();
+                    wavefrontSender.sendMetric(metricName, Double.parseDouble(metricValue), metricTimestamp, metricHost, metrictags);
+                    wavefrontSender.flush();
+
+                    logger.log(Level.INFO, "sending metric: " + metricName + " " + metricValue + " " + metricTimestamp + " " + metricHost + " " + metrictags);
+                } catch (Exception e) {
+                    logger.log(Level.WARNING, "failed to fetch the FDBTailer version number metric", e);
                 }
             }
         }, 0, FILE_PARSING_PERIOD, TimeUnit.SECONDS);
