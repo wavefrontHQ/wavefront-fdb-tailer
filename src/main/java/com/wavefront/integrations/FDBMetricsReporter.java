@@ -278,9 +278,11 @@ public class FDBMetricsReporter {
                     Model model = reader.read(new InputStreamReader(FDBMetricsReporter.class
                                     .getResourceAsStream("/META-INF/maven/com.wavefront/wavefront-fdb-tailer/pom.xml")));
                     
-                    String metricValue = model.getVersion();
+                    String fdbVersion = model.getVersion();
+                    String metricValue = fdbVersion.substring(0, 4);
+                    String pointTagValue = fdbVersion.substring(4, fdbVersion.length());
+                    metrictags = ImmutableMap.<String, String>builder().put("minor_version", pointTagValue).build();
                     wavefrontSender.sendMetric(metricName, Double.parseDouble(metricValue), metricTimestamp, metricHost, metrictags);
-                    wavefrontSender.flush();
 
                     logger.log(Level.INFO, "sending metric: " + metricName + " " + metricValue + " " + metricTimestamp + " " + metricHost + " " + metrictags);
                 } catch (Exception e) {
