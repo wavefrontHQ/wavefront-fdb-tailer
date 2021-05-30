@@ -238,9 +238,18 @@ public class FDBLogListener extends TailerListenerAdapter {
                             break;
                         }
                         case "MovingData": {
+                            // an entry looks something like:
+                            // <Event Severity="10" Time="1622081571.719325" Type="MovingData" ID="8fb39ddb70631e31"
+                            // InFlight="845" InQueue="315666" AverageShardSize="250000000" UnhealthyRelocations="143"
+                            // HighestPriority="950" BytesWritten="346668575426" PriorityRecoverMove="0" PriorityRebalanceUnderutilizedTeam="40"
+                            // PriorityRebalanceOverutilizedTeam="36" PriorityTeamHealthy="0" PriorityTeamContainsUndesiredServer="0"
+                            // PriorityTeamRedundant="4" PriorityMergeShard="264698" PriorityPopulateRegion="0" PriorityTeamUnhealthy="0"
+                            // PriorityTeam2Left="0" PriorityTeam1Left="0" PriorityTeam0Left="0" PrioritySplitShard="51733"
+                            // Machine="10.5.1.101:4591" LogGroup="default" Roles="DD" TrackLatestType="Original" />
                             addDoubleGauge(map, "shards." + getPort(map), "AverageShardSize");
                             addDoubleGauges(map, "moving", Arrays.asList("InFlight", "InQueue",
-                                    "LowPriorityRelocations", "HighPriorityRelocations", "HighestPriority"));
+                                    "LowPriorityRelocations", "HighPriorityRelocations", "HighestPriority",
+                                    "UnhealthyRelocations", "BytesWritten", "Priority"));
                             break;
                         }
                         case "MachineLoadDetail": {
