@@ -67,8 +67,6 @@ public class FDBMetricsReporter {
 
     private long metricTimestamp = System.currentTimeMillis();
 
-    // private final String metricHost = InetAddress.getLocalHost().getCanonicalHostName();
-
     String metricName(String name) {
         return prefix + name;
     }
