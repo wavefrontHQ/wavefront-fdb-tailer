@@ -24,6 +24,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
 
+import com.google.common.collect.ImmutableMap;
+
 /**
  * This class collects and periodically reports metrics via Wavefront Proxy, Wavefront Direct Ingestion, or GraphiteReporter.
  */
@@ -62,6 +64,8 @@ public class FDBMetricsReporter {
     private String SERVICE_NAME = "fdbtailer";
 
     private List<String> disabledMetrics = new ArrayList<>();
+
+    private long metricTimestamp = System.currentTimeMillis();
 
     String metricName(String name) {
         return prefix + name;
@@ -194,6 +198,7 @@ public class FDBMetricsReporter {
             public void run() {
                 try {
                     disableInactiveTailers();
+                    sendFDBTailerVersionMetric();
 
                     File[] logFiles = new File(directory).listFiles(pathname -> pattern.matcher(pathname.getName()).matches());
                     if (logFiles == null) {
@@ -251,6 +256,35 @@ public class FDBMetricsReporter {
                 if (files.putIfAbsent(logFile, tailer) != null) {
                     // The put didn't succeed, stop the tailer.
                     tailer.stop();
+                }
+            }
+
+            /*  
+            **  This method fetches the fdbtailer version number from the pom.xml file,
+            **  creates a custom metric and pushes it to the wavefront.
+            */
+            private void sendFDBTailerVersionMetric() throws Exception {
+                try {
+                    String metricName = "fdbtailer.version";
+                    ImmutableMap<String, String> metrictags = ImmutableMap.<String, String>builder().put("fdbtailer", "version_number").build();
+
+                    String fdbVersion = getClass().getPackage().getImplementationVersion();
+                    logger.log(Level.INFO, "Version Number is : " + fdbVersion);
+
+                    String metricValue = fdbVersion.substring(0, 4);
+                    logger.log(Level.INFO, "Value of metricValue is : " + metricValue);
+
+                    String pointTagValue = fdbVersion.substring(5, fdbVersion.length());
+                    logger.log(Level.INFO, "Value of pointTagValue is : " + pointTagValue);
+
+                    metrictags = ImmutableMap.<String, String>builder().put("minor_version", pointTagValue).build();
+                    wavefrontSender.sendMetric(metricName, Double.parseDouble(metricValue), metricTimestamp, getHostName(), metrictags);
+
+                    logger.log(Level.INFO, "Host name is : " + getHostName());
+                    logger.log(Level.INFO, "sending metric: " + metricName + " " + metricValue + " " + metricTimestamp + " " + getHostName() + " " + metrictags);
+
+                } catch (Exception e) {
+                    logger.log(Level.WARNING, "failed to fetch the FDBTailer version number metric", e);
                 }
             }
         }, 0, FILE_PARSING_PERIOD, TimeUnit.SECONDS);
