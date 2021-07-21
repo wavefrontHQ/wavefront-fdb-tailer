@@ -260,28 +260,19 @@ public class FDBMetricsReporter {
             }
 
             /*  
-            **  This method fetches the fdbtailer version number from the pom.xml file,
-            **  creates a custom metric and pushes it to the wavefront.
+            **  This method fetches the fdbtailer version number,
+            **  creates a custom metric and pushes it to the wavefront for monitoring.
             */
             private void sendFDBTailerVersionMetric() throws Exception {
                 try {
                     String metricName = "fdbtailer.version";
                     ImmutableMap<String, String> metrictags = ImmutableMap.<String, String>builder().put("fdbtailer", "version_number").build();
-
                     String fdbVersion = getClass().getPackage().getImplementationVersion();
-                    logger.log(Level.INFO, "Version Number is : " + fdbVersion);
-
                     String metricValue = fdbVersion.substring(0, 4);
-                    logger.log(Level.INFO, "Value of metricValue is : " + metricValue);
-
                     String pointTagValue = fdbVersion.substring(5, fdbVersion.length());
-                    logger.log(Level.INFO, "Value of pointTagValue is : " + pointTagValue);
 
                     metrictags = ImmutableMap.<String, String>builder().put("minor_version", pointTagValue).build();
                     wavefrontSender.sendMetric(metricName, Double.parseDouble(metricValue), metricTimestamp, getHostName(), metrictags);
-
-                    logger.log(Level.INFO, "Host name is : " + getHostName());
-                    logger.log(Level.INFO, "sending metric: " + metricName + " " + metricValue + " " + metricTimestamp + " " + getHostName() + " " + metrictags);
 
                 } catch (Exception e) {
                     logger.log(Level.WARNING, "failed to fetch the FDBTailer version number metric", e);
