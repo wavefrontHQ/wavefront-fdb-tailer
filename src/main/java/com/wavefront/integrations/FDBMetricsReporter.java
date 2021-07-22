@@ -65,8 +65,6 @@ public class FDBMetricsReporter {
 
     private List<String> disabledMetrics = new ArrayList<>();
 
-    private long metricTimestamp = System.currentTimeMillis();
-
     String metricName(String name) {
         return prefix + name;
     }
@@ -265,14 +263,14 @@ public class FDBMetricsReporter {
             */
             private void sendFDBTailerVersionMetric() throws Exception {
                 try {
-                    String metricName = "fdbtailer.version";
-                    ImmutableMap<String, String> metrictags = ImmutableMap.<String, String>builder().put("fdbtailer", "version_number").build();
+                    String metricName = SERVICE_NAME.concat(".version");
+                    ImmutableMap<String, String> metrictags = ImmutableMap.<String, String>builder().put(SERVICE_NAME, "version_number").build();
                     String fdbVersion = getClass().getPackage().getImplementationVersion();
                     String metricValue = fdbVersion.substring(0, 4);
                     String pointTagValue = fdbVersion.substring(5, fdbVersion.length());
 
                     metrictags = ImmutableMap.<String, String>builder().put("minor_version", pointTagValue).build();
-                    wavefrontSender.sendMetric(metricName, Double.parseDouble(metricValue), metricTimestamp, getHostName(), metrictags);
+                    wavefrontSender.sendMetric(metricName, Double.parseDouble(metricValue), null, getHostName(), metrictags);
 
                 } catch (Exception e) {
                     logger.log(Level.WARNING, "failed to fetch the FDBTailer version number metric", e);
