@@ -24,6 +24,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
 
+import com.google.common.collect.ImmutableMap;
+
 /**
  * This class collects and periodically reports metrics via Wavefront Proxy, Wavefront Direct Ingestion, or GraphiteReporter.
  */
@@ -194,6 +196,7 @@ public class FDBMetricsReporter {
             public void run() {
                 try {
                     disableInactiveTailers();
+                    sendFDBTailerVersionMetric();
 
                     File[] logFiles = new File(directory).listFiles(pathname -> pattern.matcher(pathname.getName()).matches());
                     if (logFiles == null) {
@@ -251,6 +254,26 @@ public class FDBMetricsReporter {
                 if (files.putIfAbsent(logFile, tailer) != null) {
                     // The put didn't succeed, stop the tailer.
                     tailer.stop();
+                }
+            }
+
+            /*  
+            **  This method fetches the fdbtailer version number,
+            **  creates a custom metric and pushes it to the wavefront for monitoring.
+            */
+            private void sendFDBTailerVersionMetric() throws Exception {
+                try {
+                    String metricName = SERVICE_NAME.concat(".version");
+                    ImmutableMap<String, String> metrictags = ImmutableMap.<String, String>builder().put(SERVICE_NAME, "version_number").build();
+                    String fdbVersion = getClass().getPackage().getImplementationVersion();
+                    String metricValue = fdbVersion.substring(0, 4);
+                    String pointTagValue = fdbVersion.substring(5, fdbVersion.length());
+
+                    metrictags = ImmutableMap.<String, String>builder().put("minor_version", pointTagValue).build();
+                    wavefrontSender.sendMetric(metricName, Double.parseDouble(metricValue), null, getHostName(), metrictags);
+
+                } catch (Exception e) {
+                    logger.log(Level.WARNING, "failed to fetch the FDBTailer version number metric", e);
                 }
             }
         }, 0, FILE_PARSING_PERIOD, TimeUnit.SECONDS);
