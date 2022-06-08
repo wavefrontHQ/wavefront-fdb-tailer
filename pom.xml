@@ -40,7 +40,7 @@
         <dependency>
             <groupId>io.dropwizard.metrics</groupId>
             <artifactId>metrics-graphite</artifactId>
-            <version>4.0.3</version>
+            <version>4.2.9</version>
         </dependency>
         <dependency>
             <groupId>com.wavefront</groupId>
