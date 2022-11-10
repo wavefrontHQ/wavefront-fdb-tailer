@@ -11,6 +11,6 @@ endPoints:
   - endPoint1: "token@endPoint1.wavefront.com"
   - endPoint2: "token@endPoint2.wavefront.com"
 serviceName: loghead
-disableMetrics:
+disabledMetrics:
   - "machineLoadDetail"
   - "machineMetrics"
