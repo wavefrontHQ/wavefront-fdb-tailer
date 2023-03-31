@@ -25,6 +25,12 @@
             <organizationUrl>http://www.wavefront.com</organizationUrl>
         </developer>
     </developers>
+    <scm>
+    	<connection>scm:git:git@github.com:wavefrontHQ/wavefront-fdb-tailer.git</connection>
+    	<developerConnection>scm:git:git@github.com:wavefrontHQ/wavefront-fdb-tailer.git</developerConnection>
+    	<url>git@github.com:wavefrontHQ/wavefront-fdb-tailer.git</url>
+    	<tag>HEAD</tag>
+   </scm>
     <modelVersion>4.0.0</modelVersion>
     <dependencies>
         <dependency>
