@@ -308,7 +308,7 @@ public class FDBLogListener extends TailerListenerAdapter {
                             String port = getPort(map);
                             addDoubleGauges(map, port, Arrays.asList(
                                     "BTreePreload", "BTreePreloadExt", "OpSetKeyBytes", "OpSetValueBytes", "OpClear", "OpClearKey", "OpGet", "OpGetRange", "OpCommit",
-                                    "PagerDiskWrite", "PagerDiskRead", "PagerCacheHit=", "PagerCacheMiss", "PagerProbeHit", "PagerProbeMiss", "PagerEvictUnhit", "PagerEvictFail",
+                                    "PagerDiskWrite", "PagerDiskRead", "PagerCacheHit", "PagerCacheMiss", "PagerProbeHit", "PagerProbeMiss", "PagerEvictUnhit", "PagerEvictFail",
                                     "PagerRemapFree", "PagerRemapCopy", "PagerRemapSkip", "LookupGetRPF", "LookupMeta", " HitGetRPF", "HitMeta", "MissGetRPF", "MissMeta",
                                     "WriteMeta", "PageCacheCount", "PageCacheMoved", "PageCacheSize", "DecodeCacheSize", "L1PageBuild", "L1PageBuildExt",
                                     "L1PageModify", "L1PageModifyExt", "L1PageRead", "L1PageReadExt", "L1PageCommitStart", "L1LazyClearInt", "L1LazyClearIntExt", "L1LazyClear",
