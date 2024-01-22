@@ -285,6 +285,49 @@ public class FDBLogListener extends TailerListenerAdapter {
                                     "TotalSize", "TotalCount"));
                             break;
                         }
+                        case "RedwoodMetrics": {
+                            // an entry looks something like:
+                            // BTreePreload="919" BTreePreloadExt="60" OpSet="10377" OpSetKeyBytes="375634" OpSetValueBytes="26560987" OpClear="806" OpClearKey="0" OpGet="75" OpGetRange="1403" OpCommit="10"
+                            // PagerDiskWrite="4298" PagerDiskRead="1324" PagerCacheHit="8848" PagerCacheMiss="1183" PagerProbeHit="1" PagerProbeMiss="23" PagerEvictUnhit="3222" PagerEvictFail="0"
+                            // PagerRemapFree="207" PagerRemapCopy="24" PagerRemapSkip="176" LookupGetRPF="919" LookupMeta="53" HitGetRPF="61" HitMeta="20" MissGetRPF="858" MissMeta="9"
+                            // WriteMeta="74" PageCacheCount="189076" PageCacheMoved="0" PageCacheSize="2147481730" DecodeCacheSize="46733442" L1PageBuild="2449" L1PageBuildExt="1578"
+                            // L1PageModify="105" L1PageModifyExt="5" L1PageRead="2942" L1PageReadExt="729" L1PageCommitStart="403" L1LazyClearInt="0" L1LazyClearIntExt="0" L1LazyClear="0"
+                            // L1LazyClearExt="0" L1ForceUpdate="0" L1DetachChild="0" L1LookupCommit="403" L1LookupLazyClr="0" L1LookupGet="75" L1LookupGetR="2464" L1HitCommit="389" L1HitLazyClr="0"
+                            // L1HitGet="61" L1HitGetR="2222" L1MissCommit="14" L1MissLazyClr="0" L1MissGet="14" L1MissGetR="242" L1WriteCommit="4137" L1WriteLazyClr="0" L2PageBuild="20" L2PageBuildExt="0"
+                            // L2PageModify="49" L2PageModifyExt="0" L2PageRead="1583" L2PageReadExt="0" L2PageCommitStart="101" L2LazyClearInt="0" L2LazyClearIntExt="0" L2LazyClear="0" L2LazyClearExt="0"
+                            // L2ForceUpdate="13" L2DetachChild="68" L2LookupCommit="101" L2LookupLazyClr="0" L2LookupGet="75" L2LookupGetR="1407" L2HitCommit="96" L2HitLazyClr="0" L2HitGet="72" L2HitGetR="1377"
+                            // L2MissCommit="5" L2MissLazyClr="0" L2MissGet="3" L2MissGetR="30" L2WriteCommit="69" L2WriteLazyClr="0" L3PageBuild="0" L3PageBuildExt="0" L3PageModify="16" L3PageModifyExt="0"
+                            // L3PageRead="1551" L3PageReadExt="0" L3PageCommitStart="73" L3LazyClearInt="0" L3LazyClearIntExt="0" L3LazyClear="0" L3LazyClearExt="0" L3ForceUpdate="6" L3DetachChild="19"
+                            // L3LookupCommit="73" L3LookupLazyClr="0" L3LookupGet="75" L3LookupGetR="1403" L3HitCommit="73" L3HitLazyClr="0" L3HitGet="75" L3HitGetR="1395" L3MissCommit="0" L3MissLazyClr="0" L3MissGet="0"
+                            // L3MissGetR="8" L3WriteCommit="16" L3WriteLazyClr="0" L4PageBuild="0" L4PageBuildExt="0" L4PageModify="2" L4PageModifyExt="0" L4PageRead="1519" L4PageReadExt="0" L4PageCommitStart="41"
+                            // L4LazyClearInt="0" L4LazyClearIntExt="0" L4LazyClear="0" L4LazyClearExt="0" L4ForceUpdate="2" L4DetachChild="7" L4LookupCommit="41" L4LookupLazyClr="0" L4LookupGet="75" L4LookupGetR="1403"
+                            // L4HitCommit="41" L4HitLazyClr="0" L4HitGet="75" L4HitGetR="1403" L4MissCommit="0" L4MissLazyClr="0" L4MissGet="0" L4MissGetR="0" L4WriteCommit="2" L4WriteLazyClr="0" L5PageBuild="0"
+                            // L5PageBuildExt="0" L5PageModify="0" L5PageModifyExt="0" L5PageRead="1488" L5PageReadExt="0" L5PageCommitStart="10" L5LazyClearInt="0" L5LazyClearIntExt="0" L5LazyClear="0" L5LazyClearExt="0"
+                            // L5ForceUpdate="0" L5DetachChild="0" L5LookupCommit="10" L5LookupLazyClr="0" L5LookupGet="75" L5LookupGetR="1403" L5HitCommit="10" L5HitLazyClr="0" L5HitGet="75" L5HitGetR="1403"
+                            // L5MissCommit="0" L5MissLazyClr="0" L5MissGet="0" L5MissGetR="0" L5WriteCommit="0" L5WriteLazyClr="0" ThreadID="13425918326275095525" Machine="10.0.0.1:4502" LogGroup="default" Roles="SS" />
+                            String port = getPort(map);
+                            addDoubleGauges(map, port, Arrays.asList(
+                                    "BTreePreload", "BTreePreloadExt", "OpSetKeyBytes", "OpSetValueBytes", "OpClear", "OpClearKey", "OpGet", "OpGetRange", "OpCommit",
+                                    "PagerDiskWrite", "PagerDiskRead", "PagerCacheHit=", "PagerCacheMiss", "PagerProbeHit", "PagerProbeMiss", "PagerEvictUnhit", "PagerEvictFail",
+                                    "PagerRemapFree", "PagerRemapCopy", "PagerRemapSkip", "LookupGetRPF", "LookupMeta", " HitGetRPF", "HitMeta", "MissGetRPF", "MissMeta",
+                                    "WriteMeta", "PageCacheCount", "PageCacheMoved", "PageCacheSize", "DecodeCacheSize", "L1PageBuild", "L1PageBuildExt",
+                                    "L1PageModify", "L1PageModifyExt", "L1PageRead", "L1PageReadExt", "L1PageCommitStart", "L1LazyClearInt", "L1LazyClearIntExt", "L1LazyClear",
+                                    "L1LazyClearExt", "L1ForceUpdate", "L1DetachChild", "L1LookupCommit", "L1LookupLazyClr", "L1LookupGet", "L1LookupGetR", "L1HitCommit", "L1HitLazyClr",
+                                    "L1HitGet", "L1HitGetR", "L1MissCommit", "L1MissLazyClr", "L1MissGet", "L1MissGetR", "L1WriteCommit", "L1WriteLazyClr", "L2PageBuild", "L2PageBuildExt",
+                                    "L2PageModify", "L2PageModifyExt", "L2PageRead", "L2PageReadExt", "L2PageCommitStart", "L2LazyClearInt", "L2LazyClearIntExt", "L2LazyClear", "L2LazyClearExt",
+                                    "L2ForceUpdate", "L2DetachChild", "L2LookupCommit", "L2LookupLazyClr", "L2LookupGet", "L2LookupGetR", "L2HitCommit", "L2HitLazyClr", "L2HitGet", "L2HitGetR",
+                                    "L2MissCommit", "L2MissLazyClr", "L2MissGet", "L2MissGetR", "L2WriteCommit", "L2WriteLazyClr", "L3PageBuild", "L3PageBuildExt", "L3PageModify", "L3PageModifyExt",
+                                    "L3PageRead", "L3PageReadExt", "L3PageCommitStart", "L3LazyClearInt", "L3LazyClearIntExt", "L3LazyClear", "L3LazyClearExt", "L3ForceUpdate", "L3DetachChild",
+                                    "L3LookupCommit", "L3LookupLazyClr", "L3LookupGet", "L3LookupGetR", "L3HitCommit", "L3HitLazyClr", "L3HitGet", "L3HitGetR", "L3MissCommit", "L3MissLazyClr", "L3MissGet",
+                                    "L3MissGetR", "L3WriteCommit", "L3WriteLazyClr", "L4PageBuild", "L4PageBuildExt", "L4PageModify", "L4PageModifyExt", "L4PageRead", "L4PageReadExt", "L4PageCommitStart",
+                                    "L4LazyClearInt", "L4LazyClearIntExt", "L4LazyClear", "L4LazyClearExt", "L4ForceUpdate", "L4DetachChild", "L4LookupCommit", "L4LookupLazyClr", "L4LookupGet" ,"L4LookupGetR",
+                                    "L4HitCommit", "L4HitLazyClr", "L4HitGet", "L4HitGetR", "L4MissCommit", "L4MissLazyClr", "L4MissGet", "L4MissGetR", "L4WriteCommit", "L4WriteLazyClr", "L5PageBuild",
+                                    "L5PageBuildExt", "L5PageModify", "L5PageModifyExt", "L5PageRead", "L5PageReadExt", "L5PageCommitStart", "L5LazyClearInt", "L5LazyClearIntExt", "L5LazyClear", "L5LazyClearExt",
+                                    "L5ForceUpdate", "L5DetachChild", "L5LookupCommit", "L5LookupLazyClr", "L5LookupGet", "L5LookupGetR", "L5HitCommit", "L5HitLazyClr", "L5HitGet", "L5HitGetR",
+                                    "L5MissCommit", "L5MissLazyClr", "L5MissGet", "L5MissGetR", "L5WriteCommit", "L5WriteLazyClr"
+                            ));
+                            break;
+                        }
                         default: {
                             break;
                         }
