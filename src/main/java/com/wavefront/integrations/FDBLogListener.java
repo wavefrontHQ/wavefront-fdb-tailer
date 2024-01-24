@@ -306,8 +306,7 @@ public class FDBLogListener extends TailerListenerAdapter {
                             // L5ForceUpdate="0" L5DetachChild="0" L5LookupCommit="10" L5LookupLazyClr="0" L5LookupGet="75" L5LookupGetR="1403" L5HitCommit="10" L5HitLazyClr="0" L5HitGet="75" L5HitGetR="1403"
                             // L5MissCommit="0" L5MissLazyClr="0" L5MissGet="0" L5MissGetR="0" L5WriteCommit="0" L5WriteLazyClr="0" ThreadID="13425918326275095525" Machine="10.0.0.1:4502" LogGroup="default" Roles="SS" />
                             String port = getPort(map);
-                            addDoubleGauges(map, port, Arrays.asList(
-                                    "BTreePreload", "BTreePreloadExt", "OpSetKeyBytes", "OpSetValueBytes", "OpClear", "OpClearKey", "OpGet", "OpGetRange", "OpCommit",
+                            addDoubleGauges(map, port, Arrays.asList("BTreePreload", "BTreePreloadExt", "OpSetKeyBytes", "OpSetValueBytes", "OpClear", "OpClearKey", "OpGet", "OpGetRange", "OpCommit",
                                     "PagerDiskWrite", "PagerDiskRead", "PagerCacheHit", "PagerCacheMiss", "PagerProbeHit", "PagerProbeMiss", "PagerEvictUnhit", "PagerEvictFail",
                                     "PagerRemapFree", "PagerRemapCopy", "PagerRemapSkip", "LookupGetRPF", "LookupMeta", " HitGetRPF", "HitMeta", "MissGetRPF", "MissMeta",
                                     "WriteMeta", "PageCacheCount", "PageCacheMoved", "PageCacheSize", "DecodeCacheSize", "L1PageBuild", "L1PageBuildExt",
@@ -324,8 +323,7 @@ public class FDBLogListener extends TailerListenerAdapter {
                                     "L4HitCommit", "L4HitLazyClr", "L4HitGet", "L4HitGetR", "L4MissCommit", "L4MissLazyClr", "L4MissGet", "L4MissGetR", "L4WriteCommit", "L4WriteLazyClr", "L5PageBuild",
                                     "L5PageBuildExt", "L5PageModify", "L5PageModifyExt", "L5PageRead", "L5PageReadExt", "L5PageCommitStart", "L5LazyClearInt", "L5LazyClearIntExt", "L5LazyClear", "L5LazyClearExt",
                                     "L5ForceUpdate", "L5DetachChild", "L5LookupCommit", "L5LookupLazyClr", "L5LookupGet", "L5LookupGetR", "L5HitCommit", "L5HitLazyClr", "L5HitGet", "L5HitGetR",
-                                    "L5MissCommit", "L5MissLazyClr", "L5MissGet", "L5MissGetR", "L5WriteCommit", "L5WriteLazyClr"
-                            ));
+                                    "L5MissCommit", "L5MissLazyClr", "L5MissGet", "L5MissGetR", "L5WriteCommit", "L5WriteLazyClr"));
                             break;
                         }
                         default: {
