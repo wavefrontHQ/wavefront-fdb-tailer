@@ -212,13 +212,35 @@ public class FDBLogListener extends TailerListenerAdapter {
                             addDoubleGauge(map, port, "Memory");
                             break;
                         }
+                        // an entry looks something like:
+                        // <Event Severity="10" Time="1706276733.451520" DateTime="2024-01-26T13:45:33Z" Type="StorageMetrics" ID="87e95f4ce1825556" Elapsed="5"
+                        // QueryQueue="1533.8 8.17835 446121285" SystemKeyQueries="934.999 11.0172 338909424" GetKeyQueries="0 -1 2174" GetValueQueries="970.399 12.5775 262317949"
+                        // GetRangeQueries="563.399 4.76179 183801162" GetRangeSystemKeyQueries="271.2 4.34073 114334078" GetRangeStreamQueries="0 -1 0" FinishedQueries="1533.8 9.30897 446121285"
+                        // LowPriorityQueries="0 -1 0" RowsQueried="22057.2 175.782 10846563485" BytesQueried="3.63678e+06 29196.7 1769773380385" WatchQueries="3.2 0.917709 535377"
+                        // EmptyQueries="202.2 20.8089 39720163" FeedRowsQueried="0 -1 0" FeedBytesQueried="0 -1 0" FeedStreamQueries="0 -1 0" RejectedFeedStreamQueries="0 -1 0"
+                        // FeedVersionQueries="0 -1 0" GetMappedRangeBytesQueried="0 -1 0" FinishedGetMappedRangeSecondaryQueries="0 -1 0" GetMappedRangeQueries="0 -1 0"
+                        // FinishedGetMappedRangeQueries="0 -1 0" BytesInput="3.30378e+06 41382.5 683693747690" LogicalBytesInput="963687 12070.3 212466787405" LogicalBytesMoveInOverhead="0 -1 3848694"
+                        // KVCommitLogicalBytes="354421 176147 351330835020" KVClearRanges="252 138.265 86023885" KVClearSingleKey="0.2 0 46891" KVSystemClearRanges="0.799999 1.4685 463375"
+                        // BytesDurable="1.63682e+06 818458 683676529700" BytesFetched="0 -1 156529210974" MutationBytes="982851 12310.3 215952228649" FeedBytesFetched="0 -1 0"
+                        // SampledBytesCleared="35750 178149 212529427228" KVFetched="0 -1 981991176" Mutations="1597 19.0042 290453437" SetMutations="1084.4 16.6442 148931696"
+                        // ClearRangeMutations="286 22.9326 85568844" AtomicMutations="226.6 192.432 55952897" UpdateBatches="1653.2 6.89218 457753157" UpdateVersions="304.4 2.81295 87325358"
+                        // Loops="1663.2 6.5741 460529340" FetchWaitingMS="0 -1 314243" FetchWaitingCount="0 -1 1489" FetchExecutingMS="0 -1 14441552" FetchExecutingCount="0 -1 1489"
+                        // ReadsRejected="0 -1 0" WrongShardServer="0 -1 1581" FetchedVersions="997668 5404.77 271137479542" FetchesFromLogs="1653.2 7.9577 457753157" QuickGetValueHit="0 -1 0"
+                        // QuickGetValueMiss="0 -1 0" QuickGetKeyValuesHit="0 -1 0" QuickGetKeyValuesMiss="0 -1 0" KVScanBytes="3.37271e+06 30331.1 1609369831047" KVGetBytes="115864 2024.36 51344830770"
+                        // EagerReadsKeys="512.6 28.2974 141523524" KVGets="1197 15.5863 318054755" KVScans="1684 13.1734 523470933" KVCommits="2 2.8017e-06 596034" LastTLogVersion="48820848276807"
+                        // Version="48820848276807" StorageVersion="48820842885415" DurableVersion="48820842885415" DesiredOldestVersion="48820843276807" VersionLag="135" LocalRate="100"
+                        // BytesReadSampleCount="0" FetchKeysFetchActive="0" FetchKeysWaiting="0" FetchChangeFeedFetchActive="0" FetchChangeFeedWaiting="0" QueryQueueMax="35" BytesStored="898686696480" A
+                        // ctiveWatches="65" WatchBytes="68521" KvstoreSizeTotal="0" KvstoreNodeTotal="0" KvstoreInlineKey="0" ActiveChangeFeeds="0" ActiveChangeFeedQueries="0"
+                        // StorageEngine="ssd-redwood-1-experimental" Tag="0:137" KvstoreBytesUsed="877656145920" KvstoreBytesFree="2702898458624" KvstoreBytesAvailable="2730074533888"
+                        // KvstoreBytesTotal="4754834661376" KvstoreBytesTemp="4080214016" ThreadID="18261086947468930259" Machine="10.0.0.1:4500" LogGroup="default" Roles="SS" TrackLatestType="Original" />
                         case "StorageMetrics": {
                             String port = getPort(map);
                             addDoubleGauges(map, port, Arrays.asList("Fetch"));
                             addDoubleGauges(map, port, Arrays.asList("bytes", "Bytes", "StorageVersion",
                                     "DurableVersion", "LoopsPerSecond", "MutationBytesPerSecond",
                                     "QueriesPerSecond", "Query", "Version", "IdleTime",
-                                    "ChangesPerSecond", "ElapsedTime", "BytesFetchedPerSecond"));
+                                    "ChangesPerSecond", "ElapsedTime", "BytesFetchedPerSecond", "Mutation", "Kv",
+                                    "Quick", "Finished", "Feed", "Get", "Set"));
                             break;
                         }
                         case "MasterCommit": {
